@@ -220,7 +220,6 @@ h2{font-size:clamp(22px,3vw,28px);line-height:1.25;letter-spacing:0;font-weight:
 .hero .hero-logo img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
 }
-.hero .hero-logo-static{display:none}
 .hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin-bottom:24px}
 .hero .lede{margin-left:auto;margin-right:auto;max-width:560px}
 .hero .hero-cta{display:flex;gap:10px;justify-content:center;margin-top:36px;flex-wrap:wrap}
@@ -231,11 +230,6 @@ h2{font-size:clamp(22px,3vw,28px);line-height:1.25;letter-spacing:0;font-weight:
 @media (max-width:768px){
   .hero{min-height:auto;padding:72px 0 80px}
   .hero .hero-logo{width:76px;margin-bottom:32px}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .hero .hero-logo-animated{display:none}
-  .hero .hero-logo-static{display:block}
 }
 
 /* =====================================================================
@@ -415,3 +409,11 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.2em;
   color:var(--muted);border:1px solid var(--hairline);padding:3px 8px;line-height:1;
 }
+
+/* Stable mascot crop + pronunciation wordmark */
+.brand-wordmark{gap:10px}
+.brand-mark{width:18px;height:32px;overflow:hidden}
+.brand-logo{width:22px;height:32px;max-width:none;object-fit:contain;object-position:center;clip-path:inset(0 17%)}
+.brand-copy{display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;line-height:1}
+.brand-pronunciation{font-size:8px;line-height:1;letter-spacing:.02em;color:var(--muted);text-transform:none;white-space:nowrap}
+.hero .hero-logo img{object-position:center}

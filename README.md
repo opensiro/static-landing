@@ -23,9 +23,10 @@ opensiro-web/
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
-│   ├── mascot-logo.gif      # animated landing logo
-│   ├── mascot-logo.png      # static wordmark logo
-│   └── mascot-favicon.png   # browser icon
+│   ├── mascot-logo.gif      # legacy animated source (not used in hero)
+│   ├── mascot-logo.png      # stable hero + nav mascot
+│   ├── mascot-favicon.png   # alternate square mascot icon
+│   └── favicon-64x64.png    # wider browser + touch icon
 └── README.md
 ```
 
