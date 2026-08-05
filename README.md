@@ -13,6 +13,9 @@ cleanly to a framework later.
 
 Plain static site — **no build step, no dependencies, no framework.** All fonts and mascot artwork are bundled locally and served from `assets/`.
 
+Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires Pillow:
+`uv run --no-project --with pillow python scripts/stabilize-mascot-gif.py`.
+
 ```
 opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
@@ -23,10 +26,13 @@ opensiro-web/
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
-│   ├── mascot-logo.gif      # legacy animated source (not used in hero)
-│   ├── mascot-logo.png      # stable hero + nav mascot
-│   ├── mascot-favicon.png   # alternate square mascot icon
-│   └── favicon-64x64.png    # wider browser + touch icon
+│   ├── mascot-logo-source.gif # original animation source
+│   ├── mascot-logo.gif        # stabilized animated hero mascot
+│   ├── mascot-logo.png        # reduced-motion fallback + nav mascot
+│   ├── mascot-favicon.png     # alternate square mascot icon
+│   └── favicon-64x64.png      # wider browser + touch icon
+├── scripts/
+│   └── stabilize-mascot-gif.py
 └── README.md
 ```
 
