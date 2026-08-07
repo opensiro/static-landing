@@ -3,11 +3,10 @@
 Static multi-page site for **opensiro** — the company building the toolchain for
 organizations that compile, and the ARCTIC reasoning benchmark.
 
-The design language is a faithful, monochrome adaptation of the our
-aesthetic: a single monospace typeface (DepartureMono), warm off-white
-background, sharp corners, 1px hairline borders, invert-on-hover, centered
-sparse compositions. Built as plain html/css/js now; structured to migrate
-cleanly to a framework later.
+The design language is monochrome monospace: a single typeface
+(DepartureMono), warm off-white background, sharp corners, 1px hairline
+borders, invert-on-hover, centered sparse compositions. Built as plain
+html/css/js now; structured to migrate cleanly to a framework later.
 
 ## Stack
 
@@ -21,13 +20,12 @@ opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
 ├── products.html    # vsmlite + opensiro detail
 ├── research.html    # ARCTIC detail
-├── globals.css      # tokens, @font-face, components (monochrome monochrome)
+├── globals.css      # tokens, @font-face, components (monochrome monospace)
 ├── app.js           # active-nav highlight + mobile nav drawer
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
 │   ├── DepartureMono-OFL.txt    # Departure Mono license (OFL-1.1)
-│   ├── mascot-logo-source.gif # original animation source
 │   ├── mascot-logo.gif        # stabilized animated hero mascot
 │   ├── mascot-logo.png        # reduced-motion fallback + nav mascot
 │   ├── mascot-favicon.png     # alternate square mascot icon
@@ -49,7 +47,7 @@ opensiro-web/
 | `--font`     | `'DepartureMono', monospace`       | one typeface, everywhere       |
 | `--maxw`     | `1280px`                           | content width                  |
 
-**Signature rules :**
+**Signature rules:**
 - **Sharp corners** — `border-radius:0` everywhere except 6px status dots.
 - **1px hairline borders** that fully invert on hover (fill ↔ outline swap).
 - **Uppercase + wide tracking** — nav `.05em`, section labels `.3em`, product names `.15em`.
