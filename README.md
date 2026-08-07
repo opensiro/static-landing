@@ -19,13 +19,14 @@ Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires
 ```
 opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
-├── products.html    # foundry + vsmforge detail
+├── products.html    # vsmlite + opensiro detail
 ├── research.html    # ARCTIC detail
 ├── globals.css      # tokens, @font-face, components (monochrome monochrome)
 ├── app.js           # active-nav highlight + mobile nav drawer
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
+│   ├── DepartureMono-OFL.txt    # Departure Mono license (OFL-1.1)
 │   ├── mascot-logo-source.gif # original animation source
 │   ├── mascot-logo.gif        # stabilized animated hero mascot
 │   ├── mascot-logo.png        # reduced-motion fallback + nav mascot
@@ -61,7 +62,7 @@ opensiro-web/
 | Route             | File            | Content                                   |
 |-------------------|-----------------|-------------------------------------------|
 | `/`               | `index.html`    | Hero, mission, products & research previews |
-| `/products.html`  | `products.html` | foundry + vsmforge detail blocks          |
+| `/products.html`  | `products.html` | vsmlite + opensiro detail blocks            |
 | `/research.html`  | `research.html` | ARCTIC detail + stats + CTA               |
 
 Each page shares the same sticky header (logo + Products/Research nav), footer
@@ -71,13 +72,9 @@ marked with `.active` in markup and re-asserted by `app.js` from
 
 ## Links
 
-Relative links point at sibling repos within `Opensiro Collections/` (work
-locally; swap for GitHub URLs on deploy):
+Inter-page links are relative. External product links point at GitHub:
 
-- `../../foundry` — foundry repo (discovery layer)
-- `../../vsmforge` — vsmforge repo (compiler)
-- `../../opensiro-arctic` — ARCTIC collection
-- `../concept-site` — UI concept prototypes
+- `https://github.com/opensiro/terminal-bench-vsm` — vsmlite repo
 - `https://siroarctic.com` — ARCTIC benchmark site (external)
 
 Social links are placeholders: `twitter.com/opensiro`, `youtube.com/@opensiro`,
@@ -99,3 +96,23 @@ python3 -m http.server 8000
 Push to any static host (GitHub Pages, Netlify, etc.). No build, no
 `npm install`. When migrating to a framework, the shared header/footer/nav are
 the natural extraction points into a layout component.
+
+## License & attribution
+
+Two licenses apply to this repository:
+
+| Component | License | Owner |
+|-----------|---------|-------|
+| Landing source (HTML, CSS, JS) + mascot artwork | **MIT** | © 2026 opensiro |
+| `Departure Mono` typeface (`assets/DepartureMono-Regular.*`) | **SIL Open Font License 1.1 (OFL-1.1)** | © 2022–2024 Helena Zhang |
+
+- The MIT license covers the landing code and the opensiro mascot. Full text:
+  [`LICENSE`](LICENSE).
+- **Departure Mono** by Helena Zhang ([departuremono.com](https://departuremono.com))
+  is licensed under the OFL-1.1. Full text:
+  [`assets/DepartureMono-OFL.txt`](assets/DepartureMono-OFL.txt).
+
+**Required when copying or modifying this repository:** if you keep or adapt
+the Departure Mono font, you must (a) credit "Departure Mono by Helena Zhang",
+and (b) retain the OFL-1.1 text in `assets/DepartureMono-OFL.txt`. The font
+cannot be relicensed under MIT or any other license.
