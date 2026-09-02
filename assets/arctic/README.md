@@ -46,3 +46,12 @@ The generator uses the checked-in subset, requires only the Python standard
 library, and makes no network requests. It emits six SVG assets and updates the
 gallery in `research.html` automatically. The paired versions are embedded in the
 page so it can replay them without loading a framework.
+
+## Research workflow
+
+`workflow.drawio.svg` is the original diagram supplied by the project owner
+from `ARC-TIC-0/neurips_2026/assets`. It is preserved unchanged for reference.
+The responsive HTML/CSS adaptation lives in `research.html` and `globals.css`;
+it is independent of the training-example generator above. The diagram describes
+the proposed evaluation protocol, with small language models as the evaluated
+students. It is not a report of completed evaluation runs.
