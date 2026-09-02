@@ -24,34 +24,97 @@
     });
   })();
 
+  /* Grow the pixel sprites only after loading, and only while visible. */
+  var vineHeroes = $all('.hero').filter(function (hero) { return $('.hero-vine', hero); });
+  var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (vineHeroes.length && !motionPreference.matches) {
+    vineHeroes.forEach(function (hero) { hero.classList.add('vines-pending'); });
+    var vineImage = new Image();
+    vineImage.onload = function () {
+      vineHeroes.forEach(function (hero) {
+        hero.classList.remove('vines-pending');
+        hero.classList.add('vines-ready');
+      });
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            entry.target.classList.toggle('vines-in-view', entry.isIntersecting);
+          });
+        });
+        vineHeroes.forEach(function (hero) { observer.observe(hero); });
+      } else {
+        vineHeroes.forEach(function (hero) { hero.classList.add('vines-in-view'); });
+      }
+    };
+    vineImage.onerror = function () {
+      vineHeroes.forEach(function (hero) { hero.classList.remove('vines-pending'); });
+    };
+    vineImage.src = 'assets/pixel-vine.png';
+  }
+
   /* ----------------------------------------------------------- mobile nav */
   var mobileNav = $('#mobileNav');
   var menuBtn = $('#menuBtn');
+  var background = $all('.site-header, main, .site-footer');
+  var previousOverflow = '';
+  var previousInert = [];
+
+  function navIsOpen() { return mobileNav && mobileNav.classList.contains('open'); }
+  function focusableItems() {
+    return $all('a[href], button:not([disabled])', mobileNav).filter(function (el) {
+      return el.getClientRects().length > 0;
+    });
+  }
 
   function openNav() {
-    if (!mobileNav) return;
+    if (!mobileNav || navIsOpen()) return;
+    previousOverflow = document.body.style.overflow;
+    previousInert = background.map(function (el) { return el.inert; });
     mobileNav.classList.add('open');
     mobileNav.setAttribute('aria-hidden', 'false');
+    mobileNav.setAttribute('role', 'dialog');
+    mobileNav.setAttribute('aria-modal', 'true');
+    mobileNav.setAttribute('aria-label', 'Navigation menu');
     if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    background.forEach(function (el) { el.inert = true; });
+    var closeButton = $('.menu-close', mobileNav);
+    if (closeButton) closeButton.focus();
   }
   function closeNav() {
-    if (!mobileNav) return;
+    if (!navIsOpen()) return;
+    background.forEach(function (el, i) { el.inert = previousInert[i]; });
+    if (menuBtn && menuBtn.getClientRects().length) menuBtn.focus();
     mobileNav.classList.remove('open');
     mobileNav.setAttribute('aria-hidden', 'true');
+    mobileNav.removeAttribute('aria-modal');
     if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    document.body.style.overflow = previousOverflow;
   }
 
   if (menuBtn) {
     menuBtn.addEventListener('click', function () {
-      mobileNav.classList.contains('open') ? closeNav() : openNav();
+      navIsOpen() ? closeNav() : openNav();
     });
   }
   $all('[data-close-nav]').forEach(function (el) {
     el.addEventListener('click', closeNav);
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeNav();
+    if (!navIsOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeNav(); }
+    if (e.key === 'Tab') {
+      var items = focusableItems();
+      var first = items[0];
+      var last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 820) closeNav();
   });
 })();
