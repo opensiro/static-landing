@@ -68,8 +68,9 @@ opensiro-web/
 ## Motion and interactions
 
 - `.vine-static` keeps the original bitmap vines visible on home and product
-  heroes. The home hero also has two thinner `.vine-growing` SVG shoots: stems
-  advance cell by cell, then branches and leaves unfold behind the growing tips.
+  heroes. The home hero also has two `.vine-growing` SVG shoots: curved stems
+  advance cell by cell, tendrils curl into spirals, and leaves unfold. Blue buds
+  appear at the tips before six petals open around each center.
   Growth runs once, pauses offscreen, and finishes within five visible seconds.
   Without JavaScript the original static vines remain; reduced motion shows the
   complete growing vines immediately. Use either class with `.hero-vine` and
