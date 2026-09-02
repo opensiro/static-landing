@@ -22,7 +22,7 @@ opensiro-web/
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
-├── app.js           # vine growth, active nav, accessible mobile drawer
+├── app.js           # procedural pixel vines, active nav, accessible mobile drawer
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
@@ -67,9 +67,13 @@ opensiro-web/
 
 ## Motion and interactions
 
-- Pixel vines grow from bottom to top on the home and product heroes, with
-  staggered timing. Growth starts after the image loads and pauses offscreen.
-  Both sides finish within five seconds of visible playback.
+- `.vine-static` keeps the original bitmap vines visible on home and product
+  heroes. The home hero also has two thinner `.vine-growing` SVG shoots: stems
+  advance cell by cell, then branches and leaves unfold behind the growing tips.
+  Growth runs once, pauses offscreen, and finishes within five visible seconds.
+  Without JavaScript the original static vines remain; reduced motion shows the
+  complete growing vines immediately. Use either class with `.hero-vine` and
+  `.vine-left` / `.vine-right` to choose the decorative variant.
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains blue.
 - Each product has a separate locally served SVG mark with a small animation.

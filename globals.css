@@ -468,15 +468,17 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 .hero .hero-foot{display:inline-flex;align-items:center;gap:18px;margin:36px 0 0;font-size:9px;letter-spacing:.09em;padding:8px 0}
 .hero-foot:hover{color:var(--ink)}
 .hero-coordinate{position:absolute;bottom:24px;left:32px;right:32px;display:flex;justify-content:space-between;font-size:8px;letter-spacing:.12em;color:var(--muted)}
-.hero-vine{position:absolute;z-index:0;bottom:56px;width:clamp(115px,18vw,255px);height:80%;max-height:620px;background:var(--ink);pointer-events:none;image-rendering:pixelated;-webkit-mask:url('assets/pixel-vine.png') center bottom / contain no-repeat;mask:url('assets/pixel-vine.png') center bottom / contain no-repeat;clip-path:inset(0);}
+.hero-vine{position:absolute;z-index:0;bottom:56px;width:clamp(115px,18vw,255px);height:80%;max-height:620px;pointer-events:none;image-rendering:pixelated}
+.vine-static{background:var(--ink);-webkit-mask:url('assets/pixel-vine.png') center bottom / contain no-repeat;mask:url('assets/pixel-vine.png') center bottom / contain no-repeat}
 .vine-left{left:clamp(-40px,2vw,50px)}
 .vine-right{right:clamp(-40px,2vw,50px);transform:scaleX(-1)}
-/* Growth begins after the sprite loads; the final vine remains without JS. */
-.vines-pending .hero-vine{clip-path:inset(100% 0 0 0)}
-.vines-ready .hero-vine{animation:vine-grow 4.2s steps(40,end) both;animation-play-state:paused}
-.vines-ready .vine-right{animation-delay:.35s;animation-duration:4.6s}
-.vines-ready.vines-in-view .hero-vine{animation-play-state:running}
-@keyframes vine-grow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+.hero-vine.vine-growing{width:clamp(72px,8vw,112px);height:66%;max-height:480px;color:var(--ink);opacity:.75}
+.vine-growing.vine-left{left:clamp(52px,10vw,170px)}
+.vine-growing.vine-right{right:clamp(52px,10vw,170px)}
+.vine-growing svg{display:block;width:100%;height:100%;fill:currentColor;shape-rendering:crispEdges}
+.vines-ready .vine-pixel{animation:vine-pixel-grow .01s steps(1,end) both;animation-delay:var(--grow-at);animation-play-state:paused}
+.vines-ready.vines-in-view .vine-pixel{animation-play-state:running}
+@keyframes vine-pixel-grow{from{opacity:0}to{opacity:1}}
 .page-hero{min-height:430px;padding:90px 0 72px;border-bottom:1px solid var(--hairline)}
 .page-hero .hero-vine{height:90%;bottom:0;max-width:190px}
 .page-hero .hero-cta{gap:30px}
@@ -557,6 +559,7 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 @media(min-width:1600px){.hero-vine{width:300px;max-height:680px}.vine-left{left:calc((100vw - 1440px)/2)}.vine-right{right:calc((100vw - 1440px)/2)}}
 @media(max-width:1000px){
   .hero-vine{opacity:.65;width:145px}.vine-left{left:-30px}.vine-right{right:-30px}
+  .hero-vine.vine-growing{opacity:.4}.vine-growing.vine-left{left:24px}.vine-growing.vine-right{right:24px}
   .about-grid,.detail-body{gap:40px}
   .product-cell{padding:32px}
   .detail-head .d-status{margin-left:0}
@@ -566,6 +569,7 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   .hero .hero-inner{max-width:640px}
   .hero .lede{max-width:460px}
   .hero-vine{width:100px;opacity:.4}
+  .hero-vine.vine-growing{width:64px;opacity:.28}.vine-growing.vine-left{left:8px}.vine-growing.vine-right{right:8px}
   .about-grid,.detail-body{grid-template-columns:1fr;gap:28px}
   .about-grid h2{font-size:28px}
   .product-cell,.product-cell:first-child,.product-cell:last-child{padding:32px 0}
@@ -588,6 +592,7 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   .hero .hero-foot{font-size:8px;letter-spacing:0;margin-top:30px}
   .hero-vine{width:100px;height:72%;bottom:75px;opacity:.24}
   .vine-left{left:-52px}.vine-right{right:-52px}
+  .hero-vine.vine-growing{width:56px;opacity:.2}.vine-growing.vine-left{left:-12px}.vine-growing.vine-right{right:-12px}
   .hero-coordinate{left:20px;right:20px;font-size:7px}.hero-coordinate span:last-child{display:none}
   .section-heading{gap:16px;margin-bottom:30px;align-items:flex-start}.section-note{max-width:120px;text-align:right;font-size:8px}
   .section-heading .arrow-link{font-size:8px;letter-spacing:0}
