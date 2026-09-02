@@ -22,7 +22,8 @@ opensiro-web/
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
-├── app.js           # procedural pixel vines, active nav, accessible mobile drawer
+├── app.js           # active nav, accessible mobile drawer
+├── vines.js         # continuous central vine growth and viewport tracking
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
@@ -67,14 +68,14 @@ opensiro-web/
 
 ## Motion and interactions
 
-- `.vine-static` keeps the original bitmap vines visible on home and product
-  heroes. The home hero also has two `.vine-growing` SVG shoots: curved stems
-  advance cell by cell, tendrils curl into spirals, and leaves unfold. Blue buds
-  appear at the tips before six petals open around each center.
-  Growth runs once, pauses offscreen, and finishes within five visible seconds.
-  Without JavaScript the original static vines remain; reduced motion shows the
-  complete growing vines immediately. Use either class with `.hero-vine` and
-  `.vine-left` / `.vine-right` to choose the decorative variant.
+- `.vine-static` preserves the original bitmap vines along the home and product
+  heroes. A smaller, muted `.vine-center` garden grows continuously behind the
+  home copy. New randomized bends and flowers attach to existing stems; the
+  viewport follows the growing tips slowly, letting older sections leave the
+  bottom edge. There is no fade, reset, or accumulating tangle. Offscreen sections
+  are removed to keep the document bounded. Pause/Resume controls the garden;
+  it also pauses offscreen and in hidden tabs. Reduced motion shows a completed
+  still ornament; without JavaScript only the original static vines remain.
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains blue.
 - Each product has a separate locally served SVG mark with a small animation.
