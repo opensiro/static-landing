@@ -47,6 +47,11 @@ open small buds. The user's Hammerfight chapter-screen reference guides the
 intertwined layout. A smaller footprint, muted ink and blue, and a soft center
 mask keep this secondary to the copy and the original static side vines.
 
+Three growth profiles vary bend width, curl radius, and flower size. Tendrils
+gently sway before forming a free curl. Each main stem keeps its side and carries
+its incoming tangent into the next section, avoiding sudden reversals at joins.
+Stems do not seek each other or create artificial over/under crossings.
+
 There is no fade or restarting cycle: new sections attach to the existing tips.
 A slow tracking viewport follows upward growth; old sections naturally pass the
 bottom edge before being removed. New bends take roughly four seconds each, so
