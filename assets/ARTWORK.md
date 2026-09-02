@@ -41,9 +41,15 @@ The sprite is a static CSS alpha mask (`.vine-static`). Left and right copies
 use mirroring and remain visible without JavaScript.
 
 The separate `.vine-growing` variant is drawn in `app.js` as an inline SVG on a
-four-unit pixel grid. The stem appears cell by cell; branches and stepped leaves
-follow their attachment points. Two deterministic shapes provide variation.
-Each shoot grows once in under five visible seconds and pauses offscreen.
+four-unit pixel grid. Sweeping Bezier stems appear cell by cell; shrinking
+spiral tendrils grow from their attachment points. Buds appear at the tips, then
+six blue petals unfold, with leaves opening alongside the stem. This ornamental
+growth takes its direction from the user's Hammerfight cover reference, while
+keeping the site's ivory, ink, and blue palette. Two deterministic shapes
+provide variation.
+One shared timeline per hero reveals stem cells before triggering their buds
+and petals. Each shoot grows once in under five visible seconds and pauses
+offscreen or when the browser tab is hidden.
 Reduced motion displays the complete shoot. These code-drawn shoots are used
 alongside the original static vines on the home hero.
 
