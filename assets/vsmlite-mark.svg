@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" shape-rendering="crispEdges">
+  <style>@keyframes handover{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}.child{animation:handover 3s steps(2,end) infinite;transform-origin:center}@media(prefers-reduced-motion:reduce){.child{animation:none}}</style>
+  <path d="M12 20h28v28H12z" stroke="#18181b" stroke-width="4"/>
+  <path d="M20 28h12v12H20zM24 52v10h22v-4H28v-6" fill="#18181b"/>
+  <g class="child"><path d="M48 40h20v20H48z" stroke="#18181b" stroke-width="4"/><path d="M54 46h8v8h-8z" fill="#2f6df6"/></g>
+</svg>
