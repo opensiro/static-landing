@@ -24,32 +24,69 @@
     });
   })();
 
-  /* Grow the pixel sprites only after loading, and only while visible. */
-  var vineHeroes = $all('.hero').filter(function (hero) { return $('.hero-vine', hero); });
-  var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (vineHeroes.length && !motionPreference.matches) {
-    vineHeroes.forEach(function (hero) { hero.classList.add('vines-pending'); });
-    var vineImage = new Image();
-    vineImage.onload = function () {
-      vineHeroes.forEach(function (hero) {
-        hero.classList.remove('vines-pending');
-        hero.classList.add('vines-ready');
-      });
-      if ('IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            entry.target.classList.toggle('vines-in-view', entry.isIntersecting);
-          });
-        });
-        vineHeroes.forEach(function (hero) { observer.observe(hero); });
-      } else {
-        vineHeroes.forEach(function (hero) { hero.classList.add('vines-in-view'); });
+  /* Static vines are bitmap masks. Growing vines build their stems and leaves
+     on a separate pixel grid, with each branch following its stem junction. */
+  function buildGrowingVine(container, variant) {
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 112 448');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMax meet');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    var pixels = new Map();
+    function pixel(x, y, delay) {
+      if (x < 0 || x >= 28 || y < 0 || y >= 112) return;
+      var key = x + ',' + y;
+      if (!pixels.has(key) || delay < pixels.get(key).delay) pixels.set(key, { x: x, y: y, delay: delay });
+    }
+    var previousX = 14;
+    for (var step = 0; step < 108; step++) {
+      var y = 111 - step;
+      var x = 14 + Math.round(3 * Math.sin(step / 13 + variant * .7));
+      var delay = .25 + variant * .25 + step * .034;
+      for (var join = Math.min(previousX, x); join <= Math.max(previousX, x); join++) pixel(join, y, delay);
+      previousX = x;
+      if (step > 8 && step % 14 === 10) {
+        var direction = (Math.floor(step / 14) + variant) % 2 ? 1 : -1;
+        for (var branch = 1; branch <= 5; branch++) {
+          pixel(x + direction * branch, y - Math.floor(branch / 2), delay + branch * .055);
+          pixel(x + direction * branch, y - Math.floor((branch - 1) / 2), delay + branch * .055);
+        }
+        // A stepped leaf unfurls from the end of the new branch.
+        for (var leaf = 0; leaf < 5; leaf++) {
+          var breadth = leaf < 3 ? leaf : 4 - leaf;
+          for (var edge = 0; edge <= breadth; edge++) {
+            pixel(x + direction * (5 + leaf), y - 2 - leaf - edge, delay + .3 + leaf * .06);
+          }
+        }
       }
-    };
-    vineImage.onerror = function () {
-      vineHeroes.forEach(function (hero) { hero.classList.remove('vines-pending'); });
-    };
-    vineImage.src = 'assets/pixel-vine.png';
+    }
+    pixels.forEach(function (part) {
+      var rect = document.createElementNS(ns, 'rect');
+      rect.setAttribute('x', part.x * 4);
+      rect.setAttribute('y', part.y * 4);
+      rect.setAttribute('width', 4);
+      rect.setAttribute('height', 4);
+      rect.setAttribute('class', 'vine-pixel');
+      rect.style.setProperty('--grow-at', part.delay.toFixed(3) + 's');
+      svg.appendChild(rect);
+    });
+    container.appendChild(svg);
+  }
+  $all('.vine-growing').forEach(function (vine, index) { buildGrowingVine(vine, index % 2); });
+  var vineHeroes = $all('.hero').filter(function (hero) { return $('.vine-growing', hero); });
+  vineHeroes.forEach(function (hero) { hero.classList.add('vines-ready'); });
+  if (vineHeroes.length) {
+    if ('IntersectionObserver' in window) {
+      var vineObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle('vines-in-view', entry.isIntersecting);
+        });
+      });
+      vineHeroes.forEach(function (hero) { vineObserver.observe(hero); });
+    } else {
+      vineHeroes.forEach(function (hero) { hero.classList.add('vines-in-view'); });
+    }
   }
 
   /* ----------------------------------------------------------- mobile nav */

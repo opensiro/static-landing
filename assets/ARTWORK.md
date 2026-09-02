@@ -37,8 +37,15 @@ coarse square pixel grid. Whole vine visible with generous transparent margin,
 no ground, no planter, no other objects, no typography, no border, no shading,
 no color.
 
-The sprite is a CSS alpha mask. A stepped clip reveals it upward while the
-hero is visible. Left and right copies use staggered growth and mirroring.
+The sprite is a static CSS alpha mask (`.vine-static`). Left and right copies
+use mirroring and remain visible without JavaScript.
+
+The separate `.vine-growing` variant is drawn in `app.js` as an inline SVG on a
+four-unit pixel grid. The stem appears cell by cell; branches and stepped leaves
+follow their attachment points. Two deterministic shapes provide variation.
+Each shoot grows once in under five visible seconds and pauses offscreen.
+Reduced motion displays the complete shoot. These code-drawn shoots are used
+alongside the original static vines on the home hero.
 
 ### `social-preview.png`
 
