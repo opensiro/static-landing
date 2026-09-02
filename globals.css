@@ -472,9 +472,6 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 .vine-static{background:var(--ink);-webkit-mask:url('assets/pixel-vine.png') center bottom / contain no-repeat;mask:url('assets/pixel-vine.png') center bottom / contain no-repeat}
 .vine-left{left:clamp(-40px,2vw,50px)}
 .vine-right{right:clamp(-40px,2vw,50px);transform:scaleX(-1)}
-.hero-vine.vine-growing{width:clamp(112px,11vw,160px);height:76%;max-height:520px;color:var(--ink);opacity:.75}
-.vine-growing.vine-left{left:clamp(52px,10vw,170px)}
-.vine-growing.vine-right{right:clamp(52px,10vw,170px)}
 .vine-growing svg{display:block;width:100%;height:100%;fill:currentColor;shape-rendering:crispEdges}
 .vine-petal,.vine-bud{fill:var(--accent)}
 .vine-flower-center{fill:var(--bg)}
@@ -487,6 +484,18 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 @keyframes vine-leaf-open{0%{opacity:0;transform:scale(.1) rotate(30deg)}20%{opacity:1}100%{opacity:1;transform:scale(1) rotate(0)}}
 @keyframes vine-bud-open{0%{opacity:0;transform:scale(.2)}100%{opacity:1;transform:scale(1)}}
 @keyframes vine-petal-open{0%{opacity:0;transform:scale(.1) rotate(-25deg)}20%{opacity:1}100%{opacity:1;transform:scale(1) rotate(0)}}
+.hero-garden{position:absolute;z-index:0;left:50%;top:50%;width:min(760px,82%);height:88%;transform:translate(-50%,-50%);pointer-events:none;overflow:hidden;opacity:.65;mask-image:radial-gradient(ellipse 32% 35% at 50% 50%,#0004 15%,#000 100%)}
+.vine-center{width:100%;height:100%;color:#a8ada4}
+.vine-center .vine-petal,.vine-center .vine-bud{fill:var(--garden-bloom,#9bafd2)}
+.vine-center .vine-flower{transform-box:fill-box}
+.vine-stem{stroke:currentColor;stroke-width:2.4;stroke-linecap:square;stroke-linejoin:round;fill:none}
+.home-hero h1,.home-hero .eyebrow,.home-hero .lede{text-shadow:0 0 8px var(--bg),0 0 14px var(--bg)}
+.vine-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin:14px auto 0;color:var(--muted);font-size:9px}
+.vine-controls[hidden]{display:none}
+.vine-controls button{font:inherit;color:inherit;background:none;border:0;padding:8px 0;cursor:pointer;min-height:32px}
+.vine-controls button:hover{color:var(--accent)}
+.vine-controls button:disabled{cursor:default;opacity:.5}
+@media(max-width:540px){.hero-garden{width:560px;max-width:none;opacity:.42}.vine-controls{margin-top:8px}.home-hero .hero-foot{margin-top:22px}}
 .page-hero{min-height:430px;padding:90px 0 72px;border-bottom:1px solid var(--hairline)}
 .page-hero .hero-vine{height:90%;bottom:0;max-width:190px}
 .page-hero .hero-cta{gap:30px}
@@ -567,7 +576,6 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 @media(min-width:1600px){.hero-vine{width:300px;max-height:680px}.vine-left{left:calc((100vw - 1440px)/2)}.vine-right{right:calc((100vw - 1440px)/2)}}
 @media(max-width:1000px){
   .hero-vine{opacity:.65;width:145px}.vine-left{left:-30px}.vine-right{right:-30px}
-  .hero-vine.vine-growing{opacity:.6}.vine-growing.vine-left{left:18px}.vine-growing.vine-right{right:18px}
   .about-grid,.detail-body{gap:40px}
   .product-cell{padding:32px}
   .detail-head .d-status{margin-left:0}
@@ -577,7 +585,6 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   .hero .hero-inner{max-width:640px}
   .hero .lede{max-width:460px}
   .hero-vine{width:100px;opacity:.4}
-  .hero-vine.vine-growing{width:92px;opacity:.35}.vine-growing.vine-left{left:0}.vine-growing.vine-right{right:0}
   .about-grid,.detail-body{grid-template-columns:1fr;gap:28px}
   .about-grid h2{font-size:28px}
   .product-cell,.product-cell:first-child,.product-cell:last-child{padding:32px 0}
@@ -600,7 +607,6 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   .hero .hero-foot{font-size:8px;letter-spacing:0;margin-top:30px}
   .hero-vine{width:100px;height:72%;bottom:75px;opacity:.24}
   .vine-left{left:-52px}.vine-right{right:-52px}
-  .hero-vine.vine-growing{width:78px;opacity:.24}.vine-growing.vine-left{left:-28px}.vine-growing.vine-right{right:-28px}
   .hero-coordinate{left:20px;right:20px;font-size:7px}.hero-coordinate span:last-child{display:none}
   .section-heading{gap:16px;margin-bottom:30px;align-items:flex-start}.section-note{max-width:120px;text-align:right;font-size:8px}
   .section-heading .arrow-link{font-size:8px;letter-spacing:0}
