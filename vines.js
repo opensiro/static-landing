@@ -11,11 +11,16 @@
   var pause = hero.querySelector('.vine-pause');
   var width = 880, height = 660;
   var svg = node('svg', { viewBox: '0 0 880 660', 'aria-hidden': 'true', focusable: 'false' }, host);
-  var chunks = [], drawings = [], reveals = [];
+  var chunks = [], drawings = [], reveals = [], seekers = [];
+  var profiles = [
+    { name: 'sweeping', sway: [125, 220], bend: [90, 140], radius: [28, 44], turns: [1.55, 1.95], duration: 4600, reach: 38 },
+    { name: 'spring', sway: [90, 150], bend: [38, 72], radius: [16, 25], turns: [2.4, 3], duration: 4200, reach: 28 },
+    { name: 'flowering', sway: [110, 175], bend: [55, 95], radius: [18, 28], turns: [1.3, 1.65], duration: 4400, reach: 25 }
+  ];
   var time = 0, camera = 0, last = null, frame = null;
   var inView = false, paused = false, stillPrepared = false;
   var shoots = [-1, 1].map(function (side) {
-    return { side: side, tip: [440, 500], visibleTip: [440, 500], next: side < 0 ? 100 : 750, count: 0 };
+    return { side: side, tip: [440, 500], heading: [side * .7, -.7], visibleTip: [440, 500], next: side < 0 ? 100 : 750, count: 0, profileOffset: side < 0 ? 0 : 1 };
   });
 
   function node(tag, attrs, parent) {
@@ -26,6 +31,7 @@
   }
   function rand(min, max) { return min + Math.random() * (max - min); }
   function snap(value) { return Math.round(value / 2) * 2; }
+  function commands(points) { return points.map(function (p, i) { return (i ? 'L' : 'M') + p.join(' '); }).join(''); }
   function bezier(points, t) {
     var s = 1 - t;
     return [0, 1].map(function (axis) {
@@ -42,8 +48,13 @@
       chunk.top = Math.min(chunk.top, p[1] - 45);
     }
     var el = node('path', { 'class': 'vine-stem', d: '', fill: 'none' }, chunk.node);
-    drawings.push({ node: el, points: points, start: start, duration: duration, shown: 0, shoot: shoot });
-    return points[points.length - 1];
+    var drawing = { node: el, points: points, start: start, duration: duration, shown: 0, shoot: shoot };
+    drawings.push(drawing);
+    return drawing;
+  }
+  function draw(drawing, count) {
+    drawing.node.setAttribute('d', commands(drawing.points.slice(0, count)));
+    drawing.shown = count;
   }
   function reveal(el, at) {
     el.setAttribute('visibility', 'hidden');
@@ -54,7 +65,8 @@
     reveal(node('path', { 'class': 'vine-leaf', d: 'M0 0h6v-4h8v-4h8v-8h4v-4H14v4H8v8H2v4H0Z' }, anchor), at);
   }
   function flower(chunk, point, at) {
-    var anchor = node('g', { 'class': 'vine-flower', transform: 'translate(' + point.join(' ') + ') scale(' + rand(.55, .9).toFixed(2) + ')' }, chunk.node);
+    var scale = chunk.profile.name === 'flowering' ? rand(.5, .7) : rand(.55, .85);
+    var anchor = node('g', { 'class': 'vine-flower', transform: 'translate(' + point.join(' ') + ') scale(' + scale.toFixed(2) + ')' }, chunk.node);
     chunk.top = Math.min(chunk.top, point[1] - 45);
     leaf(chunk.node, point, 1, at + 80);
     leaf(chunk.node, point, -1, at + 240);
@@ -66,29 +78,66 @@
     reveal(node('path', { 'class': 'vine-bud', d: 'M-3-6h6v3h3v6H3v3H-3V3H-6V-3h3Z' }, anchor), at);
     reveal(node('rect', { 'class': 'vine-flower-center', x: -2, y: -2, width: 4, height: 4 }, anchor), at + 500);
   }
+  function settle(seeker, at) {
+    var base = seeker.tip;
+    var profile = seeker.chunk.profile;
+    var radius = rand(profile.radius[0], profile.radius[1]);
+    var turns = rand(profile.turns[0], profile.turns[1]);
+    var curve = path(seeker.chunk, function (t) {
+      var angle = Math.PI + t * Math.PI * turns;
+      var r = radius * (1 - .78 * t);
+      return [base[0] + seeker.side * radius + seeker.side * r * Math.cos(angle), base[1] + r * Math.sin(angle)];
+    }, at, 1700);
+    seeker.node.setAttribute('data-seeking', 'curled');
+    seeker.bud.remove();
+    flower(seeker.chunk, curve.points[curve.points.length - 1], at + 1800);
+  }
+  function seek(now, instant) {
+    seekers = seekers.filter(function (seeker) {
+      if (now < seeker.start) return true;
+      var age = Math.min(1100, now - seeker.start), progress = age / 1100;
+      var length = seeker.chunk.profile.reach * Math.min(1, age / 650);
+      var swing = Math.sin(age / 270 + seeker.phase) * 4 * Math.sin(progress * Math.PI);
+      var tip = [seeker.anchor[0] + seeker.side * length + swing, seeker.anchor[1] - length * .65];
+      var feeler = [seeker.anchor, [seeker.anchor[0] + seeker.side * 8, seeker.anchor[1]], [tip[0], tip[1] + 10], tip];
+      var points = [];
+      for (var i = 0; i <= 20; i++) points.push(bezier(feeler, i / 20).map(snap));
+      seeker.tip = points[points.length - 1];
+      seeker.node.setAttribute('d', commands(points));
+      seeker.node.removeAttribute('visibility');
+      seeker.bud.setAttribute('x', seeker.tip[0] - 1.5);
+      seeker.bud.setAttribute('y', seeker.tip[1] - 1.5);
+      seeker.bud.removeAttribute('visibility');
+      if (age < 1100 && !instant) return true;
+      settle(seeker, seeker.start + 1100);
+      return false;
+    });
+  }
   function grow(shoot) {
     var start = shoot.tip;
-    var sway = shoot.count % 2 ? 100 : 215;
-    var end = [snap(440 + shoot.side * sway + rand(-48, 48)), snap(start[1] - rand(90, 140))];
-    var bend = shoot.side * (shoot.count % 2 ? -1 : 1);
-    var curve = [start, [start[0] + bend * rand(70, 135), start[1] + rand(-20, 30)],
-      [end[0] + bend * rand(40, 90), end[1] + rand(15, 60)], end];
-    var duration = rand(3900, 4900);
+    var profile = profiles[(shoot.count + shoot.profileOffset) % profiles.length];
+    var sway = profile.sway[shoot.count % 2];
+    var side = shoot.side;
+    var end = [snap(440 + side * sway + rand(-18, 18)), snap(500 - (shoot.count + 1) * 112 + rand(-8, 8))];
+    var bend = side * (shoot.count % 2 ? -1 : 1);
+    // Continue the incoming tangent instead of flipping direction at a joint.
+    var handle = Math.min(60, rand(profile.bend[0], profile.bend[1]) * .55);
+    var outgoing = [end[0] + bend * rand(24, 46), end[1] + 44];
+    var curve = [start, [start[0] + shoot.heading[0] * handle, start[1] + shoot.heading[1] * handle], outgoing, end];
+    var tangentLength = Math.hypot(end[0] - outgoing[0], end[1] - outgoing[1]);
+    shoot.heading = [(end[0] - outgoing[0]) / tangentLength, (end[1] - outgoing[1]) / tangentLength];
+    var duration = profile.duration;
     var began = shoot.next;
-    var chunk = { node: node('g', { 'class': 'vine-section' }, svg), top: end[1] };
+    var chunk = { node: node('g', { 'class': 'vine-section', 'data-vine-profile': profile.name }, svg), top: end[1], profile: profile };
     chunk.node.style.setProperty('--garden-bloom', ['#9bafd2', '#a5abc9', '#94b3bd'][Math.floor(rand(0, 3))]);
     chunks.push(chunk);
     path(chunk, function (t) { return bezier(curve, t); }, began, duration, shoot);
     var junction = bezier(curve, .63).map(snap);
-    var radius = rand(28, 48);
-    var turns = rand(1.55, 2.05);
-    var curlSide = shoot.count % 2 ? -shoot.side : shoot.side;
-    var tip = path(chunk, function (t) {
-      var angle = Math.PI + t * Math.PI * turns;
-      var r = radius * (1 - .78 * t);
-      return [junction[0] + curlSide * radius + curlSide * r * Math.cos(angle), junction[1] + r * Math.sin(angle)];
-    }, began + duration * .63, 1700);
-    flower(chunk, tip, began + duration * .63 + 1800);
+    var curlSide = shoot.count % 2 ? -side : side;
+    seekers.push({ chunk: chunk, anchor: junction, side: curlSide, start: began + duration * .63,
+      phase: rand(0, Math.PI * 2),
+      node: node('path', { 'class': 'vine-stem vine-feeler', 'data-seeking': 'searching', visibility: 'hidden', d: '' }, chunk.node),
+      bud: node('rect', { 'class': 'vine-tip', width: 3, height: 3, visibility: 'hidden' }, chunk.node) });
     leaf(chunk.node, bezier(curve, .36).map(snap), shoot.side, began + duration * .36 + 120);
     shoot.tip = end;
     shoot.next += duration;
@@ -103,12 +152,12 @@
       var progress = Math.min(1, (now - drawing.start) / drawing.duration);
       var count = Math.max(1, Math.ceil(progress * drawing.points.length));
       if (count !== drawing.shown) {
-        drawing.node.setAttribute('d', drawing.points.slice(0, count).map(function (p, i) { return (i ? 'L' : 'M') + p.join(' '); }).join(''));
-        drawing.shown = count;
+        draw(drawing, count);
       }
       if (drawing.shoot) drawing.shoot.visibleTip = drawing.points[count - 1];
       return progress < 1;
     });
+    seek(now, instant);
     reveals = reveals.filter(function (part) {
       if (part.at > now) return true;
       part.node.removeAttribute('visibility');
@@ -150,7 +199,9 @@
         stillPrepared = true;
       }
       // Complete currently generated sections without starting another loop.
-      drawings.forEach(function (d) { d.node.setAttribute('d', d.points.map(function (p, i) { return (i ? 'L' : 'M') + p.join(' '); }).join('')); });
+      drawings.forEach(function (d) { draw(d, d.points.length); });
+      seek(Infinity, true);
+      drawings.forEach(function (d) { draw(d, d.points.length); });
       reveals.forEach(function (part) { part.node.removeAttribute('visibility'); });
       drawings = [];
       reveals = [];

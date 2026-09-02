@@ -70,7 +70,9 @@ opensiro-web/
 
 - `.vine-static` preserves the original bitmap vines along the home and product
   heroes. A smaller, muted `.vine-center` garden grows continuously behind the
-  home copy. New randomized bends and flowers attach to existing stems; the
+  home copy. Tendrils gently explore before curling; sweeping, spring-like,
+  and short flowering growth alternate. Stems keep their own direction with
+  smooth joins. New randomized bends and flowers attach to existing stems; the
   viewport follows the growing tips slowly, letting older sections leave the
   bottom edge. There is no fade, reset, or accumulating tangle. Offscreen sections
   are removed to keep the document bounded. Pause/Resume controls the garden;

@@ -489,6 +489,8 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 .vine-center .vine-petal,.vine-center .vine-bud{fill:var(--garden-bloom,#9bafd2)}
 .vine-center .vine-flower{transform-box:fill-box}
 .vine-stem{stroke:currentColor;stroke-width:2.4;stroke-linecap:square;stroke-linejoin:round;fill:none}
+.vine-feeler{stroke-width:1.8}
+.vine-tip{fill:currentColor}
 .home-hero h1,.home-hero .eyebrow,.home-hero .lede{text-shadow:0 0 8px var(--bg),0 0 14px var(--bg)}
 .vine-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin:14px auto 0;color:var(--muted);font-size:9px}
 .vine-controls[hidden]{display:none}
