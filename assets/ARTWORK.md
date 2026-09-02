@@ -53,8 +53,11 @@ its incoming tangent into the next section, avoiding sudden reversals at joins.
 Stems do not seek each other or create artificial over/under crossings.
 
 There is no fade or restarting cycle: new sections attach to the existing tips.
-A slow tracking viewport follows upward growth; old sections naturally pass the
-bottom edge before being removed. New bends take roughly four seconds each, so
+A slow viewport moves at a constant speed after the first 13 seconds of growth;
+old sections naturally pass the bottom edge before being removed. Its speed
+matches the stems' average advance (112 SVG units per 4.4 seconds). Blooming
+does not affect the camera, and there is no acceleration or catch-up. New bends
+take roughly four seconds each, so
 the first 10–15 seconds include several stages of growth and blooming. Pause/
 Resume is available; growth also pauses offscreen and in hidden browser tabs.
 Reduced motion shows a completed still ornament and hides the pause control.

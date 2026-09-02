@@ -17,6 +17,8 @@
     { name: 'spring', sway: [90, 150], bend: [38, 72], radius: [16, 25], turns: [2.4, 3], duration: 4200, reach: 28 },
     { name: 'flowering', sway: [110, 175], bend: [55, 95], radius: [18, 28], turns: [1.3, 1.65], duration: 4400, reach: 25 }
   ];
+  // Match the average upward growth so the tips stay in frame indefinitely.
+  var cameraSpeed = 112 / (profiles.reduce(function (sum, profile) { return sum + profile.duration; }, 0) / profiles.length);
   var time = 0, camera = 0, last = null, frame = null;
   var inView = false, paused = false, stillPrepared = false;
   var shoots = [-1, 1].map(function (side) {
@@ -177,8 +179,8 @@
     last = now;
     time += delta;
     paint(time, false);
-    var target = Math.min(0, Math.min(shoots[0].visibleTip[1], shoots[1].visibleTip[1]) - 165);
-    camera += (target - camera) * Math.min(1, delta * .0015);
+    // Let the first shoots fill the scene, then scroll at a constant speed.
+    camera = -Math.max(0, time - 13000) * cameraSpeed;
     svg.setAttribute('viewBox', '0 ' + camera.toFixed(2) + ' ' + width + ' ' + height);
     trim();
     frame = requestAnimationFrame(tick);
