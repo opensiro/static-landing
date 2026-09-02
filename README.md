@@ -73,8 +73,9 @@ opensiro-web/
   home copy. Tendrils gently explore before curling; sweeping, spring-like,
   and short flowering growth alternate. Stems keep their own direction with
   smooth joins. New randomized bends and flowers attach to existing stems; the
-  viewport follows the growing tips slowly, letting older sections leave the
-  bottom edge. There is no fade, reset, or accumulating tangle. Offscreen sections
+  viewport moves at a constant speed after the initial growth, letting older
+  sections leave the bottom edge. Flowering does not change the camera speed.
+  There is no fade, reset, or accumulating tangle. Offscreen sections
   are removed to keep the document bounded. Pause/Resume controls the garden;
   it also pauses offscreen and in hidden tabs. Reduced motion shows a completed
   still ornament; without JavaScript only the original static vines remain.
