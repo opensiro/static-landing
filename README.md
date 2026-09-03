@@ -25,7 +25,7 @@ opensiro-web/
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
-├── app.js           # active nav, accessible mobile drawer
+├── app.js           # active nav for the shared Products/Research links
 ├── vines.js         # continuous central vine growth and viewport tracking
 ├── shared-hero.css  # aligned home/product heroes and copy transitions
 ├── hero-transition.js # native page transition guards for the shared heroes
@@ -101,8 +101,9 @@ opensiro-web/
   and palette. See `assets/arctic/README.md` for source, attribution, and rebuilding.
 - `prefers-reduced-motion` shows the full vines and static product marks and
   keeps the existing still-image fallback for the mascot.
-- The mobile drawer supports Escape, Tab focus containment, focus return,
-  and an inert background. Links and buttons have visible keyboard focus.
+- Products and Research stay visible in the header on mobile, with no drawer.
+  Both decorative side vines remain visible down to 320 px. Links and buttons
+  have visible keyboard focus.
 
 ## Pages
 
@@ -113,7 +114,8 @@ opensiro-web/
 | `/research.html`  | `research.html` | ARCTIC detail + stats + CTA               |
 
 Each page shares the same sticky header (logo + Products/Research nav), footer
-(copyright + social icon-buttons), and mobile drawer. The active nav item is
+(copyright + site links + font attribution). Social links are paused in HTML
+comments, ready to restore when the channels are available. The active nav item is
 marked with `.active` in markup and re-asserted by `app.js` from
 `location.pathname`.
 
@@ -124,7 +126,7 @@ Inter-page links are relative. External product links point at GitHub:
 - `https://github.com/opensiro/terminal-bench-vsm` — vsmlite repo
 - `https://github.com/opensiro/arctic-0` — ARCTIC-0 public archive
 
-Social links are placeholders: `twitter.com/opensiro`, `youtube.com/@opensiro`,
+Paused social links (not rendered): `twitter.com/opensiro`, `youtube.com/@opensiro`,
 `discord.gg/opensiro`.
 
 ## Run
