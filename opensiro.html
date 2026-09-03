@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://opensiro.com/opensiro.html">
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
-<link rel="stylesheet" href="products.css?v=20260903-multifidelity">
+<link rel="stylesheet" href="products.css?v=20260903-evidence">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png">
 </head>
 <body class="os-article-page">
@@ -56,7 +56,20 @@
   <p class="os-note">The model matrix, runtime, benchmark-generator versions, seeds, and baseline harness are fixed before comparison. Each commit is evaluated relative to its parent; the harness commit is the changed variable.</p>
 </div></section>
 
-<section class="os-section os-tint" id="os-economics" aria-labelledby="economics-title"><div class="wrap">
+<section class="os-section os-tint" id="os-evidence" aria-labelledby="evidence-title"><div class="wrap">
+  <div class="os-heading"><div><p class="os-kicker">Evidence from prior work</p><h2 id="evidence-title">The cheap signals can work.<br><span>The exact gate still needs proof.</span></h2></div><span class="os-badge reported">Published results</span></div>
+  <p class="os-section-lead">Existing studies support the ingredients behind OpenSiro: cheap proxies can preserve useful rankings, harness improvements can transfer across models, and SLM-first development can cut cost. They also show why frontier validation cannot be removed.</p>
+  <div class="os-evidence-grid">
+    <article><div class="os-evidence-meta"><span>01 / Cheap proxy</span><strong>&lt;1% cost</strong></div><h3>PACE preserves a useful evaluation signal.</h3><p>Across 14 models and four agentic benchmarks, a compact proxy reached Spearman correlation above 0.80 and about 85% pairwise ranking accuracy at much less than 1% of full evaluation cost.</p><a href="https://arxiv.org/abs/2607.02032">PACE · arXiv ↗</a><small>Supports cheap screening under a different cross-model protocol.</small></article>
+    <article><div class="os-evidence-meta"><span>02 / Harness transfer</span><strong>116 / 126</strong></div><h3>Life-Harness transfers beyond its source SLM.</h3><p>A harness evolved only from Qwen3-4B-Instruct trajectories transferred to 17 other models and improved 116 of 126 model-environment settings across 18 backbones.</p><a href="https://arxiv.org/abs/2605.22166">Life-Harness · arXiv ↗</a><small>Supports reusable, model-external harness structure.</small></article>
+    <article><div class="os-evidence-meta"><span>03 / SLM economics</span><strong>4% cost</strong></div><h3>Better harnesses make small models practical.</h3><p>Automated harness adaptation improved 16 of 21 task-SLM pairs. The best result recovered 89.7% of LLM performance at 4% of the cost.</p><a href="https://arxiv.org/abs/2607.08938">Better Harnesses, Smaller Models · arXiv ↗</a><small>Supports the cheap development loop, not frontier prediction.</small></article>
+    <article class="boundary"><div class="os-evidence-meta"><span>04 / Boundary condition</span><strong>Partial transfer</strong></div><h3>One model is not a reliable surrogate.</h3><p>HarnessDev found that evolution gains were unstable, transferred only partially to held-out tasks, and depended strongly on the model executing the harness.</p><a href="https://arxiv.org/abs/2609.01437">HarnessDev · arXiv ↗</a><small>This is the reason to test heterogeneous SLMs and keep the frontier model as the release judge.</small></article>
+  </div>
+  <div class="os-evidence-conclusion"><span>What the literature supports</span><p><strong>Cheap screening is plausible.</strong> Harness improvements can transfer, but transfer is not automatic.</p><span>What OpenSiro must establish</span><p><strong>Consensus adds precision.</strong> Measure whether 5/5 SLM agreement retains frontier-positive commits better than any single SLM.</p></div>
+  <p class="os-note">These results are evidence for the premises of multi-fidelity harness CI. None directly validates OpenSiro’s proposed Cross-SLM Consensus Gate; that conditional transfer probability is the research objective below.</p>
+</div></section>
+
+<section class="os-section" id="os-economics" aria-labelledby="economics-title"><div class="wrap">
   <div class="os-heading"><div><p class="os-kicker">Illustrative economics</p><h2 id="economics-title">Spend the frontier budget<br><span>on the commits most likely to matter.</span></h2></div><span class="os-badge illustrative">Adjust the assumptions</span></div>
   <form class="os-controls" id="os-cost-controls"><label>Harness commits <output for="os-commits" id="os-commits-value">100</output><input id="os-commits" type="range" min="10" max="200" step="10" value="100"></label><label>Tasks per model <output for="os-tasks" id="os-tasks-value">100</output><input id="os-tasks" type="range" min="25" max="500" step="25" value="100"></label><label>Tokens per task <output for="os-tokens" id="os-tokens-value">10K</output><input id="os-tokens" type="range" min="1000" max="30000" step="1000" value="10000"></label><label>Promoted commits <output for="os-promoted" id="os-promoted-value">5</output><input id="os-promoted" type="range" min="0" max="100" step="1" value="5"></label></form>
   <div class="os-cost-results" aria-live="polite"><article><span>Frontier-first baseline</span><strong id="os-baseline">73.52B</strong><small>commits × 735.2M reference tokens</small></article><article class="target"><span>Screening + validation</span><strong id="os-screened">4.176B</strong><small id="os-screened-formula">500M screening + 3.676B frontier</small></article><article><span>Frontier evaluations avoided</span><strong id="os-avoided">95%</strong><small id="os-gate-copy">5 of 100 commits promoted</small></article></div>
@@ -64,7 +77,7 @@
   <p class="os-note">Illustrative token bookkeeping, not equivalent compute or a cost guarantee. The 735.2M reference is a reported frontier run; small and frontier models have different tokenizers, prices, throughput, retry behavior, and infrastructure costs. Generator development and calibration are excluded.</p>
 </div></section>
 
-<section class="os-section" id="os-validation" aria-labelledby="validation-title"><div class="wrap">
+<section class="os-section os-tint" id="os-validation" aria-labelledby="validation-title"><div class="wrap">
   <div class="os-heading"><div><p class="os-kicker">Research objective</p><h2 id="validation-title">Does agreement buy<br><span>a useful frontier signal?</span></h2></div><span class="os-badge hypothesis">Must be measured</span></div>
   <div class="os-agreement-scale"><span>1 / 5</span><i>→</i><span>2 / 5</span><i>→</i><span>3 / 5</span><i>→</i><span>4 / 5</span><i>→</i><span class="active">5 / 5</span><strong>P(frontier uplift | agreement)</strong></div>
   <p class="os-section-lead">The hypothesis does not require small-model scores to predict a frontier score. It succeeds if agreement rejects many commits while retaining most changes that would improve the frontier model.</p>
@@ -72,7 +85,7 @@
   <p class="os-note">These thresholds are proposed success criteria, not observed OpenSiro results. Report uncertainty, seed sensitivity, matrix composition, missing runs, ties, and the cost of hidden-test and frontier validation.</p>
 </div></section>
 
-<section class="os-section os-tint" id="os-ecosystem" aria-labelledby="ecosystem-title"><div class="wrap">
+<section class="os-section" id="os-ecosystem" aria-labelledby="ecosystem-title"><div class="wrap">
   <div class="os-heading"><div><p class="os-kicker">Build in public · test in private</p><h2 id="ecosystem-title">One system for contribution.<br><span>One independent arena for competition.</span></h2></div></div>
   <div class="os-ecosystem-grid"><article><span class="os-badge measured">Open source</span><h3>Improve the shared test infrastructure.</h3><p>Contribute capability leaves, benchmark generators, open task families, validators, harness adapters, fixed model matrices, and reproducible failure cases.</p><div class="os-flowline">public taxonomy → reviewed contribution → development suite</div></article><article><span class="os-badge sealed-label">Competition</span><h3>Prove the harness on unseen work.</h3><p>Register a commit, enter a sealed suite, run on shared infrastructure, and compare versioned results without exposing the benchmark during the evaluation window.</p><div class="os-flowline">registered commit → sealed evaluation → leaderboard</div></article></div>
   <div class="os-primitive"><span>The artifact under evaluation</span><strong>model × harness × benchmark-generator × commit</strong><span>The new primitive</span><strong>Cross-SLM Consensus Gate</strong></div>
@@ -80,8 +93,8 @@
 </div></section>
 </main>
 
-<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-cost" data-os-section="os-cost">Cost</a><a href="#os-pipeline" data-os-section="os-pipeline">Pipeline</a><a href="#os-benchmarks" data-os-section="os-benchmarks">Benchmarks</a><a href="#os-consensus" data-os-section="os-consensus">Consensus</a><a href="#os-economics" data-os-section="os-economics">Economics</a><a href="#os-validation" data-os-section="os-validation">Validation</a><a href="#os-ecosystem" data-os-section="os-ecosystem">Contribute / Compete</a></div></div></div></nav>
+<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-cost" data-os-section="os-cost">Cost</a><a href="#os-pipeline" data-os-section="os-pipeline">Pipeline</a><a href="#os-benchmarks" data-os-section="os-benchmarks">Benchmarks</a><a href="#os-consensus" data-os-section="os-consensus">Consensus</a><a href="#os-evidence" data-os-section="os-evidence">Evidence</a><a href="#os-economics" data-os-section="os-economics">Economics</a><a href="#os-validation" data-os-section="os-validation">Validation</a><a href="#os-ecosystem" data-os-section="os-ecosystem">Contribute / Compete</a></div></div></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
-<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260903-multifidelity" defer></script>
+<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260903-evidence" defer></script>
 </body>
 </html>
