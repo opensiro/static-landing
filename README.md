@@ -4,7 +4,7 @@ Static multi-page site for **opensiro** — the company building the toolchain f
 organizations that compile, and the ARCTIC reasoning benchmark.
 
 The design uses Departure Mono, warm off-white backgrounds, sharp corners,
-hairline dividers, and blue interactive accents. The home page explains the
+hairline dividers, and pale blue artwork with darker blue link accents. The home page explains the
 work in plain language; each product has its own animated pixel mark.
 Built as plain HTML/CSS/JS, with no runtime dependencies.
 
@@ -58,7 +58,8 @@ opensiro-web/
 | `--ink`      | `#18181b`                          | zinc-900 text                  |
 | `--hairline` | `rgba(0,0,0,.10)`                  | section/button dividers        |
 | `--tint`     | `rgba(0,0,0,.04)`                  | 4% section wash                |
-| `--accent`   | `#2f6df6`                          | marks, focus, ARCTIC hover     |
+| `--accent`   | `#9bafd2`                          | pale blue marks, ARCTIC hover  |
+| `--accent-ink` | `#49658e`                        | readable links and focus       |
 | `--font`     | `'DepartureMono', monospace`       | one typeface, everywhere       |
 | `--maxw`     | `1200px`                           | content width                  |
 
@@ -94,7 +95,7 @@ opensiro-web/
   view transitions still restore the garden. Run the dependency-free lifecycle
   checks with `node tests/garden-sync.test.cjs`.
 - The ARCTIC preview and research hero end in a black mountain silhouette.
-  Hovering the section or focusing a link inside it turns the mountains blue.
+  Hovering the section or focusing a link inside it turns the mountains pale blue.
 - Each product has a separate locally served SVG mark with a small animation.
 - Research includes Stack push/pop, Pills, and Tic-tac-toe training pairs, animated once with replay
   controls, and two task-derived hero assets. The diagrams use the source grids
