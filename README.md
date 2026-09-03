@@ -18,12 +18,17 @@ Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires
 ```
 opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
-├── products.html    # vsmlite + opensiro detail
+├── products.html    # vsmlite + opensiro overview with Read full link
+├── opensiro.html    # full harness-development article, evidence + budget calculator
+├── products.css     # product hero and OpenSiro article layouts
+├── products.js      # OpenSiro article calculator and capability examples
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
 ├── app.js           # active nav, accessible mobile drawer
 ├── vines.js         # continuous central vine growth and viewport tracking
+├── shared-hero.css  # aligned home/product heroes and copy transitions
+├── hero-transition.js # native page transition guards for the shared heroes
 ├── assets/
 │   ├── DepartureMono-Regular.woff2
 │   ├── DepartureMono-Regular.woff
@@ -70,7 +75,7 @@ opensiro-web/
 
 - `.vine-static` preserves the original bitmap vines along the home and product
   heroes. A smaller, muted `.vine-center` garden grows continuously behind the
-  home copy. Tendrils gently explore before curling; sweeping, spring-like,
+  home and product copy. Tendrils gently explore before curling; sweeping, spring-like,
   and short flowering growth alternate. Stems keep their own direction with
   smooth joins. New randomized bends and flowers attach to existing stems; the
   viewport moves at a constant speed after the initial growth, letting older
@@ -79,6 +84,15 @@ opensiro-web/
   are removed to keep the document bounded. Pause/Resume controls the garden;
   it also pauses offscreen and in hidden tabs. Reduced motion shows a completed
   still ornament; without JavaScript only the original static vines remain.
+- Home and Products share the same hero layout. The garden keeps the visible
+  branch recipes, growth position, and Pause state in per-tab session storage,
+  including when returning through browser history. Only the visible sections
+  are saved; reconstruction does not replay the full session. Storage failure
+  falls back to a fresh local garden. Native cross-document view transitions
+  change the hero copy in 200 ms while keeping the garden opaque. Deep links,
+  scrolled pages, and reduced motion use ordinary navigation. Browsers without
+  view transitions still restore the garden. Run the dependency-free lifecycle
+  checks with `node tests/garden-sync.test.cjs`.
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains blue.
 - Each product has a separate locally served SVG mark with a small animation.

@@ -20,7 +20,8 @@
   // Match the average upward growth so the tips stay in frame indefinitely.
   var cameraSpeed = 112 / (profiles.reduce(function (sum, profile) { return sum + profile.duration; }, 0) / profiles.length);
   var time = 0, camera = 0, last = null, frame = null;
-  var inView = false, paused = false, stillPrepared = false;
+  var inView = false, paused = false, stillPrepared = false, leaving = false, restoring = false;
+  var storageKey = 'opensiro.hero-garden.v1';
   var shoots = [-1, 1].map(function (side) {
     return { side: side, tip: [440, 500], heading: [side * .7, -.7], visibleTip: [440, 500], next: side < 0 ? 100 : 750, count: 0, profileOffset: side < 0 ? 0 : 1 };
   });
@@ -67,12 +68,12 @@
     reveal(node('path', { 'class': 'vine-leaf', d: 'M0 0h6v-4h8v-4h8v-8h4v-4H14v4H8v8H2v4H0Z' }, anchor), at);
   }
   function flower(chunk, point, at) {
-    var scale = chunk.profile.name === 'flowering' ? rand(.5, .7) : rand(.55, .85);
+    var scale = chunk.recipe.flowerScale;
     var anchor = node('g', { 'class': 'vine-flower', transform: 'translate(' + point.join(' ') + ') scale(' + scale.toFixed(2) + ')' }, chunk.node);
     chunk.top = Math.min(chunk.top, point[1] - 45);
     leaf(chunk.node, point, 1, at + 80);
     leaf(chunk.node, point, -1, at + 240);
-    var angle = rand(0, 60);
+    var angle = chunk.recipe.flowerAngle;
     for (var i = 0; i < 6; i++) {
       var turn = node('g', { transform: 'rotate(' + (angle + i * 60) + ')' }, anchor);
       reveal(node('path', { 'class': 'vine-petal', d: 'M-3-3h6v-4h4v-10H3v-4H-3v4H-7v10h4Z' }, turn), at + 220 + i * 45);
@@ -82,9 +83,8 @@
   }
   function settle(seeker, at) {
     var base = seeker.tip;
-    var profile = seeker.chunk.profile;
-    var radius = rand(profile.radius[0], profile.radius[1]);
-    var turns = rand(profile.turns[0], profile.turns[1]);
+    var radius = seeker.chunk.recipe.radius;
+    var turns = seeker.chunk.recipe.turns;
     var curve = path(seeker.chunk, function (t) {
       var angle = Math.PI + t * Math.PI * turns;
       var r = radius * (1 - .78 * t);
@@ -128,27 +128,40 @@
     var curve = [start, [start[0] + shoot.heading[0] * handle, start[1] + shoot.heading[1] * handle], outgoing, end];
     var tangentLength = Math.hypot(end[0] - outgoing[0], end[1] - outgoing[1]);
     shoot.heading = [(end[0] - outgoing[0]) / tangentLength, (end[1] - outgoing[1]) / tangentLength];
+    makeChunk({ curve: curve, began: shoot.next, side: side,
+      profile: (shoot.count + shoot.profileOffset) % profiles.length,
+      curlSide: shoot.count % 2 ? -side : side,
+      bloom: Math.floor(rand(0, 3)), phase: rand(0, Math.PI * 2),
+      radius: rand(profile.radius[0], profile.radius[1]), turns: rand(profile.turns[0], profile.turns[1]),
+      flowerScale: profile.name === 'flowering' ? rand(.5, .7) : rand(.55, .85), flowerAngle: rand(0, 60)
+    }, shoot);
+    shoot.tip = end;
+    shoot.next += profile.duration;
+    shoot.count++;
+  }
+  // Each visible section has a small, self-contained recipe. Restoring it does
+  // not replay the entire history or store SVG markup in session storage.
+  function makeChunk(recipe, shoot) {
+    var curve = recipe.curve, began = recipe.began, profile = profiles[recipe.profile];
     var duration = profile.duration;
-    var began = shoot.next;
-    var chunk = { node: node('g', { 'class': 'vine-section', 'data-vine-profile': profile.name }, svg), top: end[1], profile: profile };
-    chunk.node.style.setProperty('--garden-bloom', ['#9bafd2', '#a5abc9', '#94b3bd'][Math.floor(rand(0, 3))]);
+    var chunk = { node: node('g', { 'class': 'vine-section', 'data-vine-profile': profile.name }, svg),
+      top: curve[3][1], profile: profile, recipe: recipe };
+    chunk.node.style.setProperty('--garden-bloom', ['#9bafd2', '#a5abc9', '#94b3bd'][recipe.bloom]);
     chunks.push(chunk);
     path(chunk, function (t) { return bezier(curve, t); }, began, duration, shoot);
     var junction = bezier(curve, .63).map(snap);
-    var curlSide = shoot.count % 2 ? -side : side;
-    seekers.push({ chunk: chunk, anchor: junction, side: curlSide, start: began + duration * .63,
-      phase: rand(0, Math.PI * 2),
+    seekers.push({ chunk: chunk, anchor: junction, side: recipe.curlSide, start: began + duration * .63,
+      phase: recipe.phase,
       node: node('path', { 'class': 'vine-stem vine-feeler', 'data-seeking': 'searching', visibility: 'hidden', d: '' }, chunk.node),
       bud: node('rect', { 'class': 'vine-tip', width: 3, height: 3, visibility: 'hidden' }, chunk.node) });
     leaf(chunk.node, bezier(curve, .36).map(snap), shoot.side, began + duration * .36 + 120);
-    shoot.tip = end;
-    shoot.next += duration;
-    shoot.count++;
   }
   function paint(now, instant) {
     shoots.forEach(function (shoot) {
       while (now >= shoot.next) grow(shoot);
     });
+    // Include newly curled tendrils in this frame, so a restored frame is exact.
+    seek(now, instant);
     drawings = drawings.filter(function (drawing) {
       if (now < drawing.start) return true;
       var progress = Math.min(1, (now - drawing.start) / drawing.duration);
@@ -159,11 +172,14 @@
       if (drawing.shoot) drawing.shoot.visibleTip = drawing.points[count - 1];
       return progress < 1;
     });
-    seek(now, instant);
     reveals = reveals.filter(function (part) {
       if (part.at > now) return true;
       part.node.removeAttribute('visibility');
-      if (!instant) part.node.classList.add('vine-unfolding');
+      if (!instant && (!restoring || now - part.at < 700)) {
+        part.node.classList.add('vine-unfolding');
+        // Continue a half-open flower from the same point after navigation.
+        if (restoring) part.node.style.animationDelay = ((part.at - now) / 1000) + 's';
+      }
       return false;
     });
   }
@@ -189,7 +205,7 @@
     if (frame !== null) cancelAnimationFrame(frame);
     frame = null;
     last = null;
-    var playing = inView && !document.hidden && !paused && !reduced.matches;
+    var playing = inView && !document.hidden && !paused && !reduced.matches && !leaving;
     hero.classList.toggle('vines-in-view', playing);
     controls.hidden = reduced.matches;
     pause.textContent = paused ? 'Resume' : 'Pause';
@@ -209,8 +225,64 @@
       reveals = [];
     } else if (playing) { frame = requestAnimationFrame(tick); }
   }
+  function save() {
+    try {
+      sessionStorage.setItem(storageKey, JSON.stringify({ version: 1, time: time, paused: paused,
+        shoots: shoots, chunks: chunks.map(function (chunk) { return chunk.recipe; }) }));
+    } catch (_) { /* Storage can be unavailable; the garden still runs locally. */ }
+  }
+  function validSnapshot(state) {
+    function number(n) { return typeof n === 'number' && Number.isFinite(n) && Math.abs(n) < 1e12; }
+    function point(p) { return Array.isArray(p) && p.length === 2 && p.every(number); }
+    return state && state.version === 1 && number(state.time) && state.time >= 0 &&
+      typeof state.paused === 'boolean' && Array.isArray(state.shoots) && state.shoots.length === 2 &&
+      state.shoots.every(function (shoot, i) {
+        return shoot.side === (i ? 1 : -1) && shoot.profileOffset === i && point(shoot.tip) &&
+          point(shoot.heading) && point(shoot.visibleTip) && number(shoot.next) && shoot.next >= state.time &&
+          Number.isInteger(shoot.count) && shoot.count >= 0;
+      }) && Array.isArray(state.chunks) && state.chunks.length <= 40 && state.chunks.every(function (chunk) {
+        return chunk && Array.isArray(chunk.curve) && chunk.curve.length === 4 && chunk.curve.every(point) &&
+          number(chunk.began) && chunk.began >= 0 && chunk.began <= state.time &&
+          (chunk.side === -1 || chunk.side === 1) && (chunk.curlSide === -1 || chunk.curlSide === 1) &&
+          Number.isInteger(chunk.profile) && chunk.profile >= 0 && chunk.profile < profiles.length &&
+          Number.isInteger(chunk.bloom) && chunk.bloom >= 0 && chunk.bloom < 3 &&
+          ['phase', 'radius', 'turns', 'flowerScale', 'flowerAngle'].every(function (key) { return number(chunk[key]); });
+      });
+  }
+  function restore() {
+    var state;
+    try { state = JSON.parse(sessionStorage.getItem(storageKey)); } catch (_) { return; }
+    if (!validSnapshot(state)) return;
+    svg.replaceChildren();
+    chunks = []; drawings = []; reveals = []; seekers = [];
+    time = state.time; paused = state.paused; shoots = state.shoots;
+    state.chunks.forEach(function (recipe) { makeChunk(recipe, shoots[recipe.side < 0 ? 0 : 1]); });
+    restoring = true;
+    paint(time, false);
+    restoring = false;
+    camera = -Math.max(0, time - 13000) * cameraSpeed;
+    svg.setAttribute('viewBox', '0 ' + camera.toFixed(2) + ' ' + width + ' ' + height);
+    stillPrepared = false;
+    trim();
+  }
+  function depart() {
+    leaving = true;
+    sync();
+    save();
+  }
+  function arrive() {
+    // A cached document can hold an older garden than the page we just left.
+    if (leaving) restore();
+    leaving = false;
+    sync();
+  }
+  restore();
   hero.classList.add('vines-ready');
-  pause.addEventListener('click', function () { paused = !paused; sync(); });
+  pause.addEventListener('click', function () { paused = !paused; sync(); save(); });
+  window.addEventListener('pageswap', depart);
+  window.addEventListener('pagehide', depart);
+  window.addEventListener('pageshow', arrive);
+  window.addEventListener('pagereveal', arrive);
   document.addEventListener('visibilitychange', sync);
   reduced.addEventListener('change', sync);
   if ('IntersectionObserver' in window) {
