@@ -100,6 +100,8 @@ opensiro-web/
 - The full OpenSiro article presents a proposed multi-fidelity CI workflow:
   Hugging Face harness commits pass through open or hidden generated benchmarks,
   a fixed five-model SLM matrix, a consensus gate, and frontier release validation.
+  Published evidence from PACE, Life-Harness, Better Harnesses, and HarnessDev
+  separates support for cheap screening from the unvalidated consensus hypothesis.
   Its calculator contrasts frontier-first evaluation with screened CI. Open-source
   benchmark contributions and sealed competition suites share one capability
   taxonomy. The previous evidence-heavy page is preserved under
