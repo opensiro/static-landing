@@ -97,6 +97,9 @@ opensiro-web/
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains pale blue.
 - Each product has a separate locally served SVG mark with a small animation.
+- The full OpenSiro article uses a fixed bottom table of contents. Its pale-blue
+  glider follows the visible section; on mobile, the links scroll horizontally
+  to keep the active section in view.
 - Research includes Stack push/pop, Pills, and Tic-tac-toe training pairs, animated once with replay
   controls, and two task-derived hero assets. The diagrams use the source grids
   and palette. See `assets/arctic/README.md` for source, attribution, and rebuilding.
