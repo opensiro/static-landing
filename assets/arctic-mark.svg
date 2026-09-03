@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="#18181b" shape-rendering="crispEdges">
   <style>@keyframes light{0%,100%{opacity:1}50%{opacity:.3}}.core{animation:light 4s steps(3,end) infinite}@media(prefers-reduced-motion:reduce){.core{animation:none}}</style>
   <path d="M34 10h12v8H34zM26 18h8v8h-8zM46 18h8v8h-8zM18 26h8v8h-8zM54 26h8v8h-8zM10 34h8v12h-8zM62 34h8v12h-8zM18 46h8v8h-8zM54 46h8v8h-8zM26 54h8v8h-8zM46 54h8v8h-8zM34 62h12v8H34z"/>
-  <path class="core" d="M34 26h12v8h8v12h-8v8H34v-8h-8V34h8z" fill="#2f6df6"/>
+  <path class="core" d="M34 26h12v8h8v12h-8v8H34v-8h-8V34h8z" fill="#9bafd2"/>
 </svg>
