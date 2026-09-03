@@ -19,9 +19,9 @@ Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires
 opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
 ├── products.html    # vsmlite + opensiro overview with Read full link
-├── opensiro.html    # full harness-development article, evidence + budget calculator
+├── opensiro.html    # multi-fidelity harness CI, benchmark tracks + economics
 ├── products.css     # product hero and OpenSiro article layouts
-├── products.js      # OpenSiro article calculator and capability examples
+├── products.js      # OpenSiro navigation, pipeline replay + CI economics
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
@@ -97,9 +97,15 @@ opensiro-web/
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains pale blue.
 - Each product has a separate locally served SVG mark with a small animation.
-- The full OpenSiro article uses a fixed bottom table of contents. Its pale-blue
-  glider follows the visible section; on mobile, the links scroll horizontally
-  to keep the active section in view.
+- The full OpenSiro article presents a proposed multi-fidelity CI workflow:
+  Hugging Face harness commits pass through open or hidden generated benchmarks,
+  a fixed five-model SLM matrix, a consensus gate, and frontier release validation.
+  Its calculator contrasts frontier-first evaluation with screened CI. Open-source
+  benchmark contributions and sealed competition suites share one capability
+  taxonomy. The previous evidence-heavy page is preserved under
+  `.archive/opensiro-harness-evaluation/`.
+- The article uses a fixed bottom table of contents. Its pale-blue glider follows
+  the visible section; on mobile, links scroll to keep the active section in view.
 - Research includes Stack push/pop, Pills, and Tic-tac-toe training pairs, animated once with replay
   controls, and two task-derived hero assets. The diagrams use the source grids
   and palette. See `assets/arctic/README.md` for source, attribution, and rebuilding.
@@ -115,6 +121,7 @@ opensiro-web/
 |-------------------|-----------------|-------------------------------------------|
 | `/`               | `index.html`    | Hero, introduction, three-step approach, products & ARCTIC |
 | `/products.html`  | `products.html` | vsmlite + opensiro detail blocks            |
+| `/opensiro.html`  | `opensiro.html` | Multi-fidelity harness CI, benchmark tracks, economics |
 | `/research.html`  | `research.html` | ARCTIC detail + stats + CTA               |
 
 Each page shares the same sticky header (logo + Products/Research nav), footer
