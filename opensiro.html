@@ -22,11 +22,11 @@
 <link rel="canonical" href="https://opensiro.com/opensiro.html">
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
-<link rel="stylesheet" href="products.css?v=20260903-pale-blue">
+<link rel="stylesheet" href="products.css?v=20260903-bottom-toc">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
 </head>
-<body>
+<body class="os-article-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- ============================================================ HEADER -->
@@ -63,7 +63,6 @@
         <p class="os-note">Target model classes, not a claim that small models can stand in for frontier models.</p>
       </aside>
     </div>
-    <nav class="os-section-nav" aria-label="OpenSiro section"><a href="#os-loops">The workflow</a><a href="#os-comparison">Token budget</a><a href="#os-taxonomy">Capabilities</a><a href="#os-scenarios">100 ideas</a><a href="#os-research">Research</a><a href="#os-evidence">Evidence &amp; sources</a></nav>
     <p class="os-note" id="os-billion-note">“A billion tokens” is rhetorical upper-bound framing informed by large published agentic evaluations, not a universal per-run requirement. <a href="https://www.tbench.ai/leaderboard/terminal-bench/2.1">Terminal-Bench reference ↗</a></p>
   </div>
 </section>
@@ -274,6 +273,24 @@
 
 </main>
 
+<nav class="os-section-nav" aria-label="OpenSiro table of contents">
+  <div class="os-section-nav-track">
+    <span class="os-section-nav-label">Contents</span>
+    <div class="os-section-nav-scroll">
+      <div class="os-section-nav-links">
+        <span class="os-section-glider" aria-hidden="true"></span>
+        <a href="#os-loops" data-os-section="os-loops">Workflow</a>
+        <a href="#os-comparison" data-os-section="os-comparison">Token budget</a>
+        <a href="#os-taxonomy" data-os-section="os-taxonomy">Capabilities</a>
+        <a href="#os-scenarios" data-os-section="os-scenarios">100 ideas</a>
+        <a href="#os-research" data-os-section="os-research">Research</a>
+        <a href="#os-validation" data-os-section="os-validation">Validation</a>
+        <a href="#os-evidence" data-os-section="os-evidence">Evidence</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <!-- ============================================================ FOOTER -->
 <footer class="site-footer">
   <div class="wrap">
@@ -300,6 +317,6 @@
 </footer>
 
 <script src="app.js?v=20260903-mobile" defer></script>
-<script src="products.js?v=20260903-harness" defer></script>
+<script src="products.js?v=20260903-bottom-toc" defer></script>
 </body>
 </html>

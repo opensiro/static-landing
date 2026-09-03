@@ -1,6 +1,53 @@
 /* Interactive examples only. No benchmark execution or remote requests. */
 (function () {
   'use strict';
+
+  var sectionNav = document.querySelector('.os-section-nav');
+  if (sectionNav) {
+    var sectionScroll = sectionNav.querySelector('.os-section-nav-scroll');
+    var sectionLinks = Array.prototype.slice.call(sectionNav.querySelectorAll('[data-os-section]'));
+    var glider = sectionNav.querySelector('.os-section-glider');
+    var sections = sectionLinks.map(function (link) { return document.getElementById(link.dataset.osSection); });
+    var activeIndex = -1;
+    var scrollFrame = null;
+
+    function positionGlider(index, reveal) {
+      var link = sectionLinks[index];
+      if (!link || !glider) return;
+      glider.style.width = link.offsetWidth + 'px';
+      glider.style.setProperty('--os-glider-x', link.offsetLeft + 'px');
+      if (reveal && sectionScroll) link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    function setActive(index, reveal) {
+      if (index === activeIndex) return;
+      activeIndex = index;
+      sectionLinks.forEach(function (link, i) {
+        link.classList.toggle('is-active', i === index);
+        if (i === index) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      positionGlider(index, reveal);
+    }
+    function syncSection() {
+      scrollFrame = null;
+      var marker = window.innerHeight * .36;
+      var index = 0;
+      sections.forEach(function (section, i) {
+        if (section && section.getBoundingClientRect().top <= marker) index = i;
+      });
+      setActive(index, true);
+    }
+    sectionLinks.forEach(function (link, index) {
+      link.addEventListener('click', function () { setActive(index, false); });
+    });
+    window.addEventListener('scroll', function () {
+      if (scrollFrame === null) scrollFrame = window.requestAnimationFrame(syncSection);
+    }, { passive: true });
+    window.addEventListener('resize', function () { positionGlider(activeIndex, false); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { positionGlider(activeIndex, false); });
+    syncSection();
+  }
+
   var controls = document.getElementById('os-scenario-controls');
   if (!controls) return;
 

@@ -30,8 +30,16 @@
 .os-audience p{font-size:11px}
 .os-audience .os-runtime{font-size:14px;color:var(--ink);line-height:2}
 .os-runtime span{color:var(--accent-ink)}
-.os-section-nav{display:flex;flex-wrap:wrap;gap:12px 26px;border-top:1px solid var(--hairline-2);padding:24px 0 8px;margin-top:36px;font-size:10px}
-.os-section-nav a{padding:6px 0}
+.os-article-page{padding-bottom:84px}
+.os-section-nav{position:fixed;z-index:55;left:50%;bottom:14px;width:min(calc(100% - 32px),1120px);transform:translateX(-50%);font-size:10px;filter:drop-shadow(0 8px 18px rgba(24,24,27,.10))}
+.os-section-nav-track{display:flex;align-items:center;min-height:52px;padding:6px;background:rgba(250,249,246,.96);border:1px solid var(--hairline-2);backdrop-filter:blur(12px)}
+.os-section-nav-label{padding:0 18px 0 12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);white-space:nowrap}
+.os-section-nav-scroll{min-width:0;flex:1;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}
+.os-section-nav-scroll::-webkit-scrollbar{display:none}
+.os-section-nav-links{position:relative;display:flex;width:max-content;min-width:100%;align-items:stretch}
+.os-section-nav a{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;color:var(--muted);white-space:nowrap;transition:color .25s ease}
+.os-section-nav a.is-active{color:var(--ink)}
+.os-section-glider{position:absolute;z-index:0;left:0;top:0;height:38px;width:0;background:rgba(155,175,210,.24);border:1px solid var(--accent);transform:translateX(var(--os-glider-x,0));transition:transform .45s cubic-bezier(.22,1,.36,1),width .45s cubic-bezier(.22,1,.36,1);pointer-events:none}
 .os-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:28px}
 .os-section-heading h2{font-size:clamp(24px,3vw,36px);line-height:1.35;letter-spacing:-.045em;margin:0}
 .os-section-heading .os-kicker{margin-bottom:18px}
@@ -269,7 +277,11 @@
   .os-savings-grid p{max-width:none}
   .os-block .os-equation{font-size:12px}
   .os-equation span{padding:0 3px}
-  .os-section-nav{gap:8px 18px}
+  .os-section-nav{bottom:10px;width:calc(100% - 20px)}
+  .os-section-nav-track{min-height:50px;padding:5px}
+  .os-section-nav-label{display:none}
+  .os-section-nav a{min-height:38px;padding:0 13px;font-size:9px}
+  .os-section-glider{height:38px}
   .os-task-example{padding:24px 20px}
   .os-task-example h3{font-size:20px}
   .os-diagnostic{gap:16px}
@@ -283,3 +295,5 @@
   .os-fixed-model{padding:24px 20px}
   .os-final-cta h2{font-size:23px}
 }
+
+@media(prefers-reduced-motion:reduce){.os-section-glider{transition:none}}
