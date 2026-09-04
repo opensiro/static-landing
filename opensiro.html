@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://opensiro.com/opensiro.html">
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
-<link rel="stylesheet" href="products.css?v=20260904-cross-flash">
+<link rel="stylesheet" href="products.css?v=20260904-flash-deltas">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png">
 </head>
 <body class="os-article-page">
@@ -48,13 +48,13 @@
         <header><div><span class="os-badge estimate">Estimated</span><p>OpenSiro / heterogeneous matrix</p><h3><span class="os-term"><button class="os-term-trigger" type="button" aria-describedby="term-flash">5× Cross-Flash<sup aria-hidden="true">?</sup></button><span class="os-tooltip" id="term-flash" role="tooltip" hidden>Five low-cost model families run concurrently with the same tasks and budget.</span></span></h3></div><span class="os-panel-tag">cheap evidence</span></header>
         <div class="os-run-origin"><span><code>b42e810</code> → OpenSiro Sandbox</span><strong>Experiment harness run</strong><small>candidate vs frozen baseline</small><em data-flash-run-state>queued</em></div>
         <div class="os-sandbox">
-          <div class="os-sandbox-head"><span>OpenSiro Sandbox</span><strong>20 terminal-bench-like tasks</strong><small>five model lanes run concurrently</small></div>
+          <div class="os-sandbox-head"><span>OpenSiro Sandbox</span><strong>20 terminal-bench-like tasks</strong><small>five concurrent lanes · cost / illustrative delta</small></div>
           <div class="os-model-lanes" aria-label="Five heterogeneous Flash model families">
-            <div class="os-model-lane" data-input-rate="0.1" data-output-rate="0.4"><span><a href="https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-5-flash" target="_blank" rel="noopener"><b>Qwen Flash</b></a><small>Qwen3.5 Flash · Alibaba</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
-            <div class="os-model-lane" data-input-rate="0" data-output-rate="0"><span><a href="https://docs.z.ai/guides/overview/pricing" target="_blank" rel="noopener"><b>GLM Flash</b></a><small>GLM-4.7-Flash · Z.ai</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>Free</strong><small>API tariff</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.15" data-output-rate="0.6"><span><a href="https://docs.mistral.ai/inference/pricing" target="_blank" rel="noopener"><b>Mistral Small</b></a><small>Mistral Small 4 · Mistral</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.3" data-output-rate="2.5"><span><a href="https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash" target="_blank" rel="noopener"><b>Gemini Flash</b></a><small>Gemini 2.5 Flash · Google</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.44" data-output-rate="1.32"><span><a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" rel="noopener"><b>DeepSeek Flash</b></a><small>DeepSeek-V4-Flash · 0731</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
+            <div class="os-model-lane" data-input-rate="0.1" data-output-rate="0.4" data-delta="7"><span><a href="https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-5-flash" target="_blank" rel="noopener"><b>Qwen Flash</b></a><small>Qwen3.5 Flash · Alibaba</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><b data-model-delta>—</b></em></div>
+            <div class="os-model-lane" data-input-rate="0" data-output-rate="0" data-delta="5"><span><a href="https://docs.z.ai/guides/overview/pricing" target="_blank" rel="noopener"><b>GLM Flash</b></a><small>GLM-4.7-Flash · Z.ai</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>Free</strong><b data-model-delta>—</b></em></div>
+            <div class="os-model-lane" data-input-rate="0.15" data-output-rate="0.6" data-delta="9"><span><a href="https://docs.mistral.ai/inference/pricing" target="_blank" rel="noopener"><b>Mistral Small</b></a><small>Mistral Small 4 · Mistral</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><b data-model-delta>—</b></em></div>
+            <div class="os-model-lane" data-input-rate="0.3" data-output-rate="2.5" data-delta="4"><span><a href="https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash" target="_blank" rel="noopener"><b>Gemini Flash</b></a><small>Gemini 2.5 Flash · Google</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><b data-model-delta>—</b></em></div>
+            <div class="os-model-lane" data-input-rate="0.44" data-output-rate="1.32" data-delta="6"><span><a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" rel="noopener"><b>DeepSeek Flash</b></a><small>DeepSeek-V4-Flash · 0731</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><b data-model-delta>—</b></em></div>
           </div>
         </div>
         <div class="os-live-metrics">
@@ -110,6 +110,6 @@
 
 <nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-overview" data-os-section="os-overview">Overview</a><a href="#os-economics" data-os-section="os-economics">Cost</a><a href="#os-workflow" data-os-section="os-workflow">Workflow</a><a href="#os-promotion" data-os-section="os-promotion">Promotion</a><a href="#os-scope" data-os-section="os-scope">Scope</a></div></div></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
-<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260904-cross-flash" defer></script>
+<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260904-flash-deltas" defer></script>
 </body>
 </html>

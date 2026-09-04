@@ -128,8 +128,12 @@
 
       modelBars.forEach(function (bar, index) {
         bar.style.width = (flashProgress * 100).toFixed(2) + '%';
-        var modelCostMeter = modelLanes[index].querySelector('[data-model-cost]');
+        var modelLane = modelLanes[index];
+        var modelCostMeter = modelLane.querySelector('[data-model-cost]');
+        var modelDeltaMeter = modelLane.querySelector('[data-model-delta]');
         setText(modelCostMeter, modelCosts[index] === 0 ? 'Free' : money(modelCosts[index] * flashProgress));
+        setText(modelDeltaMeter, flashProgress < 1 ? '—' : '+' + modelLane.dataset.delta + ' pp');
+        modelLane.classList.toggle('is-passed', flashProgress >= 1);
       });
       llmBar.style.width = (frontierProgress * 100).toFixed(2) + '%';
       llmPercent.textContent = Math.round(frontierProgress * 100) + '%';
