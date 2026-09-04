@@ -1,0 +1,48 @@
+/* Shared composition for the home and product pages. */
+.home-hero{border-bottom:1px solid var(--hairline)}
+.home-hero .hero-inner{width:100%}
+.home-hero .eyebrow{min-height:16px;line-height:16px}
+.home-hero h1{margin-top:0;min-height:2.28em}
+.hero-title-line{display:block;white-space:nowrap}
+.home-hero .lede{min-height:3.7em;margin-top:0;margin-bottom:0}
+.home-hero .hero-cta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,420px);margin-left:auto;margin-right:auto;gap:10px}
+.home-hero .hero-cta .btn{justify-content:center;white-space:nowrap}
+.home-hero .hero-foot{min-height:32px}
+.home-hero .vine-controls{min-height:32px}
+
+@media(max-width:540px){
+  .home-hero h1{font-size:clamp(21px,6.7vw,32px);letter-spacing:-.055em}
+  .home-hero .lede{min-height:7.6em}
+  .home-hero .hero-cta .btn{padding-left:10px;padding-right:10px;gap:6px}
+}
+
+/* Native page navigation preserves normal links, history, and anchor behavior.
+   Only the copy crossfades; the restored garden is shown at full opacity. */
+@view-transition{navigation:auto}
+.site-header{view-transition-name:hero-header}
+.home-hero .vine-left{view-transition-name:hero-vine-left}
+.home-hero .vine-right{view-transition-name:hero-vine-right}
+.home-hero .hero-garden{view-transition-name:hero-garden}
+.home-hero .hero-logo{view-transition-name:hero-mascot}
+.home-hero .vine-controls{view-transition-name:hero-playback}
+.home-hero .eyebrow{view-transition-name:hero-eyebrow}
+.home-hero h1{view-transition-name:hero-title}
+.home-hero .lede{view-transition-name:hero-description}
+.home-hero .hero-cta{view-transition-name:hero-actions}
+.home-hero .hero-foot{view-transition-name:hero-foot}
+.home-hero .hero-coordinate{view-transition-name:hero-coordinate}
+::view-transition-group(*){animation:none}
+::view-transition-old(*){animation:none;opacity:0}
+::view-transition-new(*){animation:none;opacity:1;mix-blend-mode:normal}
+::view-transition-old(hero-eyebrow),::view-transition-old(hero-title),
+::view-transition-old(hero-description),::view-transition-old(hero-actions),
+::view-transition-old(hero-foot),::view-transition-old(hero-coordinate){animation:hero-copy-out 100ms ease-out both}
+::view-transition-new(hero-eyebrow),::view-transition-new(hero-title),
+::view-transition-new(hero-description),::view-transition-new(hero-actions),
+::view-transition-new(hero-foot),::view-transition-new(hero-coordinate){animation:hero-copy-in 100ms 100ms ease-in both}
+@keyframes hero-copy-out{from{opacity:1}to{opacity:0}}
+@keyframes hero-copy-in{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+  ::view-transition-old(*),::view-transition-new(*){animation:none!important}
+}

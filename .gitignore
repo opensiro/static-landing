@@ -17,3 +17,6 @@ desktop.ini
 
 # Kilo
 .kilo/
+
+# Local drafts and validation output
+/work/

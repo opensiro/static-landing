@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="#18181b" shape-rendering="crispEdges">
+  <style>@keyframes scan{0%,100%{opacity:1}50%{opacity:.25}}.signal{animation:scan 3s steps(2,end) infinite}@media(prefers-reduced-motion:reduce){.signal{animation:none}}</style>
+  <path d="M10 16h8v48h-8zM18 16h12v4H18zM18 60h12v4H18zM62 16h8v48h-8zM50 16h12v4H50zM50 60h12v4H50zM26 40h8v12h-8zM38 28h8v24h-8zM50 36h8v16h-8z"/>
+  <path class="signal" d="M38 16h8v8h-8z" fill="#9bafd2"/>
+</svg>
