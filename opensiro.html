@@ -106,44 +106,9 @@
   <div class="os-benchmark-surfaces"><header><span>Evaluation surfaces</span><strong>Open → private → sealed</strong></header><article><span>01 / Open</span><h3>Development</h3><p>Public tasks.</p></article><article><span>02 / Hidden</span><h3>CI</h3><p>Private held-out tests.</p></article><article><span>03 / Sealed</span><h3>Competition</h3><p>Fixed final benchmark.</p></article></div>
 </div></section>
 
-<section class="os-section os-tint" id="os-record" aria-labelledby="record-title"><div class="wrap">
-  <div class="os-heading"><p class="os-kicker">Experiment artifact</p><h2 id="record-title">Version the hypothesis<br><span>and its evidence.</span></h2></div>
-  <div class="os-record-grid"><pre aria-label="Minimum experiment record"><code><span>hypothesis:</span>
-  experimental harness mechanism improves target tasks
-
-<span>models:</span> [qwen_flash, glm_flash, mistral_small, gemini_flash, deepseek_flash]
-<span>tasks:</span>
-  distribution: terminal-bench-like
-  count: 20
-
-<span>metrics:</span>
-  baseline_score:
-  experimental_score:
-  delta:
-  token_cost:
-  runtime:
-  tool_calls:
-  failure_distribution:
-
-<span>cross_flash:</span>
-  positive_models:
-  median_delta:
-  mean_delta:
-  variance:
-  worst_model_delta:
-
-<span>decision:</span> promote | rework | reject</code></pre><aside><span>What survives the experiment</span><strong>capability hypothesis</strong><strong>fixed task distribution</strong><strong>Cross-Flash matrix</strong><strong>budgets + regressions</strong><strong>decision + rationale</strong></aside></div>
-</div></section>
-
-<section class="os-section" id="os-evidence" aria-labelledby="evidence-title"><div class="wrap">
-  <div class="os-heading"><p class="os-kicker">Evidence boundary</p><h2 id="evidence-title">A promising premise.<br><span>A hypothesis still to prove.</span></h2></div>
-  <div class="os-evidence-grid"><article><span class="os-badge measured">Published</span><h3>89.7%</h3><p>Best adapted small-model performance relative to the LLM baseline.</p></article><article><span class="os-badge measured">Published</span><h3>4%</h3><p>Cost relative to that LLM baseline.</p></article><article class="boundary"><span class="os-badge estimate">OpenSiro claim</span><h3>?</h3><p>Whether Cross-Flash agreement selects frontier-positive capabilities.</p></article></div>
-  <p class="os-note"><a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">Better Harnesses, Smaller Models ↗</a></p>
-  <div class="os-final"><p class="os-kicker">Frontier benchmark as a late gate</p><h2>Discard weak ideas cheaply.<br><span>Spend frontier runs on earned hypotheses.</span></h2><a class="btn" href="#os-overview">Back to overview <span aria-hidden="true">↑</span></a></div>
-</div></section>
 </main>
 
-<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-overview" data-os-section="os-overview">Overview</a><a href="#os-economics" data-os-section="os-economics">Cost</a><a href="#os-workflow" data-os-section="os-workflow">Workflow</a><a href="#os-promotion" data-os-section="os-promotion">Promotion</a><a href="#os-scope" data-os-section="os-scope">Scope</a><a href="#os-record" data-os-section="os-record">Record</a><a href="#os-evidence" data-os-section="os-evidence">Evidence</a></div></div></div></nav>
+<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-overview" data-os-section="os-overview">Overview</a><a href="#os-economics" data-os-section="os-economics">Cost</a><a href="#os-workflow" data-os-section="os-workflow">Workflow</a><a href="#os-promotion" data-os-section="os-promotion">Promotion</a><a href="#os-scope" data-os-section="os-scope">Scope</a></div></div></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260904-cross-flash" defer></script>
 </body>
