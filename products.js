@@ -1,4 +1,4 @@
-/* OpenSiro article navigation, pipeline replay, and illustrative economics. */
+/* OpenSiro article navigation, pipeline replay, and measured cost playback. */
 (function () {
   'use strict';
 
@@ -44,21 +44,82 @@
   window.addEventListener('scroll', closeTerm, { passive: true });
   window.addEventListener('resize', closeTerm);
 
-  var commitDemo = document.querySelector('.os-commit-demo');
-  if (commitDemo) {
+  var costSystem = document.querySelector('[data-cost-system]');
+  if (costSystem) {
     var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var demoVisible = false;
-    function syncCommitMotion() {
-      commitDemo.classList.toggle('is-animated', !motionPreference.matches);
-      commitDemo.classList.toggle('is-paused', !demoVisible || document.hidden);
+    var tokenMeter = costSystem.querySelector('[data-token-meter]');
+    var costMeter = costSystem.querySelector('[data-cost-meter]');
+    var llmPath = costSystem.querySelector('.os-cost-path-llm');
+    var slmPath = costSystem.querySelector('.os-cost-path-slm');
+    var deltaCells = Array.prototype.slice.call(costSystem.querySelectorAll('.os-delta-stack span'));
+    var measuredTokens = 735200000;
+    var measuredCost = 2059.19;
+    var playbackLength = 16000;
+    var playbackPause = 2600;
+    var playbackStart = performance.now();
+    var costVisible = false;
+    var costFrame = null;
+    var examples = [
+      { deltas: ['+7.2', '+3.8', '+5.1', '+1.9', '+4.4'], fail: false },
+      { deltas: ['+2.1', '−0.8', '+1.4', '−1.2', '+0.6'], fail: true },
+      { deltas: ['+4.6', '+2.8', '+3.3', '+1.1', '+2.4'], fail: false }
+    ];
+    var lastExample = -1;
+    var integerFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+    var moneyFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    function showExample(index) {
+      if (index === lastExample) return;
+      lastExample = index;
+      var example = examples[index];
+      deltaCells.forEach(function (cell, cellIndex) {
+        cell.textContent = example.deltas[cellIndex];
+        cell.classList.toggle('is-negative', example.deltas[cellIndex].charAt(0) === '−');
+      });
+      slmPath.classList.toggle('is-fail', example.fail);
     }
+
+    function setMeters(progress) {
+      var eased = 1 - Math.pow(1 - progress, 3);
+      tokenMeter.textContent = integerFormat.format(Math.round(measuredTokens * eased));
+      costMeter.textContent = '$' + moneyFormat.format(measuredCost * eased);
+      llmPath.style.setProperty('--meter-progress', (progress * 100).toFixed(2) + '%');
+    }
+
+    function drawCostPlayback(now) {
+      costFrame = null;
+      if (!costVisible || document.hidden) return;
+      if (motionPreference.matches) {
+        showExample(0);
+        setMeters(1);
+        return;
+      }
+      var elapsed = (now - playbackStart) % (playbackLength + playbackPause);
+      var progress = Math.min(elapsed / playbackLength, 1);
+      setMeters(progress);
+      showExample(Math.floor((now - playbackStart) / 5400) % examples.length);
+      costFrame = requestAnimationFrame(drawCostPlayback);
+    }
+
+    function syncCostMotion() {
+      costSystem.classList.add('is-active');
+      costSystem.classList.toggle('is-paused', !costVisible || document.hidden || motionPreference.matches);
+      if (costVisible && !document.hidden && costFrame === null) costFrame = requestAnimationFrame(drawCostPlayback);
+      if ((!costVisible || document.hidden) && costFrame !== null) {
+        cancelAnimationFrame(costFrame);
+        costFrame = null;
+      }
+    }
+
     new IntersectionObserver(function (entries) {
-      demoVisible = entries[0].isIntersecting;
-      syncCommitMotion();
-    }).observe(commitDemo);
-    document.addEventListener('visibilitychange', syncCommitMotion);
-    motionPreference.addEventListener('change', syncCommitMotion);
-    syncCommitMotion();
+      costVisible = entries[0].isIntersecting;
+      if (costVisible) playbackStart = performance.now();
+      syncCostMotion();
+    }, { threshold: .08 }).observe(costSystem);
+    document.addEventListener('visibilitychange', syncCostMotion);
+    motionPreference.addEventListener('change', syncCostMotion);
+    showExample(0);
+    setMeters(motionPreference.matches ? 1 : 0);
   }
 
   var nav = document.querySelector('.os-section-nav');
@@ -111,42 +172,4 @@
   if (replay) replay.addEventListener('click', runPipeline);
   runPipeline();
 
-  var controls = document.getElementById('os-cost-controls');
-  if (!controls) return;
-  var fullTokens = 735200000;
-  var matrixSize = 5;
-  var commits = document.getElementById('os-commits');
-  var tasks = document.getElementById('os-tasks');
-  var tokens = document.getElementById('os-tokens');
-  var promoted = document.getElementById('os-promoted');
-  var formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 3 });
-  function compact(value) {
-    if (value >= 1e9) return formatter.format(value / 1e9) + 'B';
-    if (value >= 1e6) return formatter.format(value / 1e6) + 'M';
-    if (value >= 1e3) return formatter.format(value / 1e3) + 'K';
-    return formatter.format(value);
-  }
-  function render() {
-    var commitCount = Number(commits.value);
-    var taskCount = Number(tasks.value);
-    var tokenCount = Number(tokens.value);
-    var promotedCount = Math.min(Number(promoted.value), commitCount);
-    promoted.max = commitCount;
-    if (Number(promoted.value) !== promotedCount) promoted.value = promotedCount;
-    var screening = commitCount * matrixSize * taskCount * tokenCount;
-    var frontier = promotedCount * fullTokens;
-    var baseline = commitCount * fullTokens;
-    var avoided = commitCount ? (commitCount - promotedCount) / commitCount * 100 : 0;
-    document.getElementById('os-commits-value').textContent = formatter.format(commitCount);
-    document.getElementById('os-tasks-value').textContent = formatter.format(taskCount);
-    document.getElementById('os-tokens-value').textContent = compact(tokenCount);
-    document.getElementById('os-promoted-value').textContent = formatter.format(promotedCount);
-    document.getElementById('os-baseline').textContent = compact(baseline);
-    document.getElementById('os-screened').textContent = compact(screening + frontier);
-    document.getElementById('os-screened-formula').textContent = compact(screening) + ' screening + ' + compact(frontier) + ' frontier';
-    document.getElementById('os-avoided').textContent = formatter.format(avoided) + '%';
-    document.getElementById('os-gate-copy').textContent = promotedCount + ' of ' + commitCount + ' commits promoted';
-  }
-  controls.addEventListener('input', render);
-  render();
 })();
