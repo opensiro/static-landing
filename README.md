@@ -10,7 +10,7 @@ Built as plain HTML/CSS/JS, with no runtime dependencies.
 
 ## Stack
 
-Plain static site — **no build step, no dependencies, no framework.** All fonts and mascot artwork are bundled locally and served from `assets/`.
+Plain static site — **no build step, no dependencies, no framework.** All fonts and mascot artwork are bundled locally and loaded from `assets/`.
 
 Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires Pillow:
 `uv run --no-project --with pillow python scripts/stabilize-mascot-gif.py`.
@@ -18,10 +18,10 @@ Runtime remains dependency-free. Regenerating the stabilized mascot GIF requires
 ```
 opensiro-web/
 ├── index.html       # landing — hero, mission, products & research previews
-├── products.html    # vsmlite + opensiro overview with Read full link
-├── opensiro.html    # multi-fidelity harness CI, benchmark tracks + economics
-├── products.css     # product hero and OpenSiro article layouts
-├── products.js      # OpenSiro navigation, pipeline replay + CI economics
+├── products.html    # vsmlite + opensiro overview
+├── opensiro.html    # Cross-Flash sandbox article and synchronized run playback
+├── products.css     # product hero and inline term styles
+├── products.js      # accessible inline term explanations
 ├── research.html    # ARCTIC detail + animated public training examples
 ├── research.js      # play on entry, pause offscreen, replay, reduced motion
 ├── globals.css      # tokens, @font-face, components (monochrome monospace)
@@ -47,6 +47,9 @@ opensiro-web/
 ├── scripts/
 │   ├── stabilize-mascot-gif.py
 │   └── build-arctic-assets.py # exact grid diagrams from public ARCTIC-0 pairs
+├── tests/
+│   ├── garden-sync.test.cjs
+│   └── static-site.test.cjs
 └── README.md
 ```
 
@@ -96,24 +99,9 @@ opensiro-web/
   checks with `node tests/garden-sync.test.cjs`.
 - The ARCTIC preview and research hero end in a black mountain silhouette.
   Hovering the section or focusing a link inside it turns the mountains pale blue.
-- Each product has a separate locally served SVG mark with a small animation.
-- The full OpenSiro article presents a proposed multi-fidelity CI workflow:
-  Hugging Face harness commits pass through open or hidden generated benchmarks,
-  a fixed five-model SLM matrix, a consensus gate, and frontier release validation.
-  Published evidence from PACE, Life-Harness, Better Harnesses, and HarnessDev
-  separates support for cheap screening from the unvalidated consensus hypothesis.
-  The hero calculator contrasts frontier-first evaluation with screened CI. Open-source
-  benchmark contributions and sealed competition suites share one capability
-  taxonomy. The previous evidence-heavy page is preserved under
-  `.archive/opensiro-harness-evaluation/`.
-- The article uses a fixed bottom table of contents. Its pale-blue glider follows
-  the visible section; on mobile, links scroll to keep the active section in view.
-- The hero animates commits through a block flow of 5× SLM harness deltas to
-  approved or rejected screening decisions. The Terminal-Bench reference shows
-  both its published token count and cost. The loop pauses offscreen and in hidden
-  tabs, and reduced motion shows static results. Inline term explanations
-  appear above Multi-fidelity, 5× SLM, and frontier evaluation on hover, focus,
-  or tap; Escape and tapping outside dismiss them.
+- Each product has a separate bundled SVG mark with a small animation.
+- Inline term explanations on the Products page appear on hover, focus, or tap;
+  Escape and tapping outside dismiss them.
 - Research includes Stack push/pop, Pills, and Tic-tac-toe training pairs, animated once with replay
   controls, and two task-derived hero assets. The diagrams use the source grids
   and palette. See `assets/arctic/README.md` for source, attribution, and rebuilding.
@@ -129,7 +117,6 @@ opensiro-web/
 |-------------------|-----------------|-------------------------------------------|
 | `/`               | `index.html`    | Hero, introduction, three-step approach, products & ARCTIC |
 | `/products.html`  | `products.html` | vsmlite + opensiro detail blocks            |
-| `/opensiro.html`  | `opensiro.html` | Multi-fidelity harness CI, benchmark tracks, economics |
 | `/research.html`  | `research.html` | ARCTIC detail + stats + CTA               |
 
 Each page shares the same sticky header (logo + Products/Research nav), footer
@@ -150,13 +137,24 @@ Paused social links (not rendered): `twitter.com/opensiro`, `youtube.com/@opensi
 
 ## Run
 
-Open `index.html` directly, or serve the folder:
+Open `index.html` directly in a browser. The site is fully static: every page,
+stylesheet, script, font, and image is referenced with a relative local path,
+so the pages work from a `file://` URL without a web server or build step.
+
+For an optional HTTP preview (useful when checking browser policies or sharing
+the folder on a local network), serve the folder:
 
 ```bash
 python3 -m http.server 8000
 # → http://localhost:8000/
 # → http://localhost:8000/products.html
 # → http://localhost:8000/research.html
+```
+
+Run the static-link audit from the repository root:
+
+```bash
+node tests/static-site.test.cjs
 ```
 
 ## Deploy
