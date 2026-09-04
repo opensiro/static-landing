@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cross-SLM Sandbox for Harness Experiments — OpenSiro</title>
-<meta name="description" content="OpenSiro is a cross-SLM sandbox for testing uncertain harness capabilities cheaply before separate frontier implementation and validation.">
+<title>Cross-Flash Sandbox for Harness Experiments — OpenSiro</title>
+<meta name="description" content="OpenSiro is a cross-Flash sandbox for testing harness capabilities before frontier validation.">
 <meta name="color-scheme" content="light">
-<meta property="og:title" content="Cross-SLM Sandbox for Harness Experiments — OpenSiro">
+<meta property="og:title" content="Cross-Flash Sandbox for Harness Experiments — OpenSiro">
 <meta property="og:description" content="Find cross-model evidence before paying for a frontier harness experiment.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://opensiro.com/opensiro.html">
@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://opensiro.com/opensiro.html">
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
-<link rel="stylesheet" href="products.css?v=20260904-flash-commits">
+<link rel="stylesheet" href="products.css?v=20260904-cross-flash">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png">
 </head>
 <body class="os-article-page">
@@ -26,48 +26,47 @@
 <section class="os-hero" id="os-overview" aria-labelledby="os-title"><div class="wrap">
   <a class="os-back-link" href="products.html#opensiro">← All products</a>
   <div class="os-product-line"><img src="assets/opensiro-mark.svg?v=20260903-pale-blue" width="72" height="72" alt=""><div><span>002 / Develop &amp; evaluate</span><strong>opensiro</strong></div><span class="os-status"><i></i>In development</span></div>
-  <div class="os-hero-grid"><div class="os-hero-copy"><p class="os-kicker">Cross-SLM sandbox</p><h1 id="os-title">Test the mechanism<br><span>before you fund the frontier experiment.</span></h1><p class="os-lead">Prototype a new harness capability in a cheap environment. Measure whether it helps across heterogeneous small models. Promote the <em>mechanism</em>—never the SLM implementation—only when the evidence earns a separate frontier test.</p><div class="os-hero-actions"><a class="btn" href="#os-economics">Watch the comparison <span aria-hidden="true">↓</span></a><a class="btn outline" href="#os-workflow">See the workflow <span aria-hidden="true">↓</span></a></div></div>
-  <aside class="os-thesis-card"><span class="os-badge estimate">Research hypothesis</span><blockquote>Harness-level mechanisms that produce consistent gains across heterogeneous weaker models can be a low-cost signal for which capabilities deserve frontier evaluation.</blockquote><div><span><b>5</b> families</span><span><b>20</b> proxy tasks</span><span><b>≠</b> frontier proof</span></div></aside></div>
+  <div class="os-hero-grid"><div class="os-hero-copy"><p class="os-kicker">Cross-Flash sandbox</p><h1 id="os-title">Test the mechanism<br><span>before you fund the frontier experiment.</span></h1><p class="os-lead">Prototype a new harness capability in a cheap environment. Measure whether it helps across heterogeneous small models.</p></div></div>
 </div></section>
 
 <section class="os-section os-tint" id="os-economics" aria-labelledby="economics-title"><div class="wrap">
   <div class="os-heading os-heading-split"><div><p class="os-kicker">One start · two cost profiles</p><h2 id="economics-title">Synchronize the experiment.<br><span>Keep the claims distinct.</span></h2></div><div class="os-run-controls"><button class="os-replay" type="button" data-run-toggle aria-label="Pause benchmark animation">Pause</button><button class="os-replay" type="button" data-run-replay aria-label="Replay the benchmark comparison">↻ Replay run</button></div></div>
   <div class="os-data-key" aria-label="Evidence labels"><span><i class="reported"></i>Published</span><span><i class="derived"></i>Derived from published run</span><span><i class="estimated"></i>Normalized estimate</span></div>
-  <figure class="os-cost-system" data-cost-system aria-describedby="cost-method">
+  <figure class="os-cost-system" data-cost-system>
     <figcaption class="os-run-clock"><span>Shared playback · not real-time scale</span><strong data-run-clock>00:00</strong><em data-run-stage aria-live="polite">Ready</em></figcaption>
     <div class="os-commit-deck" aria-label="Illustrative harness commit history">
-      <header><span>harness / spatial-representation</span><small>illustrative commit history</small></header>
+      <header><span>harness / experiment-run</span><small>illustrative commit history</small></header>
       <ol class="os-commit-history">
-        <li class="os-commit-card is-recorded"><div><code>a17f2c9</code><span>baseline saved</span></div><strong>Freeze spatial baseline</strong><small>parent · reference evidence</small></li>
-        <li class="os-commit-card is-candidate" data-commit-active><div><code>b42e810</code><span data-commit-state>queued</span></div><strong>Add ASCII → 2D renderer</strong><small>candidate · capability hypothesis</small><i aria-hidden="true"><u data-commit-progress></u></i></li>
-        <li class="os-commit-card is-queued"><div><code>c08d35a</code><span>queued</span></div><strong>Verify scene coordinates</strong><small>next idea · not evaluated yet</small></li>
+        <li class="os-commit-card is-recorded"><div><code>a17f2c9</code><span>baseline saved</span></div><strong>Freeze harness baseline</strong><small>parent · reference evidence</small></li>
+        <li class="os-commit-card is-candidate" data-commit-active><div><code>b42e810</code><span data-commit-state>queued</span></div><strong>Experiment harness run</strong><small>candidate · capability hypothesis</small><i aria-hidden="true"><u data-commit-progress></u></i></li>
+        <li class="os-commit-card is-queued"><div><code>c08d35a</code><span>queued</span></div><strong>Audit failure distribution</strong><small>next idea · not evaluated yet</small></li>
       </ol>
       <div class="os-commit-dispatch"><code>b42e810</code><span>one candidate commit → two independent evaluation designs</span></div>
     </div>
     <div class="os-run-grid">
-      <article class="os-run-panel os-run-panel-slm" data-run-panel="slm">
-        <header><div><span class="os-badge estimate">Estimated</span><p>OpenSiro / heterogeneous matrix</p><h3><span class="os-term"><button class="os-term-trigger" type="button" aria-describedby="term-flash">5× Flash / Small<sup aria-hidden="true">?</sup></button><span class="os-tooltip" id="term-flash" role="tooltip" hidden>Five low-cost model families, evaluated concurrently. Flash and Small are product tiers, not a claim that all five have a small parameter count. Pin model versions, budgets and tasks for each experiment.</span></span></h3></div><span class="os-panel-tag">cheap evidence</span></header>
-        <div class="os-run-origin"><span><code>b42e810</code> → OpenSiro Sandbox</span><strong>ASCII → 2D representation</strong><small>candidate pass vs a saved, frozen baseline</small><em data-slm-run-state>queued</em></div>
+      <article class="os-run-panel os-run-panel-flash" data-run-panel="flash">
+        <header><div><span class="os-badge estimate">Estimated</span><p>OpenSiro / heterogeneous matrix</p><h3><span class="os-term"><button class="os-term-trigger" type="button" aria-describedby="term-flash">5× Cross-Flash<sup aria-hidden="true">?</sup></button><span class="os-tooltip" id="term-flash" role="tooltip" hidden>Five low-cost model families run concurrently with the same tasks and budget.</span></span></h3></div><span class="os-panel-tag">cheap evidence</span></header>
+        <div class="os-run-origin"><span><code>b42e810</code> → OpenSiro Sandbox</span><strong>Experiment harness run</strong><small>candidate vs frozen baseline</small><em data-flash-run-state>queued</em></div>
         <div class="os-sandbox">
           <div class="os-sandbox-head"><span>OpenSiro Sandbox</span><strong>20 terminal-bench-like tasks</strong><small>five model lanes run concurrently</small></div>
-          <div class="os-model-lanes" aria-label="Five heterogeneous Flash and Small model families">
-            <div class="os-model-lane" data-input-rate="0.1" data-output-rate="0.4"><span><a href="https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-5-flash" target="_blank" rel="noopener"><b>Qwen Flash</b></a><small>Qwen3.5 Flash · Alibaba</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$3.38</strong><small>estimated</small></em></div>
+          <div class="os-model-lanes" aria-label="Five heterogeneous Flash model families">
+            <div class="os-model-lane" data-input-rate="0.1" data-output-rate="0.4"><span><a href="https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-5-flash" target="_blank" rel="noopener"><b>Qwen Flash</b></a><small>Qwen3.5 Flash · Alibaba</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
             <div class="os-model-lane" data-input-rate="0" data-output-rate="0"><span><a href="https://docs.z.ai/guides/overview/pricing" target="_blank" rel="noopener"><b>GLM Flash</b></a><small>GLM-4.7-Flash · Z.ai</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>Free</strong><small>API tariff</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.15" data-output-rate="0.6"><span><a href="https://docs.mistral.ai/inference/pricing" target="_blank" rel="noopener"><b>Mistral Small</b></a><small>Mistral Small 4 · Mistral</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$5.08</strong><small>estimated</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.3" data-output-rate="2.5"><span><a href="https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash" target="_blank" rel="noopener"><b>Gemini Flash</b></a><small>Gemini 2.5 Flash · Google</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$10.50</strong><small>estimated</small></em></div>
-            <div class="os-model-lane" data-input-rate="0.44" data-output-rate="1.32"><span><a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" rel="noopener"><b>DeepSeek Flash</b></a><small>DeepSeek-V4-Flash · 0731</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$14.77</strong><small>estimated</small></em></div>
+            <div class="os-model-lane" data-input-rate="0.15" data-output-rate="0.6"><span><a href="https://docs.mistral.ai/inference/pricing" target="_blank" rel="noopener"><b>Mistral Small</b></a><small>Mistral Small 4 · Mistral</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
+            <div class="os-model-lane" data-input-rate="0.3" data-output-rate="2.5"><span><a href="https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash" target="_blank" rel="noopener"><b>Gemini Flash</b></a><small>Gemini 2.5 Flash · Google</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
+            <div class="os-model-lane" data-input-rate="0.44" data-output-rate="1.32"><span><a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" rel="noopener"><b>DeepSeek Flash</b></a><small>DeepSeek-V4-Flash · 0731</small></span><i><u data-model-progress></u></i><em><strong data-model-cost>$0.00</strong><small>estimated</small></em></div>
           </div>
         </div>
         <div class="os-live-metrics">
-          <div><span>Token envelope</span><strong data-slm-token-meter>0</strong><small>estimated</small></div>
-          <div><span>Matrix cost</span><strong data-slm-cost-meter>$0.00</strong><small>estimated</small></div>
-          <div><span>Concurrent runtime</span><strong data-slm-time-meter>00:00</strong><small>normalized</small></div>
+          <div><span>Token envelope</span><strong data-flash-token-meter>0</strong><small>estimated</small></div>
+          <div><span>Matrix cost</span><strong data-flash-cost-meter>$0.00</strong><small>estimated</small></div>
+          <div><span>Concurrent runtime</span><strong data-flash-time-meter>00:00</strong><small>normalized</small></div>
         </div>
-        <footer><div class="os-decision" data-slm-decision><span>REWORK</span><strong>PROMOTE</strong><span>REJECT</span></div><p>Promotion buys the next experiment. It does not prove frontier uplift.</p></footer>
+        <footer class="os-flash-footer"><div class="os-decision" data-flash-decision><span>REWORK</span><strong>PROMOTE</strong><span>REJECT</span></div><div class="os-flash-result"><span>Estimated cost advantage</span><strong data-flash-advantage>—</strong></div></footer>
       </article>
 
       <article class="os-run-panel os-run-panel-llm" data-run-panel="llm">
-        <header><div><span class="os-badge reported">Published</span><p>Terminal-Bench 2.1 / verified submission</p><h3>1× frontier LLM baseline</h3></div><span class="os-panel-tag">cost reference</span></header>
+        <header><div><span class="os-badge reported">Published</span><p><a href="https://github.com/harbor-framework/terminal-bench-2-1/blob/main/leaderboard/submissions/2026-05-01-openai-gpt-5-5-xhigh-codex.json" target="_blank" rel="noopener">Terminal-Bench 2.1 / verified submission ↗</a></p><h3>1× frontier LLM baseline</h3></div><span class="os-panel-tag">cost reference</span></header>
         <div class="os-run-origin"><span><code>b42e810</code> → Terminal-Bench 2.1</span><strong>Full benchmark run</strong><small>Codex + GPT-5.5 · xhigh · 445 trials</small><em data-llm-run-state>queued</em></div>
         <div class="os-frontier-meter"><span>Published workload</span><i><u data-llm-progress></u></i><div><b>89 tasks × 5 trials</b><em data-llm-percent>0%</em></div></div>
         <div class="os-live-metrics">
@@ -75,64 +74,44 @@
           <div><span>Total cost</span><strong data-llm-cost-meter>$0.00</strong><small>published</small></div>
           <div><span>Serialized workload</span><strong data-llm-time-meter>00:00</strong><small>derived</small></div>
         </div>
-        <footer><dl><div><dt>Mean trial</dt><dd>08:03 <small>published</small></dd></div><div><dt>Serialized total</dt><dd>59h 39m <small>derived</small></dd></div></dl><p>This baseline is a comparison—not a mandatory next node in the OpenSiro pipeline.</p></footer>
+        <footer><dl><div><dt>Mean trial</dt><dd>08:03 <small>published</small></dd></div><div><dt>Serialized total</dt><dd>59h 39m <small>derived</small></dd></div></dl></footer>
       </article>
     </div>
   </figure>
-  <div class="os-method" id="cost-method"><div><span>Flash / Small estimate · candidate pass</span><p><strong>165.2M tokens · $33.74 · 2h 41m normalized</strong></p><p>20 tasks × 5 model families × one candidate pass, with a frozen baseline already recorded. Per model: 32.774M input + 0.268M output tokens, normalized from the published Terminal-Bench trial mean. Five model lanes run concurrently, with tasks sequential within each lane.</p><p>Listed USD input/output rates per 1M tokens: Qwen3.5 Flash $0.10/$0.40 (International); GLM-4.7-Flash Free; Mistral Small 4 $0.15/$0.60; Gemini 2.5 Flash $0.30/$2.50; DeepSeek-V4-Flash $0.44/$1.32 (peak, cache miss).</p><p>A fresh baseline + candidate pair doubles this envelope: 330.4M tokens, $67.48 and 5h 22m normalized. This is not an observed sandbox bill or runtime.</p></div><div><span>LLM reference · published workload</span><p><strong>735.2M tokens · $2,059.19 · 59h 39m serialized</strong></p><p>Published submission: 336.8M uncached input + 392.4M cached input + 6.0M output tokens, $2,059.19 total and 482.6 s mean trial. Actual wall time depends on runner concurrency.</p><p>Timing formula: 445 × 482.6 s = 59h 39m serialized. The sandbox uses 20 × 482.6 s = 2h 41m only as a common planning reference—not a measured Flash speedup. Real runtime requires per-model traces, tool latency and rate-limit data.</p></div></div>
-  <div class="os-cost-sources"><a href="https://github.com/harbor-framework/terminal-bench-2-1/blob/main/leaderboard/submissions/2026-05-01-openai-gpt-5-5-xhigh-codex.json" target="_blank" rel="noopener"><span>Published run</span>Terminal-Bench 2.1 submission data ↗</a><a href="#cost-method"><span>Estimate method</span>Rates, workload and baseline accounting ↑</a><a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener"><span>Research evidence</span>Better Harnesses, Smaller Models ↗</a></div>
-  <p class="os-note">The commit history is illustrative; the LLM animation replays a published reference, not a run of this example commit. Prices checked September 4, 2026. No batch, cached-input or off-peak discounts are assumed. GLM’s published Free tariff remains subject to service quotas. Tokenization, reasoning tokens, infrastructure and tool charges can change actual cost. Flash / Small describes this low-cost roster, not a uniform parameter-count class.</p>
+  <p class="os-note">Prices checked Sept 4, 2026.</p>
 </div></section>
 
 <section class="os-section" id="os-workflow" aria-labelledby="workflow-title"><div class="wrap">
-  <div class="os-heading"><p class="os-kicker">Experiment lifecycle</p><h2 id="workflow-title">Evidence first.<br><span>Frontier work stays separate.</span></h2><p class="os-section-lead">The sandbox tests a capability hypothesis—not whether one SLM-tuned implementation can be copied into a stronger model’s harness.</p></div>
+  <div class="os-heading"><p class="os-kicker">Cross-Flash workflow</p><h2 id="workflow-title">One harness experiment.<br><span>Five independent signals.</span></h2></div>
   <div class="os-workflow" data-pipeline>
-    <div class="os-cheap-zone"><span class="os-zone-label">Cheap experimental layer</span><ol>
-      <li><i>01</i><div><span>Hypothesis</span><strong>New harness capability</strong><small>Define the mechanism and expected effect.</small></div></li>
-      <li><i>02</i><div><span>Prototype</span><strong>Cheap SLM environment</strong><small>Build only what is needed to test the idea.</small></div></li>
-      <li class="sandbox"><i>03</i><div><span>Evaluate</span><strong>OpenSiro Sandbox</strong><small>Heterogeneous models × tasks × baseline.</small></div></li>
-      <li><i>04</i><div><span>Measure</span><strong>Consistency + regressions</strong><small>Effect, variance, cost, runtime and failures.</small></div></li>
-      <li class="decision"><i>05</i><div><span>Decide</span><strong>PROMOTE / REWORK / REJECT</strong><small>Store evidence with the hypothesis.</small></div></li>
+    <div class="os-cheap-zone"><span class="os-zone-label">Cross-Flash sandbox</span><ol>
+      <li><i>01</i><div><span>Commit</span><strong>Harness capability</strong></div></li>
+      <li><i>02</i><div><span>Freeze</span><strong>Tasks + budget</strong></div></li>
+      <li class="sandbox"><i>03</i><div><span>Run in parallel</span><strong>Qwen · GLM · Mistral · Gemini · DeepSeek</strong></div></li>
+      <li><i>04</i><div><span>Compare</span><strong>Delta · cost · runtime · regressions</strong></div></li>
+      <li class="decision"><i>05</i><div><span>Decide</span><strong>PROMOTE / REWORK / REJECT</strong></div></li>
     </ol></div>
-    <div class="os-frontier-zone"><span class="os-zone-label">Conditional frontier layer</span><div class="os-frontier-gate"><span>Only after PROMOTE</span><strong>Transfer the mechanism,<br>not the SLM implementation.</strong></div><ol><li><i>06</i><div><span>Rebuild</span><strong>Separate frontier harness implementation</strong></div></li><li><i>07</i><div><span>Validate</span><strong>Limited dev / proxy tasks</strong></div></li><li><i>08</i><div><span>Justify</span><strong>Full frontier benchmark</strong></div></li></ol></div>
+    <div class="os-frontier-zone"><span class="os-zone-label">Conditional frontier layer</span><div class="os-frontier-gate"><span>Only after PROMOTE</span><strong>Reimplement the proven mechanism.</strong></div><ol><li><i>06</i><div><span>Build</span><strong>Frontier harness</strong></div></li><li><i>07</i><div><span>Validate</span><strong>Limited proxy tasks</strong></div></li><li><i>08</i><div><span>Justify</span><strong>Full benchmark</strong></div></li></ol></div>
   </div>
-</div></section>
-
-<section class="os-section os-tint" id="os-levels" aria-labelledby="levels-title"><div class="wrap">
-  <div class="os-heading"><p class="os-kicker"><span class="os-term"><button type="button" class="os-term-trigger" aria-describedby="term-fidelity">Multi-fidelity<sup aria-hidden="true">?</sup></button><span class="os-tooltip" id="term-fidelity" role="tooltip" hidden>A hierarchy of evaluations with increasing cost and fidelity. Each level earns the next experiment; a cheap positive result is not proof of a frontier gain.</span></span> cost hierarchy</p><h2 id="levels-title">Spend evidence<br><span>to unlock the next level.</span></h2></div>
-  <div class="os-levels" role="list">
-    <article role="listitem"><span>L0</span><h3>Deterministic</h3><p>Unit, regression and validator tests.</p><small>always first</small></article>
-    <article role="listitem"><span>L1</span><h3>Single cheap SLM</h3><p>Fast direction and obvious failure checks.</p><small>low confidence</small></article>
-    <article class="active" role="listitem"><span>L2</span><h3>Cross-SLM Sandbox</h3><p>Consistency across heterogeneous model families.</p><small>OpenSiro focus</small></article>
-    <article role="listitem"><span>L3</span><h3>Limited frontier</h3><p>Separate implementation on dev or proxy tasks.</p><small>conditional</small></article>
-    <article role="listitem"><span>L4</span><h3>Full benchmark</h3><p>Late validation gate when the cost is justified.</p><small>last, not inner loop</small></article>
-  </div>
-  <p class="os-level-rule"><span>Rule</span> Advance only when the preceding level produces enough evidence for the next cost.</p>
-</div></section>
-
-<section class="os-section" id="os-experiment" aria-labelledby="experiment-title"><div class="wrap">
-  <div class="os-heading os-heading-split"><div><p class="os-kicker">Worked experiment</p><h2 id="experiment-title">ASCII becomes a scene.<br><span>Five families test the claim.</span></h2></div><span class="os-badge estimate">Illustrative result</span></div>
-  <div class="os-experiment-grid"><article class="os-experiment-brief"><span>Hypothesis</span><h3>Explicit ASCII → 2D scene representation improves spatial reasoning.</h3><dl><div><dt>Comparison</dt><dd>baseline vs renderer-enabled harness</dd></div><div><dt>Task set</dt><dd>20 navigation-heavy proxy tasks</dd></div><div><dt>Budget</dt><dd>fixed tokens, tools and steps</dd></div></dl></article><article class="os-effect-card"><header><span>Observed delta</span><strong>5 / 5 positive</strong></header><div class="os-effect-bars"><div><span>SLM-1</span><i><u style="--effect:.78"></u></i><b>+7 pp</b></div><div><span>SLM-2</span><i><u style="--effect:.56"></u></i><b>+5 pp</b></div><div><span>SLM-3</span><i><u style="--effect:1"></u></i><b>+9 pp</b></div><div><span>SLM-4</span><i><u style="--effect:.44"></u></i><b>+4 pp</b></div><div><span>SLM-5</span><i><u style="--effect:.67"></u></i><b>+6 pp</b></div></div><footer><span>Decision</span><strong>PROMOTE</strong><p>Implement the representation natively in the frontier harness and validate it independently.</p></footer></article></div>
-  <p class="os-note">This example explains the decision protocol; the deltas are illustrative, not a reported OpenSiro experiment.</p>
 </div></section>
 
 <section class="os-section os-tint" id="os-promotion" aria-labelledby="promotion-title"><div class="wrap">
   <div class="os-heading"><p class="os-kicker">Promotion criteria</p><h2 id="promotion-title">Prefer general mechanisms.<br><span>Reject model-specific luck.</span></h2></div>
-  <div class="os-promotion-grid"><ol class="os-criteria"><li><span>01</span>Positive effect on most heterogeneous SLMs.</li><li><span>02</span>No single model or family determines the result.</li><li><span>03</span>The gain persists across several task types.</li><li><span>04</span>More tokens, tools or steps do not explain the gain.</li><li><span>05</span>No major regression on a model or task class.</li><li><span>06</span>Incremental cost is proportional to expected value.</li><li><span>07</span>The mechanism still makes sense as model capability grows.</li></ol><aside class="os-distinction"><span>Critical distinction</span><div><small>General capability improvement</small><strong>explicit verification<br>spatial representation<br>alternative planner<br>memory mechanism<br>recovery strategy<br>tool interface<br>context management</strong></div><div class="warning"><small>Possible SLM compensation</small><strong>Rigid step-by-step decomposition may help a weak model and constrain a frontier model.</strong></div></aside></div>
+  <div class="os-promotion-grid"><ol class="os-criteria"><li><span>01</span>Positive effect across most Flash families.</li><li><span>02</span>No single family determines the result.</li><li><span>03</span>The gain persists across task types.</li><li><span>04</span>Extra budget does not explain the gain.</li><li><span>05</span>No major family or task regression.</li><li><span>06</span>Cost is proportional to expected value.</li><li><span>07</span>The mechanism scales with model capability.</li></ol><aside class="os-distinction"><span>Critical distinction</span><div><small>General capability improvement</small><strong>verification<br>representation<br>planning<br>memory<br>recovery<br>tool interface<br>context management</strong></div><div class="warning"><small>Possible model-specific compensation</small><strong>A rigid policy may help one family and constrain another.</strong></div></aside></div>
 </div></section>
 
 <section class="os-section" id="os-scope" aria-labelledby="scope-title"><div class="wrap">
   <div class="os-heading"><p class="os-kicker">When to use the sandbox</p><h2 id="scope-title">Reserve the matrix<br><span>for uncertain, expensive changes.</span></h2></div>
-  <div class="os-scope-grid"><article><span class="os-badge target">Run Cross-SLM</span><ul><li>new tools and representations</li><li>planners and verifiers</li><li>memory and state mechanisms</li><li>parallel or multi-agent execution</li><li>new execution policies</li><li>major context strategies</li><li>experimental environment interaction</li></ul></article><article><span class="os-badge reported">Stay at L0 / L1</span><ul><li>ordinary bug fixes</li><li>small prompt changes</li><li>local implementation changes</li><li>deterministic regressions</li></ul><p>Cross-model evidence is useful only when uncertainty and downstream frontier cost justify it.</p></article></div>
-  <div class="os-benchmark-surfaces"><header><span>Evaluation surfaces</span><strong>Develop in public. Confirm in private. Compete on sealed work.</strong></header><article><span>01 / Open</span><h3>Development</h3><p>Public specifications, generators, fixtures, example tasks and inspectable traces.</p></article><article><span>02 / Hidden</span><h3>CI</h3><p>Private held-out instances with capability-level deltas and regression reporting.</p></article><article><span>03 / Sealed</span><h3>Competition</h3><p>Fixed windows, registered artifacts and shared infrastructure for comparable results.</p></article></div>
+  <div class="os-scope-grid"><article><span class="os-badge target">Run Cross-Flash</span><ul><li>new tools and representations</li><li>planners and verifiers</li><li>memory and state mechanisms</li><li>parallel execution</li><li>new execution policies</li><li>major context strategies</li></ul></article><article><span class="os-badge reported">Use basic checks</span><ul><li>ordinary bug fixes</li><li>small prompt changes</li><li>local implementation changes</li><li>deterministic regressions</li></ul></article></div>
+  <div class="os-benchmark-surfaces"><header><span>Evaluation surfaces</span><strong>Open → private → sealed</strong></header><article><span>01 / Open</span><h3>Development</h3><p>Public tasks.</p></article><article><span>02 / Hidden</span><h3>CI</h3><p>Private held-out tests.</p></article><article><span>03 / Sealed</span><h3>Competition</h3><p>Fixed final benchmark.</p></article></div>
 </div></section>
 
 <section class="os-section os-tint" id="os-record" aria-labelledby="record-title"><div class="wrap">
-  <div class="os-heading os-heading-split"><div><p class="os-kicker">Experiment artifact</p><h2 id="record-title">Version the hypothesis<br><span>and its evidence.</span></h2></div><p class="os-section-lead">A commit is implementation history. The durable research object is the capability claim, tested matrix and decision record.</p></div>
+  <div class="os-heading"><p class="os-kicker">Experiment artifact</p><h2 id="record-title">Version the hypothesis<br><span>and its evidence.</span></h2></div>
   <div class="os-record-grid"><pre aria-label="Minimum experiment record"><code><span>hypothesis:</span>
-  explicit spatial representation improves navigation-heavy tasks
+  experimental harness mechanism improves target tasks
 
-<span>models:</span> [slm_a, slm_b, slm_c, slm_d, slm_e]
+<span>models:</span> [qwen_flash, glm_flash, mistral_small, gemini_flash, deepseek_flash]
 <span>tasks:</span>
   distribution: terminal-bench-like
   count: 20
@@ -146,27 +125,26 @@
   tool_calls:
   failure_distribution:
 
-<span>cross_model:</span>
+<span>cross_flash:</span>
   positive_models:
   median_delta:
   mean_delta:
   variance:
   worst_model_delta:
 
-<span>decision:</span> promote | rework | reject</code></pre><aside><span>What survives the experiment</span><strong>capability hypothesis</strong><strong>fixed task distribution</strong><strong>model-family matrix</strong><strong>budgets + regressions</strong><strong>decision + rationale</strong><p>The SLM prototype is disposable. The evidence is not.</p></aside></div>
+<span>decision:</span> promote | rework | reject</code></pre><aside><span>What survives the experiment</span><strong>capability hypothesis</strong><strong>fixed task distribution</strong><strong>Cross-Flash matrix</strong><strong>budgets + regressions</strong><strong>decision + rationale</strong></aside></div>
 </div></section>
 
 <section class="os-section" id="os-evidence" aria-labelledby="evidence-title"><div class="wrap">
   <div class="os-heading"><p class="os-kicker">Evidence boundary</p><h2 id="evidence-title">A promising premise.<br><span>A hypothesis still to prove.</span></h2></div>
-  <div class="os-evidence-grid"><article><span class="os-badge measured">Published</span><h3>89.7%</h3><p>Best adapted SLM performance relative to the LLM baseline.</p></article><article><span class="os-badge measured">Published</span><h3>4%</h3><p>Cost of that best adapted SLM relative to the LLM baseline.</p></article><article class="boundary"><span class="os-badge estimate">OpenSiro claim</span><h3>?</h3><p>Whether gains consistent across heterogeneous SLMs select frontier-positive capabilities efficiently.</p></article></div>
-  <div class="os-evidence-copy"><p><strong>What the CMU study supports:</strong> adapted small models can approach a large-model baseline at a small fraction of cost across seven business tasks and three SLM families.</p><p><strong>What it does not establish:</strong> that cross-SLM agreement predicts frontier harness improvement. OpenSiro must measure that transfer precision, recall, avoided frontier runs and failure distribution.</p></div>
-  <p class="os-note">Source: <a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">Better Harnesses, Smaller Models ↗</a>. Promotion means “worth a more expensive experiment,” not “frontier improvement proven.”</p>
+  <div class="os-evidence-grid"><article><span class="os-badge measured">Published</span><h3>89.7%</h3><p>Best adapted small-model performance relative to the LLM baseline.</p></article><article><span class="os-badge measured">Published</span><h3>4%</h3><p>Cost relative to that LLM baseline.</p></article><article class="boundary"><span class="os-badge estimate">OpenSiro claim</span><h3>?</h3><p>Whether Cross-Flash agreement selects frontier-positive capabilities.</p></article></div>
+  <p class="os-note"><a href="https://arxiv.org/abs/2607.08938" target="_blank" rel="noopener">Better Harnesses, Smaller Models ↗</a></p>
   <div class="os-final"><p class="os-kicker">Frontier benchmark as a late gate</p><h2>Discard weak ideas cheaply.<br><span>Spend frontier runs on earned hypotheses.</span></h2><a class="btn" href="#os-overview">Back to overview <span aria-hidden="true">↑</span></a></div>
 </div></section>
 </main>
 
-<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-overview" data-os-section="os-overview">Overview</a><a href="#os-economics" data-os-section="os-economics">Cost</a><a href="#os-workflow" data-os-section="os-workflow">Workflow</a><a href="#os-levels" data-os-section="os-levels">Levels</a><a href="#os-experiment" data-os-section="os-experiment">Experiment</a><a href="#os-promotion" data-os-section="os-promotion">Promotion</a><a href="#os-scope" data-os-section="os-scope">Scope</a><a href="#os-record" data-os-section="os-record">Record</a><a href="#os-evidence" data-os-section="os-evidence">Evidence</a></div></div></div></nav>
+<nav class="os-section-nav" aria-label="OpenSiro table of contents"><div class="os-section-nav-track"><span class="os-section-nav-label">Contents</span><div class="os-section-nav-scroll"><div class="os-section-nav-links"><span class="os-section-glider" aria-hidden="true"></span><a href="#os-overview" data-os-section="os-overview">Overview</a><a href="#os-economics" data-os-section="os-economics">Cost</a><a href="#os-workflow" data-os-section="os-workflow">Workflow</a><a href="#os-promotion" data-os-section="os-promotion">Promotion</a><a href="#os-scope" data-os-section="os-scope">Scope</a><a href="#os-record" data-os-section="os-record">Record</a><a href="#os-evidence" data-os-section="os-evidence">Evidence</a></div></div></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
-<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260904-flash-commits" defer></script>
+<script src="app.js?v=20260903-mobile" defer></script><script src="products.js?v=20260904-cross-flash" defer></script>
 </body>
 </html>
