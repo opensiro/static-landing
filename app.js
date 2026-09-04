@@ -1,12 +1,11 @@
 /* =====================================================================
    opensiro — app.js
-   Vanilla, no dependencies. Active-nav highlight + mobile nav drawer.
-   Shared across index.html, products.html, research.html.
+   Vanilla, no dependencies. Active-nav highlight for the shared two-link navigation.
+   Shared across index.html, products.html, and research.html.
    ===================================================================== */
 (function () {
   'use strict';
 
-  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
 
   /* ----------------------------------------------------- active nav by page
@@ -24,34 +23,4 @@
     });
   })();
 
-  /* ----------------------------------------------------------- mobile nav */
-  var mobileNav = $('#mobileNav');
-  var menuBtn = $('#menuBtn');
-
-  function openNav() {
-    if (!mobileNav) return;
-    mobileNav.classList.add('open');
-    mobileNav.setAttribute('aria-hidden', 'false');
-    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeNav() {
-    if (!mobileNav) return;
-    mobileNav.classList.remove('open');
-    mobileNav.setAttribute('aria-hidden', 'true');
-    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  if (menuBtn) {
-    menuBtn.addEventListener('click', function () {
-      mobileNav.classList.contains('open') ? closeNav() : openNav();
-    });
-  }
-  $all('[data-close-nav]').forEach(function (el) {
-    el.addEventListener('click', closeNav);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeNav();
-  });
 })();

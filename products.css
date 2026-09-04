@@ -1,0 +1,8 @@
+.products-hero{border-bottom:1px solid var(--hairline)}
+
+/* Accessible inline explanations used on products.html. */
+.os-term{display:inline}
+.os-term-trigger{font:inherit;letter-spacing:inherit;text-transform:inherit;line-height:inherit;padding:0;border-bottom:1px dotted currentColor;cursor:help}
+.os-term-trigger sup{font-size:8px;margin-left:3px;color:var(--accent-ink)}
+.os-tooltip{position:fixed;z-index:100;box-sizing:border-box;width:min(310px,calc(100vw - 24px));padding:16px;background:var(--ink);color:var(--bg);font:11px/1.8 var(--font);letter-spacing:0;text-transform:none;text-align:left;box-shadow:0 8px 30px #0002}
+.os-tooltip[hidden]{display:none}
