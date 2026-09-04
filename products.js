@@ -1,16 +1,18 @@
-/* OpenSiro article navigation, pipeline replay, and measured cost playback. */
+/* OpenSiro article navigation, accessible terms, and synchronized run playback. */
 (function () {
   'use strict';
 
-  // Keep explanations above their terms, including at narrow viewport edges.
+  /* Inline explanations are shared with products.html. */
   var openTerm = null;
   var termCloseTimer = null;
+
   function closeTerm() {
     clearTimeout(termCloseTimer);
     if (!openTerm) return;
     openTerm.tip.hidden = true;
     openTerm = null;
   }
+
   function showTerm(button, tip) {
     closeTerm();
     tip.hidden = false;
@@ -22,11 +24,14 @@
     tip.style.top = Math.max(8, rect.top - tip.offsetHeight - 10) + 'px';
     openTerm = { button: button, tip: tip };
   }
+
   document.querySelectorAll('.os-term-trigger').forEach(function (button) {
     var tip = document.getElementById(button.getAttribute('aria-describedby'));
     if (!tip) return;
     document.body.appendChild(tip);
-    button.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') showTerm(button, tip); });
+    button.addEventListener('pointerenter', function (event) {
+      if (event.pointerType !== 'touch') showTerm(button, tip);
+    });
     function scheduleClose() {
       if (document.activeElement !== button) termCloseTimer = setTimeout(closeTerm, 160);
     }
@@ -44,99 +49,213 @@
   window.addEventListener('scroll', closeTerm, { passive: true });
   window.addEventListener('resize', closeTerm);
 
+  /* Both benchmark designs share one start signal and phase clock. */
   var costSystem = document.querySelector('[data-cost-system]');
   if (costSystem) {
-    var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var tokenMeter = costSystem.querySelector('[data-token-meter]');
-    var costMeter = costSystem.querySelector('[data-cost-meter]');
-    var llmPath = costSystem.querySelector('.os-cost-path-llm');
-    var slmPath = costSystem.querySelector('.os-cost-path-slm');
-    var deltaCells = Array.prototype.slice.call(costSystem.querySelectorAll('.os-delta-stack span'));
-    var measuredTokens = 735200000;
-    var measuredCost = 2059.19;
-    var playbackLength = 16000;
-    var playbackPause = 2600;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var replay = document.querySelector('[data-run-replay]');
+    var toggle = document.querySelector('[data-run-toggle]');
+    var clock = costSystem.querySelector('[data-run-clock]');
+    var stage = costSystem.querySelector('[data-run-stage]');
+    var slmPanel = costSystem.querySelector('[data-run-panel="slm"]');
+    var llmPanel = costSystem.querySelector('[data-run-panel="llm"]');
+    var commitCard = costSystem.querySelector('[data-commit-active]');
+    var commitState = costSystem.querySelector('[data-commit-state]');
+    var commitProgress = costSystem.querySelector('[data-commit-progress]');
+    var slmRunState = costSystem.querySelector('[data-slm-run-state]');
+    var llmRunState = costSystem.querySelector('[data-llm-run-state]');
+    var modelLanes = Array.prototype.slice.call(costSystem.querySelectorAll('.os-model-lane'));
+    var modelBars = Array.prototype.slice.call(costSystem.querySelectorAll('[data-model-progress]'));
+    var llmBar = costSystem.querySelector('[data-llm-progress]');
+    var llmPercent = costSystem.querySelector('[data-llm-percent]');
+    var slmTokenMeter = costSystem.querySelector('[data-slm-token-meter]');
+    var slmCostMeter = costSystem.querySelector('[data-slm-cost-meter]');
+    var slmTimeMeter = costSystem.querySelector('[data-slm-time-meter]');
+    var llmTokenMeter = costSystem.querySelector('[data-llm-token-meter]');
+    var llmCostMeter = costSystem.querySelector('[data-llm-cost-meter]');
+    var llmTimeMeter = costSystem.querySelector('[data-llm-time-meter]');
+    var playbackLength = 18000;
+    var playbackPause = 3600;
     var playbackStart = performance.now();
-    var costVisible = false;
-    var costFrame = null;
-    var examples = [
-      { deltas: ['+7.2', '+3.8', '+5.1', '+1.9', '+4.4'], fail: false },
-      { deltas: ['+2.1', '−0.8', '+1.4', '−1.2', '+0.6'], fail: true },
-      { deltas: ['+4.6', '+2.8', '+3.3', '+1.1', '+2.4'], fail: false }
-    ];
-    var lastExample = -1;
-    var integerFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
-    var moneyFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    var isVisible = false;
+    var isPaused = false;
+    var pausedElapsed = 0;
+    var animationFrame = null;
+    var llmTokens = 735197348;
+    var llmCost = 2059.19;
+    var referenceTrials = 445;
+    var candidateTasks = 20;
+    var referenceSecondsPerTrial = 482.6;
+    var inputPerModel = (336797311 + 392433664) * candidateTasks / referenceTrials;
+    var outputPerModel = 5966373 * candidateTasks / referenceTrials;
+    var slmTokens = (inputPerModel + outputPerModel) * modelLanes.length;
+    var slmCost = modelLanes.reduce(function (sum, lane) {
+      var estimate = inputPerModel * Number(lane.dataset.inputRate) / 1000000 + outputPerModel * Number(lane.dataset.outputRate) / 1000000;
+      lane.querySelector('[data-model-cost]').textContent = estimate === 0 ? 'Free' : money(estimate);
+      return sum + estimate;
+    }, 0);
+    var slmMinutes = candidateTasks * referenceSecondsPerTrial / 60;
+    var llmMinutes = referenceTrials * referenceSecondsPerTrial / 60;
 
-    function showExample(index) {
-      if (index === lastExample) return;
-      lastExample = index;
-      var example = examples[index];
-      deltaCells.forEach(function (cell, cellIndex) {
-        cell.textContent = example.deltas[cellIndex];
-        cell.classList.toggle('is-negative', example.deltas[cellIndex].charAt(0) === '−');
+    function clamp(value) { return Math.max(0, Math.min(1, value)); }
+    function ease(value) { return 1 - Math.pow(1 - clamp(value), 3); }
+    function compactTokens(value) {
+      if (value < 1000000) return Math.round(value).toLocaleString('en-US');
+      return (value / 1000000).toFixed(1) + 'M';
+    }
+    function money(value) {
+      return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function duration(totalMinutes) {
+      var rounded = Math.round(totalMinutes);
+      var hours = Math.floor(rounded / 60);
+      var minutes = rounded % 60;
+      return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+    }
+    function runClock(progress) {
+      var seconds = Math.round(progress * playbackLength / 1000);
+      return '00:' + String(seconds).padStart(2, '0');
+    }
+    function setText(element, value) {
+      if (element && element.textContent !== value) element.textContent = value;
+    }
+
+    function setProgress(progress) {
+      var slmProgress = ease((progress - .13) / .49);
+      var frontierProgress = ease((progress - .13) / .77);
+
+      modelBars.forEach(function (bar) {
+        bar.style.width = (slmProgress * 100).toFixed(2) + '%';
       });
-      slmPath.classList.toggle('is-fail', example.fail);
+      llmBar.style.width = (frontierProgress * 100).toFixed(2) + '%';
+      llmPercent.textContent = Math.round(frontierProgress * 100) + '%';
+
+      slmTokenMeter.textContent = compactTokens(slmTokens * slmProgress);
+      slmCostMeter.textContent = money(slmCost * slmProgress);
+      slmTimeMeter.textContent = duration(slmMinutes * slmProgress);
+      llmTokenMeter.textContent = compactTokens(llmTokens * frontierProgress);
+      llmCostMeter.textContent = money(llmCost * frontierProgress);
+      llmTimeMeter.textContent = duration(llmMinutes * frontierProgress);
+      clock.textContent = runClock(progress);
+
+      slmPanel.classList.toggle('is-active', progress >= .06 && progress < .62);
+      llmPanel.classList.toggle('is-active', progress >= .06 && progress < .90);
+      slmPanel.classList.toggle('is-complete', progress >= .62);
+      llmPanel.classList.toggle('is-complete', progress >= .90);
+      costSystem.classList.toggle('is-complete', progress >= .90);
+      commitCard.classList.toggle('is-running', progress >= .06 && progress < .62);
+      commitCard.classList.toggle('is-complete', progress >= .62);
+      commitProgress.style.width = (slmProgress * 100).toFixed(2) + '%';
+      setText(commitState, progress < .06 ? 'queued' : progress < .13 ? 'dispatched' : progress < .62 ? 'running' : 'evidence saved');
+      setText(slmRunState, progress < .13 ? 'queued' : progress < .62 ? 'running' : 'evidence');
+      setText(llmRunState, progress < .13 ? 'queued' : progress < .90 ? 'running' : 'complete');
+      if (progress < .06) setText(stage, 'Commit + hypothesis queued');
+      else if (progress < .13) setText(stage, 'Dispatching both runs');
+      else if (progress < .62) setText(stage, 'Flash / Small + LLM running');
+      else if (progress < .90) setText(stage, 'Sandbox evidence ready · baseline running');
+      else setText(stage, 'Comparison complete');
     }
 
-    function setMeters(progress) {
-      var eased = 1 - Math.pow(1 - progress, 3);
-      tokenMeter.textContent = integerFormat.format(Math.round(measuredTokens * eased));
-      costMeter.textContent = '$' + moneyFormat.format(measuredCost * eased);
-      llmPath.style.setProperty('--meter-progress', (progress * 100).toFixed(2) + '%');
+    function draw(now) {
+      animationFrame = null;
+      if (!isVisible || isPaused || document.hidden || reduceMotion.matches) return;
+      var elapsed = now - playbackStart;
+      var cycle = playbackLength + playbackPause;
+      if (elapsed >= cycle) {
+        playbackStart = now;
+        elapsed = 0;
+      }
+      setProgress(Math.min(elapsed / playbackLength, 1));
+      animationFrame = requestAnimationFrame(draw);
     }
 
-    function drawCostPlayback(now) {
-      costFrame = null;
-      if (!costVisible || document.hidden) return;
-      if (motionPreference.matches) {
-        showExample(0);
-        setMeters(1);
+    function startPlayback(restart) {
+      if (reduceMotion.matches) {
+        setProgress(1);
+        stage.textContent = 'Comparison complete · motion reduced';
         return;
       }
-      var elapsed = (now - playbackStart) % (playbackLength + playbackPause);
-      var progress = Math.min(elapsed / playbackLength, 1);
-      setMeters(progress);
-      showExample(Math.floor((now - playbackStart) / 5400) % examples.length);
-      costFrame = requestAnimationFrame(drawCostPlayback);
+      if (isPaused) return;
+      if (restart) playbackStart = performance.now();
+      if (isVisible && !document.hidden && animationFrame === null) animationFrame = requestAnimationFrame(draw);
     }
 
-    function syncCostMotion() {
-      costSystem.classList.add('is-active');
-      costSystem.classList.toggle('is-paused', !costVisible || document.hidden || motionPreference.matches);
-      if (costVisible && !document.hidden && costFrame === null) costFrame = requestAnimationFrame(drawCostPlayback);
-      if ((!costVisible || document.hidden) && costFrame !== null) {
-        cancelAnimationFrame(costFrame);
-        costFrame = null;
-      }
+    function stopPlayback() {
+      if (animationFrame !== null) cancelAnimationFrame(animationFrame);
+      animationFrame = null;
     }
+
+    if (replay) replay.addEventListener('click', function () {
+      isPaused = false;
+      if (toggle && !reduceMotion.matches) {
+        toggle.textContent = 'Pause';
+        toggle.setAttribute('aria-label', 'Pause benchmark animation');
+      }
+      setProgress(reduceMotion.matches ? 1 : 0);
+      startPlayback(true);
+    });
+    if (toggle) toggle.addEventListener('click', function () {
+      if (reduceMotion.matches) return;
+      isPaused = !isPaused;
+      toggle.textContent = isPaused ? 'Resume' : 'Pause';
+      toggle.setAttribute('aria-label', isPaused ? 'Resume benchmark animation' : 'Pause benchmark animation');
+      if (isPaused) {
+        pausedElapsed = performance.now() - playbackStart;
+        stopPlayback();
+      } else {
+        playbackStart = performance.now() - pausedElapsed;
+        startPlayback(false);
+      }
+    });
 
     new IntersectionObserver(function (entries) {
-      costVisible = entries[0].isIntersecting;
-      if (costVisible) playbackStart = performance.now();
-      syncCostMotion();
-    }, { threshold: .08 }).observe(costSystem);
-    document.addEventListener('visibilitychange', syncCostMotion);
-    motionPreference.addEventListener('change', syncCostMotion);
-    showExample(0);
-    setMeters(motionPreference.matches ? 1 : 0);
+      isVisible = entries[0].isIntersecting;
+      if (isVisible) startPlayback(true);
+      else stopPlayback();
+    }, { threshold: .06 }).observe(costSystem);
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopPlayback();
+      else startPlayback(true);
+    });
+    function motionChanged() {
+      stopPlayback();
+      isPaused = false;
+      if (toggle) {
+        toggle.disabled = reduceMotion.matches;
+        toggle.textContent = reduceMotion.matches ? 'Motion reduced' : 'Pause';
+        toggle.setAttribute('aria-label', reduceMotion.matches ? 'Animation disabled by reduced motion preference' : 'Pause benchmark animation');
+      }
+      startPlayback(true);
+    }
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', motionChanged);
+    else reduceMotion.addListener(motionChanged);
+    setProgress(reduceMotion.matches ? 1 : 0);
+    motionChanged();
   }
 
+  /* Fixed horizontal contents glider. */
   var nav = document.querySelector('.os-section-nav');
   if (nav) {
-    var scroll = nav.querySelector('.os-section-nav-scroll');
+    var navScroll = nav.querySelector('.os-section-nav-scroll');
     var links = Array.prototype.slice.call(nav.querySelectorAll('[data-os-section]'));
     var glider = nav.querySelector('.os-section-glider');
     var sections = links.map(function (link) { return document.getElementById(link.dataset.osSection); });
     var active = -1;
-    var frame = null;
+    var navFrame = null;
+    var navReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     function place(index, reveal) {
       var link = links[index];
       if (!link || !glider) return;
       glider.style.width = link.offsetWidth + 'px';
       glider.style.setProperty('--os-glider-x', link.offsetLeft + 'px');
-      if (reveal) link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (reveal && navScroll) {
+        var target = link.offsetLeft - (navScroll.clientWidth - link.offsetWidth) / 2;
+        navScroll.scrollTo({ left: Math.max(0, target), behavior: navReduceMotion.matches ? 'auto' : 'smooth' });
+      }
     }
+
     function select(index, reveal) {
       if (index === active) return;
       active = index;
@@ -147,29 +266,25 @@
       });
       place(index, reveal);
     }
-    function sync() {
-      frame = null;
-      var marker = window.innerHeight * .36;
+
+    function syncNavigation() {
+      navFrame = null;
+      var marker = window.innerHeight * .34;
       var index = 0;
-      sections.forEach(function (section, i) { if (section && section.getBoundingClientRect().top <= marker) index = i; });
+      sections.forEach(function (section, i) {
+        if (section && section.getBoundingClientRect().top <= marker) index = i;
+      });
       select(index, true);
     }
-    links.forEach(function (link, index) { link.addEventListener('click', function () { select(index, false); }); });
-    window.addEventListener('scroll', function () { if (frame === null) frame = requestAnimationFrame(sync); }, { passive: true });
+
+    links.forEach(function (link, index) {
+      link.addEventListener('click', function () { select(index, false); });
+    });
+    window.addEventListener('scroll', function () {
+      if (navFrame === null) navFrame = requestAnimationFrame(syncNavigation);
+    }, { passive: true });
     window.addEventListener('resize', function () { place(active, true); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(active, false); });
-    sync();
+    syncNavigation();
   }
-
-  var pipeline = document.querySelector('[data-pipeline]');
-  var replay = document.querySelector('.os-replay');
-  function runPipeline() {
-    if (!pipeline) return;
-    pipeline.classList.remove('is-running');
-    void pipeline.offsetWidth;
-    pipeline.classList.add('is-running');
-  }
-  if (replay) replay.addEventListener('click', runPipeline);
-  runPipeline();
-
 })();
