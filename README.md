@@ -108,9 +108,10 @@ opensiro-web/
   `.archive/opensiro-harness-evaluation/`.
 - The article uses a fixed bottom table of contents. Its pale-blue glider follows
   the visible section; on mobile, links scroll to keep the active section in view.
-- The hero animates commits through 5× SLM harness deltas to approved or rejected
-  screening decisions. The loop pauses offscreen and in hidden tabs, and reduced
-  motion shows static results. Inline term explanations
+- The hero animates commits through a block flow of 5× SLM harness deltas to
+  approved or rejected screening decisions. The Terminal-Bench reference shows
+  both its published token count and cost. The loop pauses offscreen and in hidden
+  tabs, and reduced motion shows static results. Inline term explanations
   appear above Multi-fidelity, 5× SLM, and frontier evaluation on hover, focus,
   or tap; Escape and tapping outside dismiss them.
 - Research includes Stack push/pop, Pills, and Tic-tac-toe training pairs, animated once with replay
