@@ -42,6 +42,27 @@
     button.addEventListener('blur', closeTerm);
     button.addEventListener('click', function () { showTerm(button, tip); });
   });
+  var sourceTip = document.querySelector('[data-source-tooltip]');
+  if (sourceTip) {
+    if (document.body) document.body.appendChild(sourceTip);
+    document.querySelectorAll('.os-cite[data-citation]').forEach(function (trigger) {
+      function showSource() {
+        sourceTip.textContent = trigger.dataset.citation;
+        showTerm(trigger, sourceTip);
+      }
+      trigger.addEventListener('pointerenter', function (event) {
+        if (event.pointerType !== 'touch') showSource();
+      });
+      trigger.addEventListener('pointerleave', function () {
+        if (document.activeElement !== trigger) termCloseTimer = setTimeout(closeTerm, 160);
+      });
+      trigger.addEventListener('focus', showSource);
+      trigger.addEventListener('blur', closeTerm);
+      if (trigger.tagName === 'BUTTON') trigger.addEventListener('click', showSource);
+    });
+    sourceTip.addEventListener('pointerenter', function () { clearTimeout(termCloseTimer); });
+    sourceTip.addEventListener('pointerleave', function () { termCloseTimer = setTimeout(closeTerm, 160); });
+  }
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeTerm(); });
   document.addEventListener('pointerdown', function (event) {
     if (openTerm && !openTerm.button.contains(event.target) && !openTerm.tip.contains(event.target)) closeTerm();
@@ -76,12 +97,13 @@
     var llmCostMeter = costSystem.querySelector('[data-llm-cost-meter]');
     var llmTimeMeter = costSystem.querySelector('[data-llm-time-meter]');
     var playbackLength = 18000;
-    var playbackPause = 3600;
     var playbackStart = performance.now();
     var isVisible = false;
     var isPaused = false;
     var pausedElapsed = 0;
     var animationFrame = null;
+    var hasStarted = false;
+    var hasCompleted = false;
     var llmTokens = 735197348;
     var llmCost = 2059.19;
     var referenceTrials = 445;
@@ -169,12 +191,17 @@
       animationFrame = null;
       if (!isVisible || isPaused || document.hidden || reduceMotion.matches) return;
       var elapsed = now - playbackStart;
-      var cycle = playbackLength + playbackPause;
-      if (elapsed >= cycle) {
-        playbackStart = now;
-        elapsed = 0;
+      if (elapsed >= playbackLength) {
+        setProgress(1);
+        hasCompleted = true;
+        if (toggle) {
+          toggle.disabled = true;
+          toggle.textContent = 'Complete';
+          toggle.setAttribute('aria-label', 'Benchmark animation complete');
+        }
+        return;
       }
-      setProgress(Math.min(elapsed / playbackLength, 1));
+      setProgress(elapsed / playbackLength);
       animationFrame = requestAnimationFrame(draw);
     }
 
@@ -182,11 +209,21 @@
       if (reduceMotion.matches) {
         setProgress(1);
         stage.textContent = 'Comparison complete · motion reduced';
+        hasCompleted = true;
         return;
       }
       if (isPaused) return;
-      if (restart) playbackStart = performance.now();
-      if (isVisible && !document.hidden && animationFrame === null) animationFrame = requestAnimationFrame(draw);
+      if (restart) {
+        playbackStart = performance.now();
+        hasStarted = true;
+        hasCompleted = false;
+      }
+      if (!isVisible || document.hidden || animationFrame !== null || hasCompleted) return;
+      if (!hasStarted) {
+        playbackStart = performance.now();
+        hasStarted = true;
+      }
+      animationFrame = requestAnimationFrame(draw);
     }
 
     function stopPlayback() {
@@ -197,6 +234,7 @@
     if (replay) replay.addEventListener('click', function () {
       isPaused = false;
       if (toggle && !reduceMotion.matches) {
+        toggle.disabled = false;
         toggle.textContent = 'Pause';
         toggle.setAttribute('aria-label', 'Pause benchmark animation');
       }
@@ -204,7 +242,7 @@
       startPlayback(true);
     });
     if (toggle) toggle.addEventListener('click', function () {
-      if (reduceMotion.matches) return;
+      if (reduceMotion.matches || hasCompleted) return;
       isPaused = !isPaused;
       toggle.textContent = isPaused ? 'Resume' : 'Pause';
       toggle.setAttribute('aria-label', isPaused ? 'Resume benchmark animation' : 'Pause benchmark animation');
@@ -219,23 +257,32 @@
 
     new IntersectionObserver(function (entries) {
       isVisible = entries[0].isIntersecting;
-      if (isVisible) startPlayback(true);
+      if (isVisible) startPlayback(false);
       else stopPlayback();
     }, { threshold: .06 }).observe(costSystem);
 
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) stopPlayback();
-      else startPlayback(true);
+      else startPlayback(false);
     });
     function motionChanged() {
       stopPlayback();
       isPaused = false;
       if (toggle) {
-        toggle.disabled = reduceMotion.matches;
-        toggle.textContent = reduceMotion.matches ? 'Motion reduced' : 'Pause';
-        toggle.setAttribute('aria-label', reduceMotion.matches ? 'Animation disabled by reduced motion preference' : 'Pause benchmark animation');
+        toggle.disabled = reduceMotion.matches || hasCompleted;
+        toggle.textContent = reduceMotion.matches ? 'Motion reduced' : hasCompleted ? 'Complete' : 'Pause';
+        toggle.setAttribute('aria-label', reduceMotion.matches ? 'Animation disabled by reduced motion preference' : hasCompleted ? 'Benchmark animation complete' : 'Pause benchmark animation');
       }
-      startPlayback(true);
+      if (reduceMotion.matches) {
+        setProgress(1);
+        hasCompleted = true;
+      } else if (!hasCompleted || !hasStarted) {
+        if (!hasStarted) {
+          setProgress(0);
+          hasCompleted = false;
+        }
+        startPlayback(false);
+      }
     }
     if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', motionChanged);
     else reduceMotion.addListener(motionChanged);
