@@ -46,17 +46,12 @@
 
   var commitDemo = document.querySelector('.os-commit-demo');
   if (commitDemo) {
-    var commitToggle = commitDemo.querySelector('.os-commit-toggle');
     var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var userPaused = false;
     var demoVisible = false;
     function syncCommitMotion() {
       commitDemo.classList.toggle('is-animated', !motionPreference.matches);
-      commitDemo.classList.toggle('is-paused', userPaused || !demoVisible || document.hidden);
-      commitToggle.hidden = motionPreference.matches;
-      commitToggle.textContent = userPaused ? 'Resume animation' : 'Pause animation';
+      commitDemo.classList.toggle('is-paused', !demoVisible || document.hidden);
     }
-    commitToggle.addEventListener('click', function () { userPaused = !userPaused; syncCommitMotion(); });
     new IntersectionObserver(function (entries) {
       demoVisible = entries[0].isIntersecting;
       syncCommitMotion();
