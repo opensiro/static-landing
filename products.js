@@ -2,6 +2,70 @@
 (function () {
   'use strict';
 
+  // Keep explanations above their terms, including at narrow viewport edges.
+  var openTerm = null;
+  var termCloseTimer = null;
+  function closeTerm() {
+    clearTimeout(termCloseTimer);
+    if (!openTerm) return;
+    openTerm.tip.hidden = true;
+    openTerm = null;
+  }
+  function showTerm(button, tip) {
+    closeTerm();
+    tip.hidden = false;
+    var rect = button.getBoundingClientRect();
+    var viewportWidth = document.documentElement.clientWidth;
+    tip.style.maxWidth = (viewportWidth - 24) + 'px';
+    var width = tip.offsetWidth;
+    tip.style.left = Math.max(12, Math.min(rect.left, viewportWidth - width - 12)) + 'px';
+    tip.style.top = Math.max(8, rect.top - tip.offsetHeight - 10) + 'px';
+    openTerm = { button: button, tip: tip };
+  }
+  document.querySelectorAll('.os-term-trigger').forEach(function (button) {
+    var tip = document.getElementById(button.getAttribute('aria-describedby'));
+    if (!tip) return;
+    document.body.appendChild(tip);
+    button.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') showTerm(button, tip); });
+    function scheduleClose() {
+      if (document.activeElement !== button) termCloseTimer = setTimeout(closeTerm, 160);
+    }
+    button.addEventListener('pointerleave', scheduleClose);
+    tip.addEventListener('pointerenter', function () { clearTimeout(termCloseTimer); });
+    tip.addEventListener('pointerleave', scheduleClose);
+    button.addEventListener('focus', function () { showTerm(button, tip); });
+    button.addEventListener('blur', closeTerm);
+    button.addEventListener('click', function () { showTerm(button, tip); });
+  });
+  document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeTerm(); });
+  document.addEventListener('pointerdown', function (event) {
+    if (openTerm && !openTerm.button.contains(event.target) && !openTerm.tip.contains(event.target)) closeTerm();
+  });
+  window.addEventListener('scroll', closeTerm, { passive: true });
+  window.addEventListener('resize', closeTerm);
+
+  var commitDemo = document.querySelector('.os-commit-demo');
+  if (commitDemo) {
+    var commitToggle = commitDemo.querySelector('.os-commit-toggle');
+    var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var userPaused = false;
+    var demoVisible = false;
+    function syncCommitMotion() {
+      commitDemo.classList.toggle('is-animated', !motionPreference.matches);
+      commitDemo.classList.toggle('is-paused', userPaused || !demoVisible || document.hidden);
+      commitToggle.hidden = motionPreference.matches;
+      commitToggle.textContent = userPaused ? 'Resume animation' : 'Pause animation';
+    }
+    commitToggle.addEventListener('click', function () { userPaused = !userPaused; syncCommitMotion(); });
+    new IntersectionObserver(function (entries) {
+      demoVisible = entries[0].isIntersecting;
+      syncCommitMotion();
+    }).observe(commitDemo);
+    document.addEventListener('visibilitychange', syncCommitMotion);
+    motionPreference.addEventListener('change', syncCommitMotion);
+    syncCommitMotion();
+  }
+
   var nav = document.querySelector('.os-section-nav');
   if (nav) {
     var scroll = nav.querySelector('.os-section-nav-scroll');
