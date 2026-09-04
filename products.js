@@ -57,20 +57,21 @@
     var toggle = document.querySelector('[data-run-toggle]');
     var clock = costSystem.querySelector('[data-run-clock]');
     var stage = costSystem.querySelector('[data-run-stage]');
-    var slmPanel = costSystem.querySelector('[data-run-panel="slm"]');
+    var flashPanel = costSystem.querySelector('[data-run-panel="flash"]');
     var llmPanel = costSystem.querySelector('[data-run-panel="llm"]');
     var commitCard = costSystem.querySelector('[data-commit-active]');
     var commitState = costSystem.querySelector('[data-commit-state]');
     var commitProgress = costSystem.querySelector('[data-commit-progress]');
-    var slmRunState = costSystem.querySelector('[data-slm-run-state]');
+    var flashRunState = costSystem.querySelector('[data-flash-run-state]');
     var llmRunState = costSystem.querySelector('[data-llm-run-state]');
     var modelLanes = Array.prototype.slice.call(costSystem.querySelectorAll('.os-model-lane'));
     var modelBars = Array.prototype.slice.call(costSystem.querySelectorAll('[data-model-progress]'));
     var llmBar = costSystem.querySelector('[data-llm-progress]');
     var llmPercent = costSystem.querySelector('[data-llm-percent]');
-    var slmTokenMeter = costSystem.querySelector('[data-slm-token-meter]');
-    var slmCostMeter = costSystem.querySelector('[data-slm-cost-meter]');
-    var slmTimeMeter = costSystem.querySelector('[data-slm-time-meter]');
+    var flashTokenMeter = costSystem.querySelector('[data-flash-token-meter]');
+    var flashCostMeter = costSystem.querySelector('[data-flash-cost-meter]');
+    var flashTimeMeter = costSystem.querySelector('[data-flash-time-meter]');
+    var flashAdvantageMeter = costSystem.querySelector('[data-flash-advantage]');
     var llmTokenMeter = costSystem.querySelector('[data-llm-token-meter]');
     var llmCostMeter = costSystem.querySelector('[data-llm-cost-meter]');
     var llmTimeMeter = costSystem.querySelector('[data-llm-time-meter]');
@@ -88,14 +89,15 @@
     var referenceSecondsPerTrial = 482.6;
     var inputPerModel = (336797311 + 392433664) * candidateTasks / referenceTrials;
     var outputPerModel = 5966373 * candidateTasks / referenceTrials;
-    var slmTokens = (inputPerModel + outputPerModel) * modelLanes.length;
-    var slmCost = modelLanes.reduce(function (sum, lane) {
+    var flashTokens = (inputPerModel + outputPerModel) * modelLanes.length;
+    var modelCosts = modelLanes.map(function (lane) {
       var estimate = inputPerModel * Number(lane.dataset.inputRate) / 1000000 + outputPerModel * Number(lane.dataset.outputRate) / 1000000;
-      lane.querySelector('[data-model-cost]').textContent = estimate === 0 ? 'Free' : money(estimate);
-      return sum + estimate;
-    }, 0);
-    var slmMinutes = candidateTasks * referenceSecondsPerTrial / 60;
+      return estimate;
+    });
+    var flashCost = modelCosts.reduce(function (sum, estimate) { return sum + estimate; }, 0);
+    var flashMinutes = candidateTasks * referenceSecondsPerTrial / 60;
     var llmMinutes = referenceTrials * referenceSecondsPerTrial / 60;
+    var flashCostAdvantage = llmCost / flashCost;
 
     function clamp(value) { return Math.max(0, Math.min(1, value)); }
     function ease(value) { return 1 - Math.pow(1 - clamp(value), 3); }
@@ -121,37 +123,40 @@
     }
 
     function setProgress(progress) {
-      var slmProgress = ease((progress - .13) / .49);
+      var flashProgress = ease((progress - .13) / .49);
       var frontierProgress = ease((progress - .13) / .77);
 
-      modelBars.forEach(function (bar) {
-        bar.style.width = (slmProgress * 100).toFixed(2) + '%';
+      modelBars.forEach(function (bar, index) {
+        bar.style.width = (flashProgress * 100).toFixed(2) + '%';
+        var modelCostMeter = modelLanes[index].querySelector('[data-model-cost]');
+        setText(modelCostMeter, modelCosts[index] === 0 ? 'Free' : money(modelCosts[index] * flashProgress));
       });
       llmBar.style.width = (frontierProgress * 100).toFixed(2) + '%';
       llmPercent.textContent = Math.round(frontierProgress * 100) + '%';
 
-      slmTokenMeter.textContent = compactTokens(slmTokens * slmProgress);
-      slmCostMeter.textContent = money(slmCost * slmProgress);
-      slmTimeMeter.textContent = duration(slmMinutes * slmProgress);
+      flashTokenMeter.textContent = compactTokens(flashTokens * flashProgress);
+      flashCostMeter.textContent = money(flashCost * flashProgress);
+      flashTimeMeter.textContent = duration(flashMinutes * flashProgress);
+      setText(flashAdvantageMeter, flashProgress < 1 ? 'calculating…' : Math.round(flashCostAdvantage) + '× lower cost');
       llmTokenMeter.textContent = compactTokens(llmTokens * frontierProgress);
       llmCostMeter.textContent = money(llmCost * frontierProgress);
       llmTimeMeter.textContent = duration(llmMinutes * frontierProgress);
       clock.textContent = runClock(progress);
 
-      slmPanel.classList.toggle('is-active', progress >= .06 && progress < .62);
+      flashPanel.classList.toggle('is-active', progress >= .06 && progress < .62);
       llmPanel.classList.toggle('is-active', progress >= .06 && progress < .90);
-      slmPanel.classList.toggle('is-complete', progress >= .62);
+      flashPanel.classList.toggle('is-complete', progress >= .62);
       llmPanel.classList.toggle('is-complete', progress >= .90);
       costSystem.classList.toggle('is-complete', progress >= .90);
       commitCard.classList.toggle('is-running', progress >= .06 && progress < .62);
       commitCard.classList.toggle('is-complete', progress >= .62);
-      commitProgress.style.width = (slmProgress * 100).toFixed(2) + '%';
+      commitProgress.style.width = (flashProgress * 100).toFixed(2) + '%';
       setText(commitState, progress < .06 ? 'queued' : progress < .13 ? 'dispatched' : progress < .62 ? 'running' : 'evidence saved');
-      setText(slmRunState, progress < .13 ? 'queued' : progress < .62 ? 'running' : 'evidence');
+      setText(flashRunState, progress < .13 ? 'queued' : progress < .62 ? 'running' : 'evidence');
       setText(llmRunState, progress < .13 ? 'queued' : progress < .90 ? 'running' : 'complete');
       if (progress < .06) setText(stage, 'Commit + hypothesis queued');
       else if (progress < .13) setText(stage, 'Dispatching both runs');
-      else if (progress < .62) setText(stage, 'Flash / Small + LLM running');
+      else if (progress < .62) setText(stage, 'Cross-Flash + LLM running');
       else if (progress < .90) setText(stage, 'Sandbox evidence ready · baseline running');
       else setText(stage, 'Comparison complete');
     }
