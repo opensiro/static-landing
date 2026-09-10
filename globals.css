@@ -716,3 +716,4 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
   .workflow-lane{padding:18px 14px}
   .workflow-intro{font-size:12px}
 }
+.idea-statement{padding:104px 0}.idea-copy{display:grid;gap:28px;max-width:820px;margin:0 auto;text-align:center}.idea-copy p{margin:0;font-size:clamp(1.05rem,2vw,1.4rem);line-height:1.75;letter-spacing:-.025em;color:#454844}.idea-copy p+p{color:var(--muted-2)}.hero-coordinate:has(>span:only-child){justify-content:flex-start}@media(max-width:760px){.idea-statement{padding:72px 0}.idea-copy{gap:22px}.idea-copy p{font-size:1rem;line-height:1.7}}
