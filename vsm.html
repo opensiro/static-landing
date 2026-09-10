@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
 <link rel="stylesheet" href="products.css?v=20260904-flow">
-<link rel="stylesheet" href="vsm.css?v=20260910-system">
+<link rel="stylesheet" href="vsm.css?v=20260910-beer">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png?v=20260907-theme" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64-dark.png?v=20260907-theme" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
@@ -51,20 +51,25 @@
       <button type="button" role="tab" id="tab-s5" aria-selected="false" aria-controls="system-panel" data-system="s5" tabindex="-1"><b>S5</b><span>Constrain</span></button>
     </div>
     <div class="system-stage" id="system-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-s1">
-      <div class="system-copy"><span data-system-code>S1 / OPERATION</span><strong data-system-title>Do the work</strong><p data-system-thesis>Autonomous units turn missions into outcomes.</p><small data-system-detail>A function—not one agent. Backend may contain API, Storage and Data units, each with its own agents.</small></div>
-      <div class="system-diagram role-s1" data-system-diagram aria-label="S1 operating diagram">
-        <div class="role-environment"><span>MISSION</span><i>↓</i></div>
-        <div class="role-actor"><img src="assets/mascot-logo.png" width="50" height="84" alt=""><b data-role-label>OPERATE</b></div>
-        <div class="role-output"><span>API</span><span>STORAGE</span><span>DATA</span></div>
-        <div class="role-signal" data-role-signal>WORK → OUTCOME</div>
+      <div class="system-copy"><span data-system-code>S1 / OPERATION</span><strong data-system-title>Do the work</strong><p data-system-thesis>Turn missions into outcomes.</p></div>
+      <div class="system-diagram role-s1" data-system-diagram aria-label="S1 units execute work">
+        <div class="scene-grid" aria-hidden="true"></div>
+        <div class="scene-console" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+        <div class="scene-vessels" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <div class="scene-actor actor-lead"><span class="role-tag" data-lead-role>S1</span><img src="assets/mascot-logo.gif" width="46" height="78" alt=""><i class="role-prop" aria-hidden="true"></i></div>
+        <div class="scene-actor actor-one"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
+        <div class="scene-actor actor-two"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
+        <div class="scene-actor actor-three"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
+        <div class="scene-packets" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="scene-environment" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+        <div class="scene-boundary" aria-hidden="true"></div>
       </div>
     </div>
   </div>
   <p class="model-source">Systems 1–5 follow Beer’s VSM; S3* is exposed as its own inspection view. <a href="https://metaphorum.org/staffords-work/viable-system-model" target="_blank" rel="noopener">Reference ↗</a></p>
 </div></section>
 
-<section class="poster compatibility-poster" id="layers" aria-label="Compatibility layers"><div class="wrap">
-  <div class="section-index">02 / COMPATIBILITY</div>
+<section class="poster compatibility-poster" id="layers" aria-label="Technology layers"><div class="wrap">
   <div class="compat-stack">
     <div class="compat-row is-open"><span>04</span><strong>ORGANIZATION</strong><p>responsibility · autonomy · continuity</p><div><b>OPEN METHODOLOGY</b></div></div>
     <div class="compat-row is-vsm"><span>03</span><strong>VSMLITE</strong><p>recursive control · synthesis · evolution</p><div><b>RESEARCH LAYER</b></div></div>
@@ -75,16 +80,15 @@
     </div></div>
     <div class="compat-row"><span>01</span><strong>RUNTIME</strong><p>state · tools · handoffs · workflows</p><div class="compat-tools">
       <a href="https://docs.langchain.com/oss/python/langgraph/overview" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/langchain/18181b" alt=""><small>LangGraph</small></a>
-      <a href="https://openai.github.io/openai-agents-python/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/openai/openai-agents-python/main/docs/assets/logo.svg" alt=""><small>Agents SDK</small></a>
+      <a href="https://openai.github.io/openai-agents-python/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/openai/18181b" alt=""><small>Agents SDK</small></a>
       <a href="https://microsoft.github.io/autogen/stable/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/microsoft/autogen/main/python/docs/src/_static/images/logo/logo.svg" alt=""><small>AutoGen</small></a>
     </div></div>
     <div class="compat-row"><span>00</span><strong>INFRASTRUCTURE</strong><p>compute · isolation · scheduling</p><div class="compat-tools">
       <a href="https://kubernetes.io/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/kubernetes/18181b" alt=""><small>Kubernetes</small></a>
       <a href="https://www.docker.com/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/docker/18181b" alt=""><small>Docker</small></a>
-      <a href="https://e2b.dev/" target="_blank" rel="noopener"><span class="tool-monogram">E2B</span><small>E2B</small></a>
+      <a href="https://e2b.dev/" target="_blank" rel="noopener"><img src="https://e2b.dev/brand/e2b-symbol-black-m.svg" alt=""><small>E2B</small></a>
     </div></div>
   </div>
-  <div class="compat-equation"><span>KEEP THE STACK</span><b>+</b><span>ADD ORGANIZATIONAL CONTROL</span></div>
 </div></section>
 
 <section class="poster poster-light use-poster" id="fit" aria-label="When to use VSM"><div class="wrap">
@@ -116,41 +120,30 @@
   </div>
 </div></section>
 
-<section class="poster poster-dark synthesis-poster" id="harness" aria-labelledby="synthesis-title"><div class="wrap">
-  <header class="process-head"><span>05 / ORGANIZATIONAL SYNTHESIS</span><h2 id="synthesis-title">From intent<br><em>to a viable system.</em></h2><div class="process-controls"><button type="button" data-osm-toggle aria-label="Pause organizational synthesis animation">Pause</button><button type="button" data-osm-replay>↻ Replay</button></div></header>
-
-  <ol class="osm-timeline" data-osm-timeline aria-label="Organizational synthesis phases">
-    <li class="is-active"><span>0</span><b>Intent</b></li><li><span>1</span><b>Operations</b></li><li><span>2</span><b>S2</b></li><li><span>3</span><b>S3</b></li><li><span>4</span><b>S3*</b></li><li><span>5</span><b>S4</b></li><li><span>6</span><b>S5</b></li>
-  </ol>
-
-  <figure class="osm-figure" data-osm-figure style="--osm-progress:0%">
-    <figcaption><span data-osm-stage>Intent</span><b data-osm-state>Parent identifies a missing viable function</b></figcaption>
-    <div class="osm-graph">
-      <div class="osm-parent"><img src="assets/mascot-logo.png" width="42" height="70" alt=""><span>EXISTING VSM</span></div>
-      <div class="osm-transfer"><i>→</i><small>ASSISTED VIABILITY</small></div>
-      <div class="osm-child">
-        <div class="osm-shell"><span>CANDIDATE ORGANIZATION</span><b data-osm-autonomy>A = 0</b></div>
-        <div class="osm-org">
-          <div class="osm-node node-s5"><b>S5</b><small>identity</small></div>
-          <div class="osm-node node-s4"><b>S4</b><small>adapt</small></div>
-          <div class="osm-node node-s3"><b>S3</b><small>regulate</small></div>
-          <div class="osm-node node-s3x"><b>S3*</b><small>verify</small></div>
-          <div class="osm-node node-s2"><b>S2</b><small>coordinate</small></div>
-          <div class="osm-units"><span>S1.A</span><span>S1.B</span><span>S1.C</span></div>
-        </div>
-      </div>
+<section class="poster poster-dark autonomy-poster" id="autonomy" aria-labelledby="autonomy-title"><div class="wrap">
+  <header class="process-head"><span>04 / AUTONOMY</span><h2 id="autonomy-title">A viable system<br><em>buys time.</em></h2><div class="process-controls"><button type="button" data-autonomy-toggle aria-label="Pause autonomy animation">Pause</button><button type="button" data-autonomy-replay>↻ Replay</button></div></header>
+  <figure class="beer-figure" data-autonomy-figure data-stage="0" style="--autonomy-progress:0%">
+    <figcaption><span>HYPOTHETICAL · NOT MEASURED</span><b data-autonomy-state>S1 keeps work moving</b><div><small>WITHOUT HUMAN TOUCH</small><strong data-autonomy-horizon>&lt; 1 DAY</strong></div></figcaption>
+    <div class="autonomy-track" aria-hidden="true"><i></i><b></b><em></em></div>
+    <div class="beer-map" aria-label="Beer viable system model">
+      <div class="beer-node beer-s5"><b>S5</b><span>IDENTITY</span></div>
+      <div class="beer-node beer-s4"><b>S4</b><span>OUTSIDE + NEXT</span></div>
+      <div class="beer-environment"><span>DYNAMIC ENVIRONMENT</span><i></i><i></i><i></i></div>
+      <div class="beer-node beer-s3"><b>S3</b><span>INSIDE + NOW</span></div>
+      <div class="beer-node beer-s3x"><b>S3*</b><span>INDEPENDENT AUDIT</span></div>
+      <div class="beer-node beer-s2"><b>S2</b><span>COORDINATION</span></div>
+      <div class="beer-operations"><div class="beer-node"><b>S1</b><span>UNIT A</span></div><div class="beer-node"><b>S1</b><span>UNIT B</span></div><div class="beer-node"><b>S1</b><span>UNIT C</span></div></div>
+      <div class="beer-bus bus-main" aria-hidden="true"></div><div class="beer-bus bus-future" aria-hidden="true"></div><div class="beer-bus bus-audit" aria-hidden="true"></div>
     </div>
-    <div class="osm-motion" aria-hidden="true"><i></i><b></b></div>
+    <ol class="autonomy-roles" data-autonomy-roles><li class="is-active"><b>S1</b><span>&lt; 1 day</span></li><li><b>+S2</b><span>days–weeks</span></li><li><b>+S3</b><span>weeks</span></li><li><b>+S3*</b><span>weeks+</span></li><li><b>+S4</b><span>months*</span></li><li><b>+S5</b><span>open-ended*</span></li></ol>
   </figure>
-  <div class="osm-primitives"><span>SPLIT</span><span>MERGE</span><span>INTERSECT</span><span>REMOVE</span><span>RECONFIGURE</span></div>
-  <p class="osm-source">OSM models change as transitions between complete organizational snapshots—not creation from an empty state. <a href="https://github.com/opensiro/terminal-bench-vsm/blob/main/vsmlite-tb/osm.md" target="_blank" rel="noopener">Read OSM draft ↗</a></p>
+  <p class="autonomy-source">A conceptual horizon, not an SLA. S4 adds value only when the external environment changes; S5 preserves identity as adaptation compounds. <a href="https://github.com/opensiro/terminal-bench-vsm/blob/main/vsmlite-tb/osm.md" target="_blank" rel="noopener">OSM draft ↗</a></p>
 </div></section>
 
 <section class="poster poster-blue" id="vsmlite" aria-labelledby="vsmlite-title"><div class="wrap">
-  <header class="poster-head"><span>06 / VSMLITE</span><h2 id="vsmlite-title">A small implementation<br><em>for testing the methodology.</em></h2></header>
+  <header class="poster-head"><span>05 / VSMLITE</span><h2 id="vsmlite-title">A small implementation<br><em>for testing the methodology.</em></h2></header>
   <div class="vsmlite-category">
     <div class="vsmlite-core"><img src="assets/vsmlite-mark.svg?v=20260903-pale-blue" width="96" height="96" alt=""><strong>VSMLITE</strong><span>EXPERIMENTAL PROTOTYPE / SEPTEMBER 2026</span></div>
-    <div class="vsmlite-tests"><span>COMPARE</span><b>CENTRAL SUPERVISOR</b><i>VS</i><b>RECURSIVE ORGANIZATION</b><small>10–50 / 50–200 / 200–1,000 agents</small></div>
     <div class="vsmlite-signals"><span>MEASURE</span><b>completion</b><b>coordination</b><b>conflicts</b><b>interventions</b><b>recovery</b><b>legibility</b></div>
   </div>
   <div class="claim-boundary"><div><span>EXPLORES</span><p>recursive autonomy · stable roles · escalation · independent inspection · organizational synthesis</p></div><div><span>DOES NOT YET DEMONSTRATE</span><p>1,000-agent production deployment · organizational autoscaling · universal superiority over centralized orchestration</p></div></div>
@@ -159,9 +152,9 @@
 </div></section>
 </main>
 
-<nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Compatibility</a><a href="#fit">When use</a><a href="#harness">Synthesis</a><a href="#vsmlite">VSMLite</a></div></nav>
+<nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Layers</a><a href="#fit">When use</a><a href="#autonomy">Autonomy</a><a href="#vsmlite">VSMLite</a></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260910-vsm" defer></script>
-<script src="vsm.js?v=20260910-system" defer></script>
+<script src="vsm.js?v=20260910-beer" defer></script>
 </body>
 </html>

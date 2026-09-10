@@ -1,14 +1,14 @@
-/* VSMLite — accessible system browser and OSM synthesis playback. */
+/* VSMLite — role diorama and autonomy horizon. */
 (function () {
   'use strict';
 
   var systems = {
-    s1: { code:'S1 / OPERATION', title:'Do the work', thesis:'Autonomous units turn missions into outcomes.', detail:'A function—not one agent. Backend may contain API, Storage and Data units, each with its own agents.', env:'MISSION', role:'OPERATE', nodes:['API','STORAGE','DATA'], signal:'WORK → OUTCOME' },
-    s2: { code:'S2 / COORDINATION', title:'Detect interference', thesis:'Watch S1 units, surface conflicts and synchronize peers.', detail:'S2 does not absorb local authority. It issues alerts and coordination signals when autonomous work starts to collide.', env:'UNIT SIGNALS', role:'ALERT + SYNC', nodes:['CONFLICT','DEPENDENCY','CAPACITY'], signal:'PEER COORDINATION / NO CENTRAL COMMAND' },
-    s3: { code:'S3 / INSIDE + NOW', title:'Optimize operation', thesis:'Allocate shared resources and resolve escalations.', detail:'S3 sees the current whole: it balances budget, priority and capacity while S1 units keep operating locally.', env:'LOCAL REPORTS', role:'OPTIMIZE', nodes:['BUDGET','PRIORITY','ESCALATION'], signal:'GLOBAL VIEW → LOCAL DECISIONS' },
-    s3x:{ code:'S3* / AUDIT', title:'Verify reality', thesis:'Sample operations independently of their self-reports.', detail:'S3* checks traces, evaluations and anomalies when information asymmetry makes normal reporting insufficient.', env:'REALITY SAMPLE', role:'VERIFY', nodes:['TRACES','EVALS','ANOMALIES'], signal:'EVIDENCE BYPASSES SELF-REPORT' },
-    s4: { code:'S4 / OUTSIDE + NEXT', title:'Evolve the system', thesis:'Model alternatives before changing the organization.', detail:'S4 reads the environment, runs experiments and proposes new planners, routing, memory or organizational topology.', env:'ENVIRONMENT', role:'EVOLVE', nodes:['SIMULATE','COMPARE','RESTRUCTURE'], signal:'PRESENT SYSTEM ↔ POSSIBLE SYSTEM' },
-    s5: { code:'S5 / IDENTITY', title:'Protect the boundary', thesis:'Define what adaptation cannot silently rewrite.', detail:'S5 holds identity, policy, security and limits—the invariants inside which autonomous evolution remains legitimate.', env:'IDENTITY', role:'CONSTRAIN', nodes:['POLICY','SECURITY','LIMITS'], signal:'AUTONOMY INSIDE A BOUNDARY' }
+    s1: { code:'S1 / OPERATION', title:'Do the work', thesis:'Turn missions into outcomes.', role:'S1', label:'S1 units execute work' },
+    s2: { code:'S2 / COORDINATION', title:'Prevent collisions', thesis:'Synchronize autonomous peers.', role:'S2', label:'S2 routes signals between S1 units' },
+    s3: { code:'S3 / INSIDE + NOW', title:'Tune the system', thesis:'Read metrics. Reallocate capacity.', role:'S3', label:'S3 studies metrics while S1 units operate' },
+    s3x:{ code:'S3* / AUDIT', title:'Check reality', thesis:'Sample work outside self-reporting.', role:'S3*', label:'S3 star independently inspects S1 units' },
+    s4: { code:'S4 / OUTSIDE + NEXT', title:'Read the outside', thesis:'Only needed when the environment moves.', role:'S4', label:'S4 reads a changing external environment' },
+    s5: { code:'S5 / IDENTITY', title:'Hold the boundary', thesis:'Keep adaptation legitimate.', role:'S5', label:'S5 protects the organizational boundary' }
   };
 
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-system]'));
@@ -17,12 +17,8 @@
     var code = panel.querySelector('[data-system-code]');
     var title = panel.querySelector('[data-system-title]');
     var thesis = panel.querySelector('[data-system-thesis]');
-    var detail = panel.querySelector('[data-system-detail]');
     var diagram = panel.querySelector('[data-system-diagram]');
-    var environment = diagram.querySelector('.role-environment span');
-    var role = diagram.querySelector('[data-role-label]');
-    var outputs = Array.prototype.slice.call(diagram.querySelectorAll('.role-output span'));
-    var signal = diagram.querySelector('[data-role-signal]');
+    var leadRole = diagram.querySelector('[data-lead-role]');
 
     function select(tab, moveFocus) {
       var key = tab.getAttribute('data-system');
@@ -37,13 +33,9 @@
       code.textContent = item.code;
       title.textContent = item.title;
       thesis.textContent = item.thesis;
-      detail.textContent = item.detail;
-      environment.textContent = item.env;
-      role.textContent = item.role;
-      outputs.forEach(function (output, index) { output.textContent = item.nodes[index]; });
-      signal.textContent = item.signal;
+      leadRole.textContent = item.role;
       diagram.className = 'system-diagram role-' + key;
-      diagram.setAttribute('aria-label', item.code + ': ' + item.title);
+      diagram.setAttribute('aria-label', item.label);
       if (moveFocus) tab.focus();
     }
 
@@ -62,25 +54,24 @@
     });
   }
 
-  var figure = document.querySelector('[data-osm-figure]');
-  var timeline = Array.prototype.slice.call(document.querySelectorAll('[data-osm-timeline] li'));
-  var toggle = document.querySelector('[data-osm-toggle]');
-  var replay = document.querySelector('[data-osm-replay]');
-  if (!figure || !timeline.length || !toggle || !replay) return;
+  var figure = document.querySelector('[data-autonomy-figure]');
+  var roles = Array.prototype.slice.call(document.querySelectorAll('[data-autonomy-roles] li'));
+  var toggle = document.querySelector('[data-autonomy-toggle]');
+  var replay = document.querySelector('[data-autonomy-replay]');
+  if (!figure || !roles.length || !toggle || !replay) return;
 
-  var stages = [
-    ['Intent','Parent identifies a missing viable function','A = 0'],
-    ['Operations','Candidate S1 units begin doing the work','A = .15'],
-    ['Coordination','S2 emerges as interactions start to collide','A = .30'],
-    ['Regulation','S3 allocates shared resources and optimizes the whole','A = .48'],
-    ['Verification','S3* observes independently when asymmetry grows','A = .62'],
-    ['Adaptation','S4 models the environment and alternative structures','A = .80'],
-    ['Identity','S5 defines policy, identity and autonomy boundaries','A = 1']
+  var states = [
+    'S1 keeps work moving',
+    'S2 absorbs coordination noise',
+    'S3 corrects resource drift',
+    'S3* catches hidden failure',
+    'S4 adapts before the environment wins',
+    'S5 preserves purpose through change'
   ];
-  var stageLabel = figure.querySelector('[data-osm-stage]');
-  var stageState = figure.querySelector('[data-osm-state]');
-  var autonomy = figure.querySelector('[data-osm-autonomy]');
-  var duration = 15000;
+  var state = figure.querySelector('[data-autonomy-state]');
+  var horizon = figure.querySelector('[data-autonomy-horizon]');
+  var horizons = ['< 1 DAY','DAYS → WEEKS','WEEKS','WEEKS +','MONTHS *','OPEN-ENDED *'];
+  var duration = 14000;
   var frame = null;
   var startedAt = 0;
   var elapsed = 0;
@@ -91,13 +82,12 @@
 
   function setProgress(progress) {
     var bounded = Math.max(0, Math.min(1, progress));
-    var stage = Math.min(6, Math.floor(bounded * 7));
-    figure.style.setProperty('--osm-progress', (bounded * 100).toFixed(2) + '%');
+    var stage = Math.min(5, Math.floor(bounded * 6));
+    figure.style.setProperty('--autonomy-progress', (bounded * 100).toFixed(2) + '%');
     figure.setAttribute('data-stage', String(stage));
-    stageLabel.textContent = stages[stage][0];
-    stageState.textContent = stages[stage][1];
-    autonomy.textContent = stages[stage][2];
-    timeline.forEach(function (item, index) {
+    state.textContent = states[stage];
+    if (horizon) horizon.textContent = horizons[stage];
+    roles.forEach(function (item, index) {
       item.classList.toggle('is-active', index === stage);
       item.classList.toggle('is-complete', index < stage);
     });
@@ -136,7 +126,7 @@
     complete = false;
     toggle.disabled = false;
     toggle.textContent = 'Pause';
-    toggle.setAttribute('aria-label', 'Pause organizational synthesis animation');
+    toggle.setAttribute('aria-label', 'Pause autonomy animation');
     setProgress(0);
     start();
   }
@@ -145,7 +135,7 @@
     if (complete) return;
     paused = !paused;
     toggle.textContent = paused ? 'Resume' : 'Pause';
-    toggle.setAttribute('aria-label', paused ? 'Resume organizational synthesis animation' : 'Pause organizational synthesis animation');
+    toggle.setAttribute('aria-label', paused ? 'Resume autonomy animation' : 'Pause autonomy animation');
     if (paused) stop();
     else {
       startedAt = performance.now() - elapsed;
