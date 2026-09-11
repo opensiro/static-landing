@@ -131,4 +131,30 @@
     button.addEventListener('click', function () { setMaturity(button.getAttribute('data-osm-level')); });
   });
   setMaturity(0);
+
+  var sectionNav = document.querySelector('.vsm-section-nav');
+  if (sectionNav) {
+    var sectionLinks = Array.prototype.slice.call(sectionNav.querySelectorAll('a[href^="#"]'));
+    var sectionTargets = sectionLinks.map(function (link) { return document.querySelector(link.getAttribute('href')); });
+    var sectionFrame = null;
+    function syncSectionNav() {
+      sectionFrame = null;
+      var marker = window.innerHeight * .34;
+      var activeIndex = 0;
+      sectionTargets.forEach(function (section, index) {
+        if (section && section.getBoundingClientRect().top <= marker) activeIndex = index;
+      });
+      sectionLinks.forEach(function (link, index) {
+        var active = index === activeIndex;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (sectionFrame === null) sectionFrame = requestAnimationFrame(syncSectionNav);
+    }, { passive: true });
+    sectionLinks.forEach(function (link) { link.addEventListener('click', syncSectionNav); });
+    syncSectionNav();
+  }
 })();

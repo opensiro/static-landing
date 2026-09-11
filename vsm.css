@@ -556,3 +556,24 @@
 .use-heading{grid-template-columns:1fr}
 
 @media(max-width:680px){.hero-poster .section-export{right:15px}}
+
+/* One semantic poster link per section. */
+.section-export{left:0;right:auto;top:-48px;display:inline-flex;min-width:0;min-height:0;padding:0;border:0;background:transparent;backdrop-filter:none;font-size:.66rem;line-height:1.4;letter-spacing:.08em;color:var(--accent-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.section-export span{margin-left:7px}
+.section-export:hover,.section-export:focus-visible{background:transparent;color:var(--ink)}
+.poster-dark .section-export{right:auto;border:0;background:transparent;color:var(--accent)}
+.poster-dark .section-export:hover,.poster-dark .section-export:focus-visible{background:transparent;color:var(--bg)}
+.hero-poster .section-export{left:0;right:auto;top:-48px}
+.vsm-page{padding-bottom:51px}
+.vsm-section-nav{height:51px}
+.vsm-section-nav .wrap{width:100%;max-width:none;height:100%;padding:0}
+.vsm-section-nav a{display:block;height:auto;padding:15px 18px}
+.vsm-section-nav a.is-active{background:#e8eef9;color:var(--accent-ink)}
+@media(max-width:680px){
+ .section-export,.hero-poster .section-export{left:0;right:auto;top:-38px;font-size:.6rem}
+ .vsm-section-nav{height:47px}
+ .vsm-section-nav .wrap{width:100%;max-width:none}
+}
+
+.poster>.wrap>.section-export{left:32px}
+@media(max-width:680px){.poster>.wrap>.section-export{left:18px}}
