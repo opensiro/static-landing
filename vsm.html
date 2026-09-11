@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
 <link rel="stylesheet" href="products.css?v=20260904-flow">
-<link rel="stylesheet" href="vsm.css?v=20260911-model-poster">
+<link rel="stylesheet" href="vsm.css?v=20260911-autonomy-scenarios">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png?v=20260907-theme" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64-dark.png?v=20260907-theme" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
@@ -145,28 +145,26 @@
 </div></section>
 
 <section class="poster poster-dark autonomy-poster" id="autonomy" aria-labelledby="autonomy-title"><div class="wrap">
-  <header class="process-head"><span>04 / AUTONOMY</span><h2 id="autonomy-title">Measure the distance<br><em>to human intervention.</em></h2><div class="process-controls"><button type="button" data-autonomy-toggle aria-label="Pause autonomy animation">Pause</button><button type="button" data-autonomy-replay>↻ Replay</button></div></header>
-  <figure class="autonomy-meter" data-autonomy-figure data-stage="0" style="--autonomy-progress:0%">
-    <figcaption><span>HYPOTHETICAL · NOT MEASURED</span><b data-autonomy-state>S1 keeps work moving</b></figcaption>
-    <div class="autonomy-kpis">
-      <div class="autonomy-primary"><span>INTERVENTION-FREE HORIZON</span><strong data-autonomy-horizon>&lt; 1 DAY</strong><small>Conceptual estimate</small></div>
-      <div><span>CONCURRENT AGENTS</span><strong data-agent-count>10</strong><small>Illustrative load · not benchmarked</small></div>
+  <header class="process-head"><span>04 / AUTONOMY</span><h2 id="autonomy-title">Handle the routine.<br><em>Escalate the exception.</em></h2></header>
+  <div class="autonomy-demo" data-autonomy-demo data-escalated="false">
+    <div class="autonomy-demo-top"><span>TRY A SITUATION</span><span>ILLUSTRATIVE · WITHIN DEFINED AUTHORITY</span></div>
+    <div class="autonomy-situations" role="group" aria-label="Choose an autonomy scenario">
+      <button type="button" data-situation="0" aria-pressed="true"><span>01 / S1</span>New task</button>
+      <button type="button" data-situation="1" aria-pressed="false"><span>02 / S2</span>Work collides</button>
+      <button type="button" data-situation="2" aria-pressed="false"><span>03 / S3</span>Queue grows</button>
+      <button type="button" data-situation="3" aria-pressed="false"><span>04 / S3*</span>Hidden error</button>
+      <button type="button" data-situation="4" aria-pressed="false"><span>05 / S4</span>World changes</button>
+      <button type="button" data-situation="5" aria-pressed="false"><span>06 / S5</span>Purpose changes</button>
     </div>
-    <div class="autonomy-distance" aria-label="Human distance from an operating agent system">
-      <div class="autonomy-events" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <div class="agent-computer" aria-hidden="true">
-        <svg viewBox="0 0 120 96"><rect x="8" y="7" width="104" height="70"/><rect x="17" y="16" width="86" height="52"/><path d="M47 78h26v8H47zM34 87h52v3H34z"/></svg>
-        <i class="agent-screen"></i><span>AGENTS ONLINE</span>
-      </div>
-      <div class="agent-rack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><span>ACTIVE POOL</span></div>
-      <div class="system-signals" aria-hidden="true"><span><i></i>WORK</span><span><i></i>ALERTS</span><span><i></i>POLICY</span></div>
-      <div class="distance-line" aria-hidden="true"><i></i><b>HUMAN DISTANCE</b></div>
-      <div class="human-marker" aria-hidden="true"><svg viewBox="0 0 48 88"><circle cx="24" cy="13" r="9"/><path d="M15 27h18v27H15zM15 34 5 53l6 4 10-15M33 34l10 19-6 4-10-15M17 54l-3 29h8l2-21 2 21h8l-3-29z"/></svg><span>HUMAN</span></div>
+    <div class="autonomy-story" aria-live="polite" aria-atomic="true">
+      <div class="autonomy-event"><span class="autonomy-eyebrow">SOMETHING HAPPENS</span><div class="autonomy-event-icon" aria-hidden="true">+</div><h3 data-auto-event>A new task arrives.</h3><p data-auto-context>The work fits an existing responsibility.</p></div>
+      <div class="autonomy-route route-in" aria-hidden="true"><i></i><span>DETECT</span></div>
+      <div class="autonomy-owner"><span class="autonomy-eyebrow">THE ORGANIZATION</span><div class="autonomy-owner-art" aria-hidden="true"><img src="assets/mascot-logo.png" alt=""><b data-auto-role>S1</b><div class="autonomy-work-blocks"><i></i><i></i><i></i></div></div><h3 data-auto-action>Own it. Do it.</h3><p data-auto-detail>The responsible unit completes the task and checks its result.</p><strong class="autonomy-outcome" data-auto-outcome>↺ WORK CONTINUES</strong></div>
+      <div class="autonomy-route route-out" aria-hidden="true"><i></i><span data-auto-route>NO REQUEST</span></div>
+      <div class="autonomy-human"><span class="autonomy-eyebrow">THE HUMAN</span><svg class="autonomy-person" viewBox="0 0 48 88" aria-hidden="true"><path d="M16 4h16v18H16zM12 28h24v28H12zM6 32h6v28H6zM36 32h6v28h-6zM14 56h8v28h-8zM26 56h8v28h-8z"/></svg><h3 data-auto-human>No interruption.</h3><p data-auto-human-detail>Can review the outcome without directing each step.</p><strong class="autonomy-human-state" data-auto-human-state>STAYS INFORMED</strong></div>
     </div>
-    <div class="autonomy-track" aria-hidden="true"><i></i><b></b><em></em></div>
-    <ol class="autonomy-roles" data-autonomy-roles><li class="is-active"><b>S1</b><span>&lt; 1 day</span></li><li><b>+S2</b><span>days–weeks</span></li><li><b>+S3</b><span>weeks</span></li><li><b>+S3*</b><span>weeks+</span></li><li><b>+S4</b><span>months*</span></li><li><b>+S5</b><span>open-ended*</span></li></ol>
-    <div class="autonomy-return" aria-hidden="true"><span>S5</span><i></i><b>RECALIBRATE · BEGIN NEXT CYCLE</b><i></i><span>S1</span></div>
-  </figure>
+    <div class="autonomy-principle"><span>THE BOUNDARY</span><p>Act within agreed limits. Ask when authority, confidence or purpose is unclear.</p><button type="button" data-auto-motion aria-pressed="false">Pause signals</button></div>
+  </div>
 </div></section>
 
 <section class="poster poster-blue" id="vsmlite" aria-labelledby="vsmlite-title"><div class="wrap">
@@ -184,6 +182,6 @@
 <nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Layers</a><a href="#fit">When use</a><a href="#autonomy">Autonomy</a><a href="#vsmlite">VSMLite</a></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260910-vsm" defer></script>
-<script src="vsm.js?v=20260911-model-poster" defer></script>
+<script src="vsm.js?v=20260911-autonomy-scenarios" defer></script>
 </body>
 </html>

@@ -56,114 +56,50 @@
     });
   }
 
-  var figure = document.querySelector('[data-autonomy-figure]');
-  var roles = Array.prototype.slice.call(document.querySelectorAll('[data-autonomy-roles] li'));
-  var toggle = document.querySelector('[data-autonomy-toggle]');
-  var replay = document.querySelector('[data-autonomy-replay]');
-  if (!figure || !roles.length || !toggle || !replay) return;
-
-  var states = [
-    'S1 keeps work moving',
-    'S2 absorbs coordination noise',
-    'S3 corrects resource drift',
-    'S3* catches hidden failure',
-    'S4 adapts before the environment wins',
-    'S5 preserves purpose through change'
+  // Scenarios are examples of responsibility, not levels or measured time horizons.
+  var demo = document.querySelector('[data-autonomy-demo]');
+  if (!demo) return;
+  var scenarios = [
+    ['A new task arrives.', 'The work fits an existing responsibility.', 'S1', 'Own it. Do it.', 'The responsible unit completes the task and checks its result.', 'No interruption.', 'Can review the outcome without directing each step.'],
+    ['Two units need the same slot.', 'Their schedules conflict.', 'S2', 'Resolve the collision.', 'Coordination aligns the schedules so both units can keep working.', 'No interruption.', 'The teams coordinate within the agreed rules.'],
+    ['One queue starts growing.', 'Another unit has capacity to spare.', 'S3', 'Rebalance the work.', 'Control reallocates available capacity within the approved resource limits.', 'No interruption.', 'No new budget or authority is needed.'],
+    ['A report says “done”. It isn’t.', 'A direct sample reveals a missed check.', 'S3*', 'Find it. Feed it back.', 'Audit reports the mismatch to control; the responsible unit corrects the work.', 'No interruption.', 'The correction stays within the existing mandate.'],
+    ['The outside world changes.', 'A new condition makes the current plan less useful.', 'S4', 'Sense. Test. Adapt.', 'Intelligence proposes a response; control tests it within the current policy.', 'No interruption.', 'A change beyond that policy would need a decision.'],
+    ['The goal needs to change.', 'The proposed direction exceeds the agreed mandate.', 'S5', 'Make the boundary clear.', 'Policy identifies the decision that requires human authority.', 'A decision is needed.', 'Approve a new direction or keep the existing mandate.']
   ];
-  var state = figure.querySelector('[data-autonomy-state]');
-  var horizon = figure.querySelector('[data-autonomy-horizon]');
-  var agentCount = figure.querySelector('[data-agent-count]');
-  var horizons = ['< 1 DAY','DAYS → WEEKS','WEEKS','WEEKS +','MONTHS *','OPEN-ENDED *'];
-  var agentCounts = ['10','50','200','400','800','1,000+'];
-  var duration = 14000;
-  var frame = null;
-  var startedAt = 0;
-  var elapsed = 0;
-  var paused = false;
-  var visible = false;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  function setProgress(progress) {
-    var bounded = Math.max(0, Math.min(1, progress));
-    var stage = Math.min(5, Math.floor(bounded * 6));
-    figure.style.setProperty('--autonomy-progress', (bounded * 100).toFixed(2) + '%');
-    figure.setAttribute('data-stage', String(stage));
-    state.textContent = states[stage];
-    if (horizon) horizon.textContent = horizons[stage];
-    if (agentCount) agentCount.textContent = agentCounts[stage];
-    roles.forEach(function (item, index) {
-      item.classList.toggle('is-active', index === stage);
-      item.classList.toggle('is-complete', index < stage);
+  var fields = ['event', 'context', 'role', 'action', 'detail', 'human', 'human-detail'];
+  var choices = Array.prototype.slice.call(demo.querySelectorAll('[data-situation]'));
+  function chooseScenario(index) {
+    var scenario = scenarios[index];
+    if (!scenario) return;
+    fields.forEach(function (field, position) {
+      demo.querySelector('[data-auto-' + field + ']').textContent = scenario[position];
+    });
+    var escalated = index === 5;
+    demo.setAttribute('data-escalated', String(escalated));
+    demo.querySelector('.autonomy-event-icon').textContent = ['+', '⇄', '▥', '!', '↗', '?'][index];
+    demo.querySelector('[data-auto-outcome]').textContent = escalated ? '→ REQUEST A DECISION' : '↺ WORK CONTINUES';
+    demo.querySelector('[data-auto-route]').textContent = escalated ? 'ESCALATE' : 'NO REQUEST';
+    demo.querySelector('[data-auto-human-state]').textContent = escalated ? 'SETS THE MANDATE' : 'STAYS INFORMED';
+    choices.forEach(function (button, position) {
+      button.setAttribute('aria-pressed', String(position === index));
     });
   }
-
-  function stop() {
-    if (frame !== null) cancelAnimationFrame(frame);
-    frame = null;
-  }
-
-  function draw(now) {
-    frame = null;
-    if (!startedAt) startedAt = now - elapsed;
-    elapsed = now - startedAt;
-    var progress = (elapsed % duration) / duration;
-    setProgress(progress);
-    if (!paused && visible && !document.hidden) frame = requestAnimationFrame(draw);
-  }
-
-  function start() {
-    if (reduceMotion.matches || paused || !visible || document.hidden || frame !== null) return;
-    frame = requestAnimationFrame(draw);
-  }
-
-  function reset() {
-    stop();
-    startedAt = 0;
-    elapsed = 0;
-    paused = false;
-    toggle.disabled = false;
-    toggle.textContent = 'Pause';
-    toggle.setAttribute('aria-label', 'Pause autonomy animation');
-    setProgress(0);
-    start();
-  }
-
-  toggle.addEventListener('click', function () {
-    paused = !paused;
-    toggle.textContent = paused ? 'Resume' : 'Pause';
-    toggle.setAttribute('aria-label', paused ? 'Resume autonomy animation' : 'Pause autonomy animation');
-    if (paused) stop();
-    else {
-      startedAt = performance.now() - elapsed;
-      start();
-    }
+  choices.forEach(function (button) {
+    button.addEventListener('click', function () {
+      chooseScenario(Number(button.getAttribute('data-situation')));
+    });
   });
-  replay.addEventListener('click', reset);
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) stop();
-    else {
-      startedAt = performance.now() - elapsed;
-      start();
-    }
-  });
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      visible = entries[0].isIntersecting;
-      if (visible) start();
-      else stop();
-    }, { threshold:.2 }).observe(figure);
-  } else {
-    visible = true;
+  var motionButton = demo.querySelector('[data-auto-motion]');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var paused = false;
+  function updateMotion() {
+    demo.classList.toggle('signals-paused', paused || reduceMotion.matches);
+    motionButton.disabled = reduceMotion.matches;
+    motionButton.textContent = reduceMotion.matches ? 'Motion off' : (paused ? 'Resume signals' : 'Pause signals');
+    motionButton.setAttribute('aria-pressed', String(paused || reduceMotion.matches));
   }
-
-  if (reduceMotion.matches) {
-    setProgress(1);
-    complete = true;
-    toggle.textContent = 'Motion off';
-    toggle.disabled = true;
-  } else {
-    setProgress(0);
-    start();
-  }
+  motionButton.addEventListener('click', function () { paused = !paused; updateMotion(); });
+  if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', updateMotion);
+  updateMotion();
 })();
