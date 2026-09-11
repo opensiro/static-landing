@@ -412,6 +412,7 @@
 .model-beer .model-local-environments i:before{left:4px;top:5px}
 .model-beer .model-local-environments i:after{right:4px;bottom:5px}
 .model-beer .label-balance{left:40.5%;top:30.9%;transform:translateX(-50%)}
+.model-beer .label-s3s2{left:28.2%;top:47.2%;transform:translateX(-50%)}
 .model-beer .label-audit{left:3.4%;top:60.5%}
 .model-beer .zone-operations{top:66.5%;left:35%}
 .model-beer .model-node,.model-beer .model-op{opacity:1;color:#a3ada6}
@@ -420,6 +421,7 @@
 .model-beer.role-s5 .model-s5 b,.model-beer.role-s3 .model-s3 b,.model-beer.role-s4 .model-s4 b,.model-beer.role-s3x .model-s3x b,.model-beer.role-s2 .model-s2 b,.model-beer.role-s1 .model-op b{color:var(--accent)}
 .model-beer .model-environment span{writing-mode:horizontal-tb}
 .model-beer .model-beer-links .link-homeostat,.model-beer .model-beer-links .link-operation,.model-beer .model-beer-links .link-intelligence{marker-start:url(#model-arrow)}
+.model-beer .model-beer-links .link-s3s2{marker-start:url(#model-arrow)}
 .model-beer .model-beer-links .link-algedonic{stroke-dasharray:2 6}
 .beer-browser .system-tabs button[aria-selected="true"]:before,.beer-browser .system-tabs button[aria-selected="true"]:after{display:none}
 .model-beer.role-s5 .model-s5:before,.model-beer.role-s3 .model-s3:before,.model-beer.role-s4 .model-s4:before,.model-beer.role-s3x .model-s3x:before,.model-beer.role-s2 .model-s2:before,.model-beer.role-s1 .model-op:before{position:absolute;right:calc(100% + 6px);top:50%;transform:translateY(-50%);content:"▸";color:var(--accent);font-size:.9rem}
@@ -429,6 +431,8 @@
 .model-beer .model-role-scene img{filter:invert(1)!important}
 .model-beer .model-operations,.model-beer .model-local-environments{grid-template-columns:repeat(3,25.862069%);gap:11.206897%}
 .model-beer.role-s5 .link-policy,.model-beer.role-s5 .link-homeostat,.model-beer.role-s4 .link-intelligence,.model-beer.role-s4 .link-homeostat,.model-beer.role-s3 .link-command,.model-beer.role-s3 .link-homeostat,.model-beer.role-s3x .link-audit,.model-beer.role-s2 .link-coordination,.model-beer.role-s1 .link-operation{opacity:1}
+.model-beer.role-s3 .link-s3s2,.model-beer.role-s2 .link-s3s2{opacity:1;stroke-dasharray:4 7;animation:model-pixel-flow .9s steps(6,end) infinite}
+@media(prefers-reduced-motion:reduce){.model-beer .link-s3s2{animation:none!important}}
 .beer-browser .system-tabs button{grid-template-columns:40px minmax(0,1fr)}
 .beer-browser .system-tabs button span{font-size:.76rem}
 .beer-browser .system-tabs button i{display:none}
