@@ -451,3 +451,17 @@
 .osm-maturity .osm-ownership-metric>span{font-size:.52rem;line-height:1.5;letter-spacing:.05em;color:#a8b7ad;text-align:center}
 .osm-maturity .osm-support i b{animation-iteration-count:2}
 @media(max-width:560px){.osm-ownership-metric{margin:18px 0}.osm-ownership-metric>strong{font-size:2.5rem}.osm-maturity .osm-ownership-metric>strong>span{font-size:1rem}.osm-maturity .osm-ownership-metric>span{font-size:.45rem;max-width:16ch;min-height:3em}}
+.osm-agent-estimate{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 24px;padding:24px 32px;border-top:1px solid #ffffff30;background:#9fcbff06}
+.osm-agent-estimate>span{font-size:.8rem;color:#aeb9b2}
+.osm-agent-estimate>strong{grid-column:2;grid-row:1/3;font-size:clamp(1.8rem,4vw,3.1rem);font-weight:normal;letter-spacing:-.055em;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
+.osm-agent-estimate>small{font-size:.66rem;color:var(--accent)}
+.osm-maturity .osm-function-grid b{font-size:.64rem;font-weight:normal;flex-shrink:0}
+.model-beer .model-role-tool{width:36px;height:36px;border:0;border-radius:0;transform:none;background:var(--accent);box-shadow:none;clip-path:none;mask:var(--role-icon) center / contain no-repeat;-webkit-mask:var(--role-icon) center / contain no-repeat}
+.model-beer .model-role-tool:before,.model-beer .model-role-tool:after{display:none}
+.model-beer.role-s1{--role-icon:url('assets/vsm-roles/briefcase.svg')}
+.model-beer.role-s2{--role-icon:url('assets/vsm-roles/radio.svg')}
+.model-beer.role-s3{--role-icon:url('assets/vsm-roles/chart.svg')}
+.model-beer.role-s3x{--role-icon:url('assets/vsm-roles/search.svg')}
+.model-beer.role-s4{--role-icon:url('assets/vsm-roles/radar.svg')}
+.model-beer.role-s5{--role-icon:url('assets/vsm-roles/compass.svg')}
+@media(max-width:560px){.osm-agent-estimate{padding:20px 16px;grid-template-columns:1fr;gap:12px}.osm-agent-estimate>strong{grid-column:1;grid-row:2}.osm-agent-estimate>small{font-size:.59rem}.osm-maturity .osm-function-grid span{font-size:.44rem;padding:10px 4px;gap:3px}.osm-maturity .osm-function-grid b{font-size:.48rem}}

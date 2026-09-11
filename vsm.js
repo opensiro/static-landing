@@ -60,6 +60,15 @@
   var maturity = document.querySelector('[data-osm-maturity]');
   if (!maturity) return;
   var phases = ['INTENT', 'OPERATIONS', 'COORDINATION', 'REGULATION', 'VERIFICATION', 'ADAPTATION', 'IDENTITY'];
+  var agentEstimates = ['—', '1–10', '10–50', '50–200', '100–400', '200–800', '500–1,000+'];
+  var systemCodes = ['S1', 'S2', 'S3', 'S3*', 'S4', 'S5'];
+  ['parent', 'child'].forEach(function (side) {
+    Array.prototype.forEach.call(maturity.querySelectorAll('[data-osm-' + side + '] [data-osm-function]'), function (item, index) {
+      var code = document.createElement('b');
+      code.textContent = systemCodes[index];
+      item.insertBefore(code, item.lastChild);
+    });
+  });
   var headlines = [
     'The parent carries the missing functions.',
     'The system does the work. The parent holds it together.',
@@ -83,10 +92,10 @@
   function setMaturity(level) {
     level = Math.max(0, Math.min(6, Number(level) || 0));
     maturity.setAttribute('data-level', String(level));
-    maturity.querySelector('[data-osm-parent-count]').firstChild.nodeValue = String(6 - level);
-    maturity.querySelector('[data-osm-child-count]').firstChild.nodeValue = String(level);
+    maturity.querySelector('[data-osm-agents]').textContent = agentEstimates[level];
+    maturity.querySelector('[data-osm-systems]').textContent = level ? systemCodes.slice(0, level).join(' + ') : 'Parent-led / intent';
     range.value = String(level);
-    range.setAttribute('aria-valuetext', phases[level] + '. ' + headlines[level]);
+    range.setAttribute('aria-valuetext', phases[level] + '. ' + headlines[level] + (level ? ' Est. concurrent agents: ' + agentEstimates[level] : ''));
     maturity.querySelector('[data-osm-phase]').textContent = '0' + level + ' / ' + phases[level];
     maturity.querySelector('[data-osm-headline]').textContent = headlines[level];
     maturity.querySelector('[data-osm-description]').textContent = descriptions[level];
