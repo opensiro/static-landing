@@ -77,7 +77,6 @@
   var elapsed = 0;
   var paused = false;
   var visible = false;
-  var complete = false;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function setProgress(progress) {
@@ -103,19 +102,13 @@
     frame = null;
     if (!startedAt) startedAt = now - elapsed;
     elapsed = now - startedAt;
-    var progress = elapsed / duration;
+    var progress = (elapsed % duration) / duration;
     setProgress(progress);
-    if (progress >= 1) {
-      complete = true;
-      toggle.textContent = 'Complete';
-      toggle.disabled = true;
-      return;
-    }
     if (!paused && visible && !document.hidden) frame = requestAnimationFrame(draw);
   }
 
   function start() {
-    if (reduceMotion.matches || paused || complete || !visible || document.hidden || frame !== null) return;
+    if (reduceMotion.matches || paused || !visible || document.hidden || frame !== null) return;
     frame = requestAnimationFrame(draw);
   }
 
@@ -124,7 +117,6 @@
     startedAt = 0;
     elapsed = 0;
     paused = false;
-    complete = false;
     toggle.disabled = false;
     toggle.textContent = 'Pause';
     toggle.setAttribute('aria-label', 'Pause autonomy animation');
@@ -133,7 +125,6 @@
   }
 
   toggle.addEventListener('click', function () {
-    if (complete) return;
     paused = !paused;
     toggle.textContent = paused ? 'Resume' : 'Pause';
     toggle.setAttribute('aria-label', paused ? 'Resume autonomy animation' : 'Pause autonomy animation');

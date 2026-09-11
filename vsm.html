@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
 <link rel="stylesheet" href="products.css?v=20260904-flow">
-<link rel="stylesheet" href="vsm.css?v=20260911-autonomy-metric">
+<link rel="stylesheet" href="vsm.css?v=20260911-autonomy-cycle">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png?v=20260907-theme" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64-dark.png?v=20260907-theme" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
@@ -143,17 +143,20 @@
       <div><span>CONCURRENT AGENTS</span><strong data-agent-count>10</strong><small>Illustrative load · not benchmarked</small></div>
     </div>
     <div class="autonomy-distance" aria-label="Human distance from an operating agent system">
+      <div class="autonomy-events" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <div class="agent-computer" aria-hidden="true">
         <svg viewBox="0 0 120 96"><rect x="8" y="7" width="104" height="70"/><rect x="17" y="16" width="86" height="52"/><path d="M47 78h26v8H47zM34 87h52v3H34z"/></svg>
         <i class="agent-screen"></i><span>AGENTS ONLINE</span>
       </div>
+      <div class="agent-rack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><span>ACTIVE POOL</span></div>
+      <div class="system-signals" aria-hidden="true"><span><i></i>WORK</span><span><i></i>ALERTS</span><span><i></i>POLICY</span></div>
       <div class="distance-line" aria-hidden="true"><i></i><b>HUMAN DISTANCE</b></div>
       <div class="human-marker" aria-hidden="true"><svg viewBox="0 0 48 88"><circle cx="24" cy="13" r="9"/><path d="M15 27h18v27H15zM15 34 5 53l6 4 10-15M33 34l10 19-6 4-10-15M17 54l-3 29h8l2-21 2 21h8l-3-29z"/></svg><span>HUMAN</span></div>
     </div>
     <div class="autonomy-track" aria-hidden="true"><i></i><b></b><em></em></div>
     <ol class="autonomy-roles" data-autonomy-roles><li class="is-active"><b>S1</b><span>&lt; 1 day</span></li><li><b>+S2</b><span>days–weeks</span></li><li><b>+S3</b><span>weeks</span></li><li><b>+S3*</b><span>weeks+</span></li><li><b>+S4</b><span>months*</span></li><li><b>+S5</b><span>open-ended*</span></li></ol>
+    <div class="autonomy-return" aria-hidden="true"><span>S5</span><i></i><b>RECALIBRATE · BEGIN NEXT CYCLE</b><i></i><span>S1</span></div>
   </figure>
-  <p class="autonomy-source">Autonomy is treated as an observable interval between necessary human interventions—not a binary property or an agent-count threshold.</p>
 </div></section>
 
 <section class="poster poster-blue" id="vsmlite" aria-labelledby="vsmlite-title"><div class="wrap">
@@ -171,6 +174,6 @@
 <nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Layers</a><a href="#fit">When use</a><a href="#autonomy">Autonomy</a><a href="#vsmlite">VSMLite</a></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260910-vsm" defer></script>
-<script src="vsm.js?v=20260911-autonomy-metric" defer></script>
+<script src="vsm.js?v=20260911-autonomy-cycle" defer></script>
 </body>
 </html>
