@@ -540,3 +540,19 @@
   .use-tree>article{min-height:205px}
   .use-outcome{gap:13px;padding:19px}
 }
+
+/* Downloadable section stills and motion loops. */
+.poster>.wrap,.os-hero>.wrap,.os-section>.wrap{position:relative}
+.section-export{position:absolute;z-index:12;right:0;top:0;display:flex;border:1px solid var(--hairline-2);background:rgba(250,249,246,.88);backdrop-filter:blur(8px)}
+.section-export a{display:grid;place-items:center;min-width:52px;min-height:34px;padding:0 11px;font-size:.61rem;letter-spacing:.08em;color:var(--muted)}
+.section-export a+a{border-left:1px solid var(--hairline)}
+.section-export a:hover,.section-export a:focus-visible{background:#e8eef9;color:var(--accent-ink)}
+.poster-dark .section-export{border-color:#ffffff42;background:#111513e8}
+.poster-dark .section-export a{color:#b9c1bc}
+.poster-dark .section-export a+a{border-color:#ffffff32}
+.poster-dark .section-export a:hover,.poster-dark .section-export a:focus-visible{background:#9fcbff18;color:var(--accent)}
+@media(max-width:680px){.section-export{right:0}.section-export a{min-width:44px;min-height:30px;padding:0 8px;font-size:.55rem}}
+
+.use-heading{grid-template-columns:1fr}
+
+@media(max-width:680px){.hero-poster .section-export{right:15px}}

@@ -115,3 +115,33 @@
 @keyframes catalog-status-pulse{60%,100%{box-shadow:0 0 0 9px #9bafd200}}
 @media(max-width:760px){.product-entry{padding:68px 0}.product-entry .product-mark{width:64px;height:64px}.product-summary{font-size:.82rem}.product-status{width:auto;margin-top:62px}.product-status:before,.product-status:after{display:none}}
 @media(prefers-reduced-motion:reduce){.status-sigil i{animation:none}.product-word-link,.product-icon-link{transition:none}}
+
+/* Downloadable section stills and motion loops. */
+.poster>.wrap,.os-hero>.wrap,.os-section>.wrap{position:relative}
+.section-export{position:absolute;z-index:12;right:0;top:0;display:flex;border:1px solid var(--hairline-2);background:rgba(250,249,246,.88);backdrop-filter:blur(8px)}
+.section-export a{display:grid;place-items:center;min-width:52px;min-height:34px;padding:0 11px;font-size:.61rem;letter-spacing:.08em;color:var(--muted)}
+.section-export a+a{border-left:1px solid var(--hairline)}
+.section-export a:hover,.section-export a:focus-visible{background:#e8eef9;color:var(--accent-ink)}
+.poster-dark .section-export{border-color:#ffffff42;background:#111513e8}
+.poster-dark .section-export a{color:#b9c1bc}
+.poster-dark .section-export a+a{border-color:#ffffff32}
+.poster-dark .section-export a:hover,.poster-dark .section-export a:focus-visible{background:#9fcbff18;color:var(--accent)}
+@media(max-width:680px){.section-export{right:0}.section-export a{min-width:44px;min-height:30px;padding:0 8px;font-size:.55rem}}
+
+/* Proofstate navigator follows the compact VSMLite navigator. */
+.os-article-page{padding-bottom:51px}
+.os-section-nav{height:51px}
+.os-section-nav-track{display:block;height:100%}
+.os-section-nav-label,.os-section-glider{display:none}
+.os-section-nav-scroll{height:100%}
+.os-section-nav-links{justify-content:center;width:auto;min-width:100%;height:100%}
+.os-section-nav-links a{display:block;height:auto;padding:15px 18px;font-size:.75rem}
+.os-section-nav-links a:hover,.os-section-nav-links a:focus-visible,.os-section-nav-links a.is-active{background:#e8eef9;color:var(--accent-ink)}
+.os-section>.wrap>.section-export{top:-54px}
+@media(max-width:680px){
+ .os-article-page{padding-bottom:47px}
+ .os-section-nav{height:47px}
+ .os-section-nav-links{justify-content:flex-start;width:max-content;min-width:max-content}
+ .os-section-nav-links a{padding:13px 14px;font-size:.75rem}
+ .os-section>.wrap>.section-export{top:-44px}
+}
