@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
 <link rel="stylesheet" href="products.css?v=20260904-flow">
-<link rel="stylesheet" href="vsm.css?v=20260911-s3-s2-channel">
+<link rel="stylesheet" href="vsm.css?v=20260911-responsive-decision-tree">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png?v=20260907-theme" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64-dark.png?v=20260907-theme" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
@@ -70,18 +70,18 @@
             <path class="link-operation" d="M115 580V625 M330 580V625 M545 580V625"/>
             <path class="link-algedonic" d="M40 540H14V80H344"/>
           </svg>
-          <div class="model-node model-s5"><b>S5</b><span>IDENTITY · POLICY</span></div>
-          <div class="model-node model-s3"><b>S3</b><span>INSIDE · NOW</span></div>
-          <div class="model-node model-s4"><b>S4</b><span>OUTSIDE · NEXT</span></div>
-          <div class="model-node model-s3x"><b>S3*</b><span>DIRECT AUDIT</span></div>
-          <div class="model-node model-s2"><b>S2</b><span>COORDINATION</span></div>
+          <button class="model-node model-s5" type="button" data-model-system="s5" aria-pressed="true"><b>S5</b><span>IDENTITY · POLICY</span></button>
+          <button class="model-node model-s3" type="button" data-model-system="s3" aria-pressed="false"><b>S3</b><span>INSIDE · NOW</span></button>
+          <button class="model-node model-s4" type="button" data-model-system="s4" aria-pressed="false"><b>S4</b><span>OUTSIDE · NEXT</span></button>
+          <button class="model-node model-s3x" type="button" data-model-system="s3x" aria-pressed="false"><b>S3*</b><span>DIRECT AUDIT</span></button>
+          <button class="model-node model-s2" type="button" data-model-system="s2" aria-pressed="false"><b>S2</b><span>COORDINATION</span></button>
           <span class="model-channel-label label-balance">BALANCE</span>
           <span class="model-channel-label label-s3s2">STATUS / CONSTRAINTS</span>
           <span class="model-channel-label label-audit">DIRECT SAMPLE</span>
           <div class="model-operations">
-            <div class="model-op"><b>S1·A</b><i><u></u><u></u><u></u></i></div>
-            <div class="model-op"><b>S1·B</b><i><u></u><u></u><u></u></i></div>
-            <div class="model-op"><b>S1·C</b><i><u></u><u></u><u></u></i></div>
+            <button class="model-op" type="button" data-model-system="s1" aria-pressed="false"><b>S1·A</b><i><u></u><u></u><u></u></i></button>
+            <button class="model-op" type="button" data-model-system="s1" aria-pressed="false"><b>S1·B</b><i><u></u><u></u><u></u></i></button>
+            <button class="model-op" type="button" data-model-system="s1" aria-pressed="false"><b>S1·C</b><i><u></u><u></u><u></u></i></button>
           </div>
           <div class="model-local-environments" aria-hidden="true"><i><b>ENV·A</b></i><i><b>ENV·B</b></i><i><b>ENV·C</b></i></div>
           <div class="model-environment" aria-hidden="true"><span>DYNAMIC FIELD</span><i></i><i></i><i></i><i></i><b>FUTURE HORIZON</b></div>
@@ -119,30 +119,21 @@
 
 <section class="poster poster-light use-poster" id="fit" aria-label="When to use VSM"><div class="wrap">
   <div class="section-index">03 / WHEN USE</div>
-  <div class="use-matrix" aria-label="Scale and organizational signals">
-    <div class="use-corner"><span>AGENT COUNT</span><b>is context,<br>not a trigger</b></div>
-    <div class="use-range"><strong>10–50</strong><span>ORCHESTRATE</span></div>
-    <div class="use-range"><strong>50–200</strong><span>OWN</span></div>
-    <div class="use-range"><strong>200–1,000</strong><span>RECURSE</span></div>
-    <div class="use-range"><strong>1,000+</strong><span>GOVERN</span></div>
-
-    <div class="use-label">INDEPENDENT<br>WORKERS</div>
-    <div class="use-cell"><i>···</i><span>parallel tasks</span></div>
-    <div class="use-cell"><i>·····</i><span>more throughput</span></div>
-    <div class="use-cell"><i>·······</i><span>same pattern</span></div>
-    <div class="use-cell outcome-runtime"><b>RUNTIME</b><span>VSM unnecessary</span></div>
-
-    <div class="use-label">PERSISTENT<br>UNITS</div>
-    <div class="use-cell"><i>○</i><span>roles emerge</span></div>
-    <div class="use-cell"><i>○—○</i><span>shared resources</span></div>
-    <div class="use-cell"><i>○—◎—○</i><span>recursion + audit</span></div>
-    <div class="use-cell outcome-vsm"><b>VSM</b><span>strong fit</span></div>
+  <header class="use-heading"><h2>When structure<br><em>must become explicit.</em></h2><p>Follow the organizational signals. Agent counts estimate when each function becomes worth formalizing.</p></header>
+  <div class="use-scale-gate">
+    <span>FAST GATE</span><strong>1,000+ CONCURRENT AGENTS?</strong><i>YES →</i><b>USE VSM AS THE SHARED SYSTEM MAP</b>
   </div>
-  <div class="use-test">
-    <div><span>01</span><p>Do responsibilities persist?</p></div>
-    <i>→</i><div><span>02</span><p>Do autonomous units depend on each other?</p></div>
-    <i>→</i><div><span>03</span><p>Must the organization adapt or restructure?</p></div>
-    <i>→</i><strong>USE VSM</strong>
+  <div class="use-tree" aria-label="Decision tree for formalizing VSM systems">
+    <article><span>01 / OWNERSHIP</span><h3>Does responsibility persist?</h3><div class="use-branches"><small>NO → ORCHESTRATE TASKS</small><b>YES → S1</b></div><em>EST. 1–10+</em></article>
+    <i aria-hidden="true">→</i>
+    <article><span>02 / DEPENDENCE</span><h3>Must autonomous units coordinate?</h3><div class="use-branches"><small>NO → KEEP S1 LOCAL</small><b>YES → S2</b></div><em>EST. 10–50</em></article>
+    <i aria-hidden="true">→</i>
+    <article><span>03 / CONTROL</span><h3>Are resources and evidence shared?</h3><div class="use-branches"><small>NO → COORDINATE</small><b>YES → S3 + S3*</b></div><em>EST. 50–400</em></article>
+    <i aria-hidden="true">→</i>
+    <article><span>04 / CHANGE</span><h3>Must the organization adapt and choose policy?</h3><div class="use-branches"><small>NO → OPERATE</small><b>YES → S4 + S5</b></div><em>EST. 200–1,000</em></article>
+  </div>
+  <div class="use-outcome">
+    <span>FULL FORMALIZATION</span><strong>S1 · S2 · S3 · S3* · S4 · S5</strong><p>At 1,000+, the model becomes an organizational passport: one legible contract for everyone designing the system.</p>
   </div>
 </div></section>
 
@@ -193,6 +184,6 @@
 <nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Layers</a><a href="#fit">When use</a><a href="#autonomy">Autonomy</a><a href="#vsmlite">VSMLite</a></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260910-vsm" defer></script>
-<script src="vsm.js?v=20260911-agent-estimates" defer></script>
+<script src="vsm.js?v=20260911-clickable-model" defer></script>
 </body>
 </html>

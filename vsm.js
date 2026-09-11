@@ -11,7 +11,7 @@
     s5: { code:'S5 / POLICY', title:'Hold identity', thesis:'Purpose balances the present and future.', label:'S5 balances current control and future intelligence', scene:'COMPASS / POLICY' }
   };
 
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-system]'));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.system-tabs [data-system]'));
   var panel = document.getElementById('system-panel');
   if (tabs.length && panel) {
     var code = panel.querySelector('[data-system-code]');
@@ -20,6 +20,7 @@
     var diagram = panel.querySelector('[data-system-diagram]');
     var roleScene = panel.querySelector('[data-role-scene]');
     var roleSceneLabel = panel.querySelector('[data-role-scene-label]');
+    var modelTriggers = Array.prototype.slice.call(panel.querySelectorAll('[data-model-system]'));
 
     function select(tab, moveFocus) {
       var key = tab.getAttribute('data-system');
@@ -38,6 +39,9 @@
       diagram.setAttribute('aria-label', item.label);
       if (roleScene) roleScene.setAttribute('data-role', key);
       if (roleSceneLabel) roleSceneLabel.textContent = item.code;
+      modelTriggers.forEach(function (trigger) {
+        trigger.setAttribute('aria-pressed', trigger.getAttribute('data-model-system') === key ? 'true' : 'false');
+      });
       if (moveFocus) tab.focus();
     }
 
@@ -52,6 +56,13 @@
         else return;
         event.preventDefault();
         select(tabs[next], true);
+      });
+    });
+    modelTriggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var key = trigger.getAttribute('data-model-system');
+        var tab = tabs.find(function (candidate) { return candidate.getAttribute('data-system') === key; });
+        if (tab) select(tab, false);
       });
     });
   }
