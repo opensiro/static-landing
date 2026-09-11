@@ -155,3 +155,8 @@
 
 .os-hero>.wrap>.section-export,.os-section>.wrap>.section-export{left:32px}
 @media(max-width:680px){.os-hero>.wrap>.section-export,.os-section>.wrap>.section-export{left:18px}}
+
+/* Export belongs to the section label, not the page chrome. */
+.section-export,.poster-dark .section-export,.hero-poster .section-export,.poster>.wrap>.section-export,.os-hero>.wrap>.section-export,.os-section>.wrap>.section-export{position:static;display:inline;margin-left:7px;padding:0;border:0;background:transparent;backdrop-filter:none;font-size:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.section-export:hover,.section-export:focus-visible,.poster-dark .section-export:hover,.poster-dark .section-export:focus-visible{background:transparent;color:var(--accent-ink)}
+.poster-dark .section-export:hover,.poster-dark .section-export:focus-visible{color:var(--accent)}
