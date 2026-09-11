@@ -3,12 +3,12 @@
   'use strict';
 
   var systems = {
-    s1: { code:'S1 / OPERATION', title:'Do the work', thesis:'Turn missions into outcomes.', role:'S1', label:'S1 units execute work' },
-    s2: { code:'S2 / COORDINATION', title:'Prevent collisions', thesis:'Synchronize autonomous peers.', role:'S2', label:'S2 routes signals between S1 units' },
-    s3: { code:'S3 / INSIDE + NOW', title:'Tune the system', thesis:'Read metrics. Reallocate capacity.', role:'S3', label:'S3 studies metrics while S1 units operate' },
-    s3x:{ code:'S3* / AUDIT', title:'Check reality', thesis:'Sample work outside self-reporting.', role:'S3*', label:'S3 star independently inspects S1 units' },
-    s4: { code:'S4 / OUTSIDE + NEXT', title:'Read the outside', thesis:'Only needed when the environment moves.', role:'S4', label:'S4 reads a changing external environment' },
-    s5: { code:'S5 / IDENTITY', title:'Hold the boundary', thesis:'Keep adaptation legitimate.', role:'S5', label:'S5 protects the organizational boundary' }
+    s1: { code:'S1 / OPERATION', title:'Run the operations', thesis:'Each unit regulates work in its own local environment.', label:'S1 units exchange work with local environments' },
+    s2: { code:'S2 / COORDINATION', title:'Dampen oscillation', thesis:'Coordinate interactions without taking over S1.', label:'S2 dampens oscillation between S1 units' },
+    s3: { code:'S3 / INSIDE + NOW', title:'Regulate the present', thesis:'Allocate resources across the operating whole.', label:'S3 controls current operations through S2 and S1' },
+    s3x:{ code:'S3* / AUDIT', title:'Inspect directly', thesis:'Bypass routine reports and sample S1.', label:'S3 star independently audits S1 operations' },
+    s4: { code:'S4 / OUTSIDE + NEXT', title:'Model the future', thesis:'Needed only when the external environment changes.', label:'S4 exchanges intelligence with a dynamic environment' },
+    s5: { code:'S5 / POLICY', title:'Hold identity', thesis:'Balance the present with the future.', label:'S5 balances current control and future intelligence' }
   };
 
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-system]'));
@@ -18,7 +18,6 @@
     var title = panel.querySelector('[data-system-title]');
     var thesis = panel.querySelector('[data-system-thesis]');
     var diagram = panel.querySelector('[data-system-diagram]');
-    var leadRole = diagram.querySelector('[data-lead-role]');
 
     function select(tab, moveFocus) {
       var key = tab.getAttribute('data-system');
@@ -33,8 +32,7 @@
       code.textContent = item.code;
       title.textContent = item.title;
       thesis.textContent = item.thesis;
-      leadRole.textContent = item.role;
-      diagram.className = 'system-diagram role-' + key;
+      diagram.className = 'model-beer role-' + key;
       diagram.setAttribute('aria-label', item.label);
       if (moveFocus) tab.focus();
     }

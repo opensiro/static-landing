@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="globals.css?v=20260903-pale-blue">
 <link rel="stylesheet" href="products.css?v=20260904-flow">
-<link rel="stylesheet" href="vsm.css?v=20260910-beer">
+<link rel="stylesheet" href="vsm.css?v=20260911-model">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64.png?v=20260907-theme" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64x64-dark.png?v=20260907-theme" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/favicon-64x64.png">
@@ -41,32 +41,45 @@
 
 <section class="poster poster-dark model-poster" id="model" aria-label="VSM model"><div class="wrap">
   <div class="section-index">01 / MODEL</div>
-  <div class="system-browser">
+  <div class="system-browser beer-browser">
     <div class="system-tabs" role="tablist" aria-label="VSM control functions">
-      <button type="button" role="tab" id="tab-s1" aria-selected="true" aria-controls="system-panel" data-system="s1"><b>S1</b><span>Operate</span></button>
+      <button type="button" role="tab" id="tab-s5" aria-selected="true" aria-controls="system-panel" data-system="s5"><b>S5</b><span>Policy</span></button>
+      <button type="button" role="tab" id="tab-s4" aria-selected="false" aria-controls="system-panel" data-system="s4" tabindex="-1"><b>S4</b><span>Intelligence</span></button>
+      <button type="button" role="tab" id="tab-s3" aria-selected="false" aria-controls="system-panel" data-system="s3" tabindex="-1"><b>S3</b><span>Control</span></button>
+      <button type="button" role="tab" id="tab-s3x" aria-selected="false" aria-controls="system-panel" data-system="s3x" tabindex="-1"><b>S3*</b><span>Audit</span></button>
       <button type="button" role="tab" id="tab-s2" aria-selected="false" aria-controls="system-panel" data-system="s2" tabindex="-1"><b>S2</b><span>Coordinate</span></button>
-      <button type="button" role="tab" id="tab-s3" aria-selected="false" aria-controls="system-panel" data-system="s3" tabindex="-1"><b>S3</b><span>Optimize</span></button>
-      <button type="button" role="tab" id="tab-s3x" aria-selected="false" aria-controls="system-panel" data-system="s3x" tabindex="-1"><b>S3*</b><span>Verify</span></button>
-      <button type="button" role="tab" id="tab-s4" aria-selected="false" aria-controls="system-panel" data-system="s4" tabindex="-1"><b>S4</b><span>Evolve</span></button>
-      <button type="button" role="tab" id="tab-s5" aria-selected="false" aria-controls="system-panel" data-system="s5" tabindex="-1"><b>S5</b><span>Constrain</span></button>
+      <button type="button" role="tab" id="tab-s1" aria-selected="false" aria-controls="system-panel" data-system="s1" tabindex="-1"><b>S1</b><span>Operate</span></button>
     </div>
-    <div class="system-stage" id="system-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-s1">
-      <div class="system-copy"><span data-system-code>S1 / OPERATION</span><strong data-system-title>Do the work</strong><p data-system-thesis>Turn missions into outcomes.</p></div>
-      <div class="system-diagram role-s1" data-system-diagram aria-label="S1 units execute work">
-        <div class="scene-grid" aria-hidden="true"></div>
-        <div class="scene-console" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-        <div class="scene-vessels" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
-        <div class="scene-actor actor-lead"><span class="role-tag" data-lead-role>S1</span><img src="assets/mascot-logo.gif" width="46" height="78" alt=""><i class="role-prop" aria-hidden="true"></i></div>
-        <div class="scene-actor actor-one"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
-        <div class="scene-actor actor-two"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
-        <div class="scene-actor actor-three"><span class="role-tag">S1</span><img src="assets/mascot-logo.gif" width="38" height="64" alt=""><i class="role-prop" aria-hidden="true"></i></div>
-        <div class="scene-packets" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="scene-environment" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
-        <div class="scene-boundary" aria-hidden="true"></div>
-      </div>
+    <div class="system-stage beer-stage" id="system-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-s5">
+      <div class="system-copy beer-caption"><span data-system-code>S5 / POLICY</span><strong data-system-title>Hold identity</strong><p data-system-thesis>Balance the present with the future.</p></div>
+      <figure class="model-beer role-s5" data-system-diagram aria-label="S5 balances current control and future intelligence">
+        <svg class="model-beer-links" viewBox="0 0 900 620" preserveAspectRatio="none" aria-hidden="true">
+          <path class="link-policy" d="M468 102 V150 M468 150 L355 222 M468 150 L585 222"/>
+          <path class="link-homeostat" d="M405 250 C455 210 510 210 558 250"/>
+          <path class="link-intelligence" d="M636 250 C706 250 724 184 795 184"/>
+          <path class="link-command" d="M355 277 V348 M355 348 V524"/>
+          <path class="link-coordination" d="M355 390 C300 410 410 430 355 450 C300 470 410 490 355 510"/>
+          <path class="link-audit" d="M248 285 C160 330 160 470 275 520"/>
+          <path class="link-operation" d="M310 532 H160 M400 532 H490 M490 532 H705"/>
+          <path class="link-algedonic" d="M310 532 C225 430 220 170 435 90"/>
+        </svg>
+        <div class="model-node model-s5"><b>S5</b><span>POLICY · IDENTITY</span></div>
+        <div class="model-node model-s3"><b>S3</b><span>INSIDE + NOW</span></div>
+        <div class="model-node model-s4"><b>S4</b><span>OUTSIDE + NEXT</span></div>
+        <div class="model-node model-s3x"><b>S3*</b><span>AUDIT</span></div>
+        <div class="model-node model-s2"><b>S2</b><span>ANTI-OSCILLATION</span></div>
+        <div class="model-operations">
+          <div class="model-op"><b>S1·A</b><i><u></u><u></u><u></u></i></div>
+          <div class="model-op"><b>S1·B</b><i><u></u><u></u><u></u></i></div>
+          <div class="model-op"><b>S1·C</b><i><u></u><u></u><u></u></i></div>
+        </div>
+        <div class="model-environment"><span>ENVIRONMENT</span><i></i><i></i><i></i><i></i><b>FUTURE</b></div>
+        <div class="model-cursor" aria-hidden="true">◀</div>
+        <figcaption>BEER / VIABLE SYSTEM MODEL</figcaption>
+      </figure>
     </div>
   </div>
-  <p class="model-source">Systems 1–5 follow Beer’s VSM; S3* is exposed as its own inspection view. <a href="https://metaphorum.org/staffords-work/viable-system-model" target="_blank" rel="noopener">Reference ↗</a></p>
+  <p class="model-source">One fixed architecture; each view reveals a different regulatory channel. <a href="https://metaphorum.org/staffords-work/viable-system-model" target="_blank" rel="noopener">Reference ↗</a></p>
 </div></section>
 
 <section class="poster compatibility-poster" id="layers" aria-label="Technology layers"><div class="wrap">
@@ -155,6 +168,6 @@
 <nav class="vsm-section-nav" aria-label="On this page"><div class="wrap"><a href="#overview">Overview</a><a href="#model">Model</a><a href="#layers">Layers</a><a href="#fit">When use</a><a href="#autonomy">Autonomy</a><a href="#vsmlite">VSMLite</a></div></nav>
 <footer class="site-footer"><div class="wrap"><span class="footer-copy">© 2026 opensiro · all rights reserved</span><div class="footer-links"><a href="products.html">Products</a><a href="research.html">Research</a></div><p class="footer-font">Set in <a href="https://departuremono.com" target="_blank" rel="noopener">Departure Mono</a> by Helena Zhang · <a href="assets/DepartureMono-OFL.txt" target="_blank">SIL Open Font License 1.1</a></p></div></footer>
 <script src="app.js?v=20260910-vsm" defer></script>
-<script src="vsm.js?v=20260910-beer" defer></script>
+<script src="vsm.js?v=20260911-model" defer></script>
 </body>
 </html>
