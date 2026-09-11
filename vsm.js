@@ -3,12 +3,12 @@
   'use strict';
 
   var systems = {
-    s1: { code:'S1 / OPERATION', title:'Run the operations', thesis:'Each unit regulates work in its own local environment.', label:'S1 units exchange work with local environments' },
-    s2: { code:'S2 / COORDINATION', title:'Dampen oscillation', thesis:'Coordinate interactions without taking over S1.', label:'S2 dampens oscillation between S1 units' },
-    s3: { code:'S3 / INSIDE + NOW', title:'Regulate the present', thesis:'Allocate resources across the operating whole.', label:'S3 controls current operations through S2 and S1' },
-    s3x:{ code:'S3* / AUDIT', title:'Inspect directly', thesis:'Bypass routine reports and sample S1.', label:'S3 star independently audits S1 operations' },
-    s4: { code:'S4 / OUTSIDE + NEXT', title:'Model the future', thesis:'Needed only when the external environment changes.', label:'S4 exchanges intelligence with a dynamic environment' },
-    s5: { code:'S5 / POLICY', title:'Hold identity', thesis:'Balance the present with the future.', label:'S5 balances current control and future intelligence' }
+    s1: { code:'S1 / OPERATION', title:'Run the operations', thesis:'Autonomous units meet their own local environments.', label:'S1 units exchange work with local environments', scene:'TOOL / WORK CASE' },
+    s2: { code:'S2 / COORDINATION', title:'Dampen oscillation', thesis:'Coordinate interactions without taking over S1.', label:'S2 dampens oscillation between S1 units', scene:'RADIO / SIGNAL DESK' },
+    s3: { code:'S3 / INSIDE + NOW', title:'Regulate the present', thesis:'Resources and current work across the whole.', label:'S3 controls current operations through S2 and S1', scene:'METRICS DASHBOARD' },
+    s3x:{ code:'S3* / AUDIT', title:'Inspect directly', thesis:'Independent samples from operations.', label:'S3 star independently audits S1 operations', scene:'AUDIT PROBE' },
+    s4: { code:'S4 / OUTSIDE + NEXT', title:'Model the future', thesis:'Essential when the outside world is changing.', label:'S4 exchanges intelligence with a dynamic environment', scene:'RADAR / TELESCOPE' },
+    s5: { code:'S5 / POLICY', title:'Hold identity', thesis:'Purpose balances the present and future.', label:'S5 balances current control and future intelligence', scene:'COMPASS / POLICY' }
   };
 
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-system]'));
@@ -18,6 +18,8 @@
     var title = panel.querySelector('[data-system-title]');
     var thesis = panel.querySelector('[data-system-thesis]');
     var diagram = panel.querySelector('[data-system-diagram]');
+    var roleScene = panel.querySelector('[data-role-scene]');
+    var roleSceneLabel = panel.querySelector('[data-role-scene-label]');
 
     function select(tab, moveFocus) {
       var key = tab.getAttribute('data-system');
@@ -34,6 +36,8 @@
       thesis.textContent = item.thesis;
       diagram.className = 'model-beer role-' + key;
       diagram.setAttribute('aria-label', item.label);
+      if (roleScene) roleScene.setAttribute('data-role', key);
+      if (roleSceneLabel) roleSceneLabel.textContent = item.scene;
       if (moveFocus) tab.focus();
     }
 
