@@ -437,3 +437,17 @@
 .osm-maturity .osm-eyebrow{font-size:.64rem;color:#aeb9b2;line-height:1.5}
 @media(max-width:560px){.osm-maturity .osm-eyebrow{font-size:.48rem}}
 @media(max-width:680px){.beer-browser .system-tabs button{grid-template-columns:34px minmax(0,1fr);column-gap:3px;padding:0 7px}.beer-browser .system-tabs b{font-size:.95rem}.model-poster .model-source:before{display:block;margin-bottom:10px;content:"SWIPE THE DIAGRAM ↔";color:var(--accent)}}
+/* Role vignette belongs to the diagram; ownership counts describe the OSM state. */
+.model-beer .model-role-scene{border:0;background:transparent;box-shadow:none;overflow:visible}
+.model-role-actor{position:absolute;left:50%;bottom:36px;width:104px;height:110px;transform:translateX(-50%)}
+.model-beer .model-role-actor img{left:18px;bottom:0;width:50px;height:86px;transform:none;animation:none}
+.model-beer .model-role-tool{left:64px;top:63px}
+.model-beer .model-role-scene>b{bottom:9px;left:0;right:0;font-size:.57rem;letter-spacing:.08em;color:#a8b9ad}
+.model-role-actor:after{position:absolute;left:5px;right:5px;bottom:-9px;border-top:1px solid #9fcbff45;content:""}
+.osm-ownership-metric{height:86px;margin:26px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.osm-ownership-metric>strong{font-size:3.1rem;font-weight:normal;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.05em;color:#d6dfd9}
+.osm-maturity .osm-ownership-metric>strong>span{font-size:1.2rem;color:#8d9e93}
+.osm-child .osm-ownership-metric>strong{color:var(--accent)}
+.osm-maturity .osm-ownership-metric>span{font-size:.52rem;line-height:1.5;letter-spacing:.05em;color:#a8b7ad;text-align:center}
+.osm-maturity .osm-support i b{animation-iteration-count:2}
+@media(max-width:560px){.osm-ownership-metric{margin:18px 0}.osm-ownership-metric>strong{font-size:2.5rem}.osm-maturity .osm-ownership-metric>strong>span{font-size:1rem}.osm-maturity .osm-ownership-metric>span{font-size:.45rem;max-width:16ch;min-height:3em}}

@@ -37,7 +37,7 @@
       diagram.className = 'model-beer role-' + key;
       diagram.setAttribute('aria-label', item.label);
       if (roleScene) roleScene.setAttribute('data-role', key);
-      if (roleSceneLabel) roleSceneLabel.textContent = item.scene;
+      if (roleSceneLabel) roleSceneLabel.textContent = item.code;
       if (moveFocus) tab.focus();
     }
 
@@ -83,6 +83,8 @@
   function setMaturity(level) {
     level = Math.max(0, Math.min(6, Number(level) || 0));
     maturity.setAttribute('data-level', String(level));
+    maturity.querySelector('[data-osm-parent-count]').firstChild.nodeValue = String(6 - level);
+    maturity.querySelector('[data-osm-child-count]').firstChild.nodeValue = String(level);
     range.value = String(level);
     range.setAttribute('aria-valuetext', phases[level] + '. ' + headlines[level]);
     maturity.querySelector('[data-osm-phase]').textContent = '0' + level + ' / ' + phases[level];
@@ -108,17 +110,5 @@
   stops.forEach(function (button) {
     button.addEventListener('click', function () { setMaturity(button.getAttribute('data-osm-level')); });
   });
-  var motionButton = maturity.querySelector('[data-osm-motion]');
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var paused = false;
-  function updateMotion() {
-    maturity.classList.toggle('signals-paused', paused || reduceMotion.matches);
-    motionButton.disabled = reduceMotion.matches;
-    motionButton.textContent = reduceMotion.matches ? 'Motion off' : paused ? 'Resume signals' : 'Pause signals';
-    motionButton.setAttribute('aria-pressed', String(paused || reduceMotion.matches));
-  }
-  motionButton.addEventListener('click', function () { paused = !paused; updateMotion(); });
-  if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', updateMotion);
   setMaturity(0);
-  updateMotion();
 })();
