@@ -56,50 +56,69 @@
     });
   }
 
-  // Scenarios are examples of responsibility, not levels or measured time horizons.
-  var demo = document.querySelector('[data-autonomy-demo]');
-  if (!demo) return;
-  var scenarios = [
-    ['A new task arrives.', 'The work fits an existing responsibility.', 'S1', 'Own it. Do it.', 'The responsible unit completes the task and checks its result.', 'No interruption.', 'Can review the outcome without directing each step.'],
-    ['Two units need the same slot.', 'Their schedules conflict.', 'S2', 'Resolve the collision.', 'Coordination aligns the schedules so both units can keep working.', 'No interruption.', 'The teams coordinate within the agreed rules.'],
-    ['One queue starts growing.', 'Another unit has capacity to spare.', 'S3', 'Rebalance the work.', 'Control reallocates available capacity within the approved resource limits.', 'No interruption.', 'No new budget or authority is needed.'],
-    ['A report says “done”. It isn’t.', 'A direct sample reveals a missed check.', 'S3*', 'Find it. Feed it back.', 'Audit reports the mismatch to control; the responsible unit corrects the work.', 'No interruption.', 'The correction stays within the existing mandate.'],
-    ['The outside world changes.', 'A new condition makes the current plan less useful.', 'S4', 'Sense. Test. Adapt.', 'Intelligence proposes a response; control tests it within the current policy.', 'No interruption.', 'A change beyond that policy would need a decision.'],
-    ['The goal needs to change.', 'The proposed direction exceeds the agreed mandate.', 'S5', 'Make the boundary clear.', 'Policy identifies the decision that requires human authority.', 'A decision is needed.', 'Approve a new direction or keep the existing mandate.']
+  // OSM §6–7: discrete snapshots of functions transferred from parent to child.
+  var maturity = document.querySelector('[data-osm-maturity]');
+  if (!maturity) return;
+  var phases = ['INTENT', 'OPERATIONS', 'COORDINATION', 'REGULATION', 'VERIFICATION', 'ADAPTATION', 'IDENTITY'];
+  var headlines = [
+    'The parent carries the missing functions.',
+    'The system does the work. The parent holds it together.',
+    'Coordination moves inside the system.',
+    'Day-to-day regulation no longer depends on the parent.',
+    'The system can inspect its own work independently.',
+    'The system can respond to a changing environment.',
+    'The organization owns the full set of viable functions.'
   ];
-  var fields = ['event', 'context', 'role', 'action', 'detail', 'human', 'human-detail'];
-  var choices = Array.prototype.slice.call(demo.querySelectorAll('[data-situation]'));
-  function chooseScenario(index) {
-    var scenario = scenarios[index];
-    if (!scenario) return;
-    fields.forEach(function (field, position) {
-      demo.querySelector('[data-auto-' + field + ']').textContent = scenario[position];
+  var descriptions = [
+    'A new organization starts inside an existing viable system. The human provides the support it cannot yet provide for itself.',
+    'Operational units take responsibility for delivery. Coordination, regulation and the remaining functions are still supported by the parent.',
+    'Units coordinate with one another. The parent no longer needs to mediate every interaction.',
+    'Resources and internal optimization are managed locally. The parent supplies the functions still missing.',
+    'Independent observation reduces reliance on the human to discover hidden problems.',
+    'Strategic adaptation moves inside when the external environment is changing. Identity and autonomy boundaries are still supported by the parent.',
+    'Policy and identity resolve internal trade-offs. The system can sustain itself within its autonomy boundaries; parent compensation is no longer required.'
+  ];
+  var range = document.getElementById('osm-maturity-range');
+  var stops = Array.prototype.slice.call(maturity.querySelectorAll('[data-osm-level]'));
+  function setMaturity(level) {
+    level = Math.max(0, Math.min(6, Number(level) || 0));
+    maturity.setAttribute('data-level', String(level));
+    range.value = String(level);
+    range.setAttribute('aria-valuetext', phases[level] + '. ' + headlines[level]);
+    maturity.querySelector('[data-osm-phase]').textContent = '0' + level + ' / ' + phases[level];
+    maturity.querySelector('[data-osm-headline]').textContent = headlines[level];
+    maturity.querySelector('[data-osm-description]').textContent = descriptions[level];
+    maturity.querySelector('[data-osm-parent-title]').textContent = level === 6 ? 'Support can recede.' : level === 0 ? 'Holds the whole.' : 'Hands over responsibility.';
+    maturity.querySelector('[data-osm-child-title]').textContent = level === 6 ? 'Sustains itself.' : level === 0 ? 'Begins with intent.' : 'Owns more of its life.';
+    maturity.querySelector('[data-osm-support]').textContent = level === 0 ? 'FULL SUPPORT' : level === 6 ? 'NO COMPENSATION NEEDED' : 'LESS SUPPORT';
+    ['parent', 'child'].forEach(function (side) {
+      var functions = maturity.querySelectorAll('[data-osm-' + side + '] [data-osm-function]');
+      Array.prototype.forEach.call(functions, function (item, index) {
+        item.classList.toggle('is-owned', side === 'parent' ? index >= level : index < level);
+      });
     });
-    var escalated = index === 5;
-    demo.setAttribute('data-escalated', String(escalated));
-    demo.querySelector('.autonomy-event-icon').textContent = ['+', '⇄', '▥', '!', '↗', '?'][index];
-    demo.querySelector('[data-auto-outcome]').textContent = escalated ? '→ REQUEST A DECISION' : '↺ WORK CONTINUES';
-    demo.querySelector('[data-auto-route]').textContent = escalated ? 'ESCALATE' : 'NO REQUEST';
-    demo.querySelector('[data-auto-human-state]').textContent = escalated ? 'SETS THE MANDATE' : 'STAYS INFORMED';
-    choices.forEach(function (button, position) {
-      button.setAttribute('aria-pressed', String(position === index));
+    Array.prototype.forEach.call(maturity.querySelectorAll('[data-osm-wire]'), function (wire, index) {
+      wire.classList.toggle('is-released', index < level);
+    });
+    stops.forEach(function (button) {
+      button.setAttribute('aria-pressed', String(Number(button.getAttribute('data-osm-level')) === level));
     });
   }
-  choices.forEach(function (button) {
-    button.addEventListener('click', function () {
-      chooseScenario(Number(button.getAttribute('data-situation')));
-    });
+  range.addEventListener('input', function () { setMaturity(range.value); });
+  stops.forEach(function (button) {
+    button.addEventListener('click', function () { setMaturity(button.getAttribute('data-osm-level')); });
   });
-  var motionButton = demo.querySelector('[data-auto-motion]');
+  var motionButton = maturity.querySelector('[data-osm-motion]');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var paused = false;
   function updateMotion() {
-    demo.classList.toggle('signals-paused', paused || reduceMotion.matches);
+    maturity.classList.toggle('signals-paused', paused || reduceMotion.matches);
     motionButton.disabled = reduceMotion.matches;
-    motionButton.textContent = reduceMotion.matches ? 'Motion off' : (paused ? 'Resume signals' : 'Pause signals');
+    motionButton.textContent = reduceMotion.matches ? 'Motion off' : paused ? 'Resume signals' : 'Pause signals';
     motionButton.setAttribute('aria-pressed', String(paused || reduceMotion.matches));
   }
   motionButton.addEventListener('click', function () { paused = !paused; updateMotion(); });
   if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', updateMotion);
+  setMaturity(0);
   updateMotion();
 })();
