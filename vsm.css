@@ -153,3 +153,41 @@
 @media(max-width:960px){.beer-browser{grid-template-columns:1fr}.beer-browser .system-tabs button{min-height:72px}.beer-browser .system-tabs button[aria-selected="true"]:after{left:50%;top:100%;width:2px;height:18px;border-top:0;border-left:2px solid var(--accent)}.beer-browser .system-tabs button[aria-selected="true"]:before{left:calc(50% - 4px);top:calc(100% + 14px);border-width:6px 4px 0;border-color:var(--accent) transparent transparent}.beer-caption{grid-template-columns:140px 1fr}.beer-caption p{grid-column:1/-1}.model-beer{min-height:540px}}
 @media(max-width:680px){.beer-stage{padding:14px}.beer-caption{grid-template-columns:1fr;gap:8px}.beer-caption p{grid-column:auto}.model-beer{min-height:580px}.model-node{width:100px}.model-s5{left:43%}.model-s3{left:34%}.model-s4{left:63%}.model-s3x{left:14%;width:76px}.model-s2{left:34%;width:94px}.model-operations{left:3%;right:20%;gap:5px}.model-op b{font-size:.72rem}.model-environment{right:2%;width:17%}.model-environment span{writing-mode:vertical-rl}.role-s5 .model-cursor{left:24%}.role-s4 .model-cursor{left:45%}.role-s3 .model-cursor{left:15%}.role-s3x .model-cursor{left:2%}.role-s2 .model-cursor{left:17%}.role-s1 .model-cursor{left:1%}}
 @media(prefers-reduced-motion:reduce){.model-beer-links path,.model-environment i,.model-op u{animation:none!important}}
+
+/* 2026-09-11 — autonomy as an intervention metric; Model spacing pass. */
+.agents-sdk-mark{border-radius:3px;background:var(--ink);color:var(--bg);font-size:.62rem;letter-spacing:-.04em}
+.compatibility-poster>.wrap>.section-index{margin-bottom:28px}
+.beer-browser{grid-template-columns:212px 1fr;min-height:750px}
+.beer-browser .system-tabs button{min-height:106px}
+.beer-stage{gap:20px;padding:28px 30px 30px}
+.beer-caption{grid-template-columns:150px minmax(190px,.7fr) 1fr;min-height:76px;padding-bottom:18px}
+.model-beer{min-height:600px}
+.model-s5{left:50%;top:12%}.model-s3{left:39.5%;top:36%}.model-s4{left:63%;top:36%}.model-s3x{left:18%;top:42%;width:104px}.model-s2{left:39.5%;top:58%}
+.model-operations{left:11%;right:21%;bottom:6%;gap:18px}.model-environment{right:2.5%;top:12%;bottom:7%;width:18%}
+.role-s5 .model-cursor{left:39%;top:11%}.role-s4 .model-cursor{left:52%;top:35%}.role-s3 .model-cursor{left:28%;top:35%}.role-s3x .model-cursor{left:9%;top:41%}.role-s2 .model-cursor{left:29%;top:57%}.role-s1 .model-cursor{left:5%;top:84%}
+
+.autonomy-meter{margin:0;border:1px solid #ffffff45;background:#0b0e0d}
+.autonomy-meter figcaption{display:flex;justify-content:space-between;gap:24px;padding:15px 18px;border-bottom:1px solid #ffffff30}
+.autonomy-meter figcaption span,.autonomy-meter figcaption b{font-size:.75rem;font-weight:normal}.autonomy-meter figcaption span{color:var(--accent)}.autonomy-meter figcaption b{color:#b8bcba}
+.autonomy-kpis{display:grid;grid-template-columns:1.35fr .65fr;border-bottom:1px solid #ffffff30}
+.autonomy-kpis>div{display:grid;align-content:center;min-height:190px;padding:28px}.autonomy-kpis>div+div{border-left:1px solid #ffffff30}
+.autonomy-kpis span,.autonomy-kpis small{font-size:.68rem;letter-spacing:.08em;color:#949a97}.autonomy-kpis strong{display:block;margin:18px 0 12px;font-size:clamp(2.1rem,5.5vw,5.6rem);line-height:.86;font-weight:normal;letter-spacing:-.07em;color:var(--accent);font-variant-numeric:tabular-nums}
+.autonomy-kpis>div+div strong{font-size:clamp(2rem,4vw,4rem);color:var(--bg)}
+.autonomy-distance{--human-x:33%;position:relative;min-height:330px;overflow:hidden;border-bottom:1px solid #ffffff30;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:24px 24px}
+.autonomy-meter[data-stage="1"] .autonomy-distance{--human-x:43%}.autonomy-meter[data-stage="2"] .autonomy-distance{--human-x:54%}.autonomy-meter[data-stage="3"] .autonomy-distance{--human-x:65%}.autonomy-meter[data-stage="4"] .autonomy-distance{--human-x:77%}.autonomy-meter[data-stage="5"] .autonomy-distance{--human-x:88%}
+.agent-computer{position:absolute;left:7%;bottom:49px;width:145px;height:145px;color:var(--accent)}
+.agent-computer svg{position:absolute;left:0;bottom:0;width:120px;height:96px;fill:none;stroke:currentColor;stroke-width:3;shape-rendering:crispEdges}.agent-computer svg path{fill:currentColor;stroke:none}
+.agent-computer span{position:absolute;left:7px;bottom:-20px;font-size:.62rem;color:#969c99;white-space:nowrap}
+.agent-screen{position:absolute;z-index:2;left:22px;bottom:39px;width:76px;height:45px;background-color:#9fcbff1b;background-image:radial-gradient(square,var(--accent) 1px,transparent 2px);background-image:repeating-linear-gradient(90deg,var(--accent) 0 3px,transparent 3px 8px),repeating-linear-gradient(0deg,#0000 0 6px,#101412 6px 9px);background-size:22px 9px;animation:agent-screen-run 1.1s steps(5,end) infinite}
+.autonomy-meter[data-stage="1"] .agent-screen{background-size:18px 9px}.autonomy-meter[data-stage="2"] .agent-screen{background-size:14px 8px}.autonomy-meter[data-stage="3"] .agent-screen{background-size:11px 7px}.autonomy-meter[data-stage="4"] .agent-screen{background-size:8px 6px}.autonomy-meter[data-stage="5"] .agent-screen{background-size:6px 5px}
+.human-marker{position:absolute;left:var(--human-x);bottom:42px;display:grid;justify-items:center;gap:8px;width:48px;color:#d6d9d7;transform:translateX(-50%);transition:none}
+.human-marker svg{width:38px;height:70px;fill:currentColor}.human-marker span{font-size:.62rem;color:#969c99}
+.distance-line{position:absolute;left:20%;bottom:92px;width:calc(var(--human-x) - 22%);border-top:1px dashed #9fcbff76}
+.distance-line:before,.distance-line:after{position:absolute;top:-4px;width:7px;height:7px;background:var(--accent);content:""}.distance-line:before{left:0}.distance-line:after{right:0}
+.distance-line i{position:absolute;left:0;top:-1px;width:100%;border-top:1px solid var(--accent);transform-origin:left;animation:distance-scan 1.5s steps(8,end) infinite}
+.distance-line b{position:absolute;left:50%;top:-24px;font-size:.59rem;font-weight:normal;color:#8e9491;white-space:nowrap;transform:translateX(-50%)}
+.autonomy-meter .autonomy-track{height:34px}.autonomy-meter .autonomy-track i{top:16px}.autonomy-meter .autonomy-track b{top:9px}.autonomy-meter .autonomy-roles{border-top:0}
+@keyframes agent-screen-run{to{background-position:22px 9px}}@keyframes distance-scan{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@media(max-width:960px){.beer-browser{grid-template-columns:1fr}.model-beer{min-height:570px}.autonomy-kpis{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.beer-stage{padding:14px}.model-beer{min-height:590px}.model-s5{left:42%}.model-s3{left:33%}.model-s4{left:61%}.model-s3x{left:12%;width:70px}.model-s2{left:33%}.model-operations{left:2%;right:20%;gap:5px}.role-s5 .model-cursor{left:23%}.role-s4 .model-cursor{left:43%}.role-s3 .model-cursor{left:14%}.role-s3x .model-cursor{left:1%}.role-s2 .model-cursor{left:15%}.role-s1 .model-cursor{left:0}.autonomy-meter figcaption{display:grid}.autonomy-kpis{grid-template-columns:1fr}.autonomy-kpis>div{min-height:150px;padding:22px}.autonomy-kpis>div+div{border-left:0;border-top:1px solid #ffffff30}.autonomy-distance{min-height:290px}.agent-computer{left:2%;transform:scale(.82);transform-origin:left bottom}.human-marker{bottom:40px}.distance-line{left:22%;width:calc(var(--human-x) - 24%)}}
+@media(prefers-reduced-motion:reduce){.agent-screen,.distance-line i{animation:none!important}}

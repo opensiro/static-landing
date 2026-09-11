@@ -68,7 +68,9 @@
   ];
   var state = figure.querySelector('[data-autonomy-state]');
   var horizon = figure.querySelector('[data-autonomy-horizon]');
+  var agentCount = figure.querySelector('[data-agent-count]');
   var horizons = ['< 1 DAY','DAYS → WEEKS','WEEKS','WEEKS +','MONTHS *','OPEN-ENDED *'];
+  var agentCounts = ['10','50','200','400','800','1,000+'];
   var duration = 14000;
   var frame = null;
   var startedAt = 0;
@@ -85,6 +87,7 @@
     figure.setAttribute('data-stage', String(stage));
     state.textContent = states[stage];
     if (horizon) horizon.textContent = horizons[stage];
+    if (agentCount) agentCount.textContent = agentCounts[stage];
     roles.forEach(function (item, index) {
       item.classList.toggle('is-active', index === stage);
       item.classList.toggle('is-complete', index < stage);
