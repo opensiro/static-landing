@@ -638,6 +638,8 @@ hr.rule{border:0;border-top:1px solid var(--hairline);margin:0}
 @media(max-width:540px){.benchmark-samples{padding:52px 0}.sample-intro{margin-bottom:28px}.sample-intro h2{font-size:23px}}
 
 /* ARCTIC workflow — preparation, submission, and small-model evaluation. */
+.detail .section-export{display:inline;margin-left:7px;color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.detail .section-export:hover,.detail .section-export:focus-visible{color:var(--accent-ink)}
 .workflow-question{margin-bottom:20px}
 .workflow-intro{max-width:790px;margin:0 0 36px;color:var(--muted-2);font-size:13px;line-height:1.9}
 .workflow-intro strong{font-weight:normal;color:var(--ink)}
