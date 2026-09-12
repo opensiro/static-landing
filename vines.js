@@ -207,9 +207,11 @@
     last = null;
     var playing = inView && !document.hidden && !paused && !reduced.matches && !leaving;
     hero.classList.toggle('vines-in-view', playing);
-    controls.hidden = reduced.matches;
-    pause.textContent = paused ? 'Resume' : 'Pause';
-    pause.setAttribute('aria-label', paused ? 'Resume garden animation' : 'Pause garden animation');
+    if (controls) controls.hidden = reduced.matches;
+    if (pause) {
+      pause.textContent = paused ? 'Resume' : 'Pause';
+      pause.setAttribute('aria-label', paused ? 'Resume garden animation' : 'Pause garden animation');
+    }
     if (reduced.matches) {
       if (!stillPrepared) {
         time = Math.max(time, 12500);
@@ -278,7 +280,7 @@
   }
   restore();
   hero.classList.add('vines-ready');
-  pause.addEventListener('click', function () { paused = !paused; sync(); save(); });
+  if (pause) pause.addEventListener('click', function () { paused = !paused; sync(); save(); });
   window.addEventListener('pageswap', depart);
   window.addEventListener('pagehide', depart);
   window.addEventListener('pageshow', arrive);
